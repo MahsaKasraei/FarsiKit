@@ -27,7 +27,11 @@ describe("normalizePersian", () => {
 
 describe("addZwnj", () => {
   it("adds ZWNJ to common prefixes", () => {
-    expect(addZwnj("می رود")).toBe("می‌رود");
+    expect(addZwnj("می رود و نمی شود")).toBe("می‌رود و نمی‌شود");
+  });
+
+  it("joins common suffixes to the preceding word", () => {
+    expect(addZwnj("کتاب ها و خانه های بزرگ")).toBe("کتاب‌ها و خانه‌های بزرگ");
   });
 });
 

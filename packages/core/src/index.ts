@@ -16,7 +16,7 @@ const digitMaps: Record<DigitSystem, string> = {
   latin: LATIN_DIGITS
 };
 
-export function convertDigits(text: string, target: DigitSustem): string {
+export function convertDigits(text: string, target: DigitSystem): string {
   const output = digitMaps[target];
   return text.replace(/[0-9۰-۹٠-٩]/g, (digit) => {
     const index = LATIN_DIGITS.indexOf(digit) >= 0
@@ -65,17 +65,13 @@ export function normalizePersian(
 }
 
 /**
- * Adds ZWNJ in a deliberately small set of common Persian constructions.
+ * Applies conservative ZWNJ rules for common Persian prefixes and suffixes.
  * This heuristic is not a complete Persian morphology or spell-check engine.
  */
 export function addZwnj(text: string): string {
   return text
-    .replace(/\bمی\s+(?=[\u0600-\u06FF])/g, "می‌")
-    .replace(/\bنمی\s+(?=[\u0600-\u06FF])/g, "نمی‌")
-    .replace(/ها\s+(?=[\u0600-\u06FF])/g, "ها‌")
-    .replace(/های\s+(?=[\u0600-\u06FF])/g, "های‌")
-    .replace(/تر\s+(?=[\u0600-\u06FF])/g, "تر‌")
-    .replace(/ترین\s+(?=[\u0600-\u06FF])/g, "ترین‌");
+    .replace(/(^|\s)(نمی|می)\s+(?=[\u0600-\u06FF])/gu, "$1$2‌")
+    .replace(/([\u0600-\u06FF]+)\s+(ها|های|تر|ترین)(?=\s|$|[،؛؟.!:])/gu, "$1‌$2");
 }
 
 export interface TextStats {
