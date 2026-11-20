@@ -46,12 +46,14 @@ npm run build
 import {
   normalizePersian,
   convertDigits,
-  getTextStats
+  getTextStats,
+  addZwnj
 } from "@farsikit/core";
 
 normalizePersian("كتاب و علي"); // "کتاب و علی"
 convertDigits("Order 123", "persian"); // "Order ۱۲۳"
 getTextStats("سلام دنیا"); // { characters: 9, ... }
+addZwnj("می رود"); // "می‌رود"
 ```
 
 ## API
@@ -64,7 +66,7 @@ Options:
 - `convertDigits`: `"persian" | "arabic" | "latin" | "none"` (default: `"none"`)
 - `normalizeWhitespace`: boolean (default: `true`)
 - `fixPunctuation`: boolean (default: `true`)
-- ` نیمSpace`: not applicable; use `addZwnj` separately.
+- Use `addZwnj(text)` separately for conservative ZWNJ insertion.
 
 ### `convertDigits(text, target)`
 
