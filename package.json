@@ -1,0 +1,13 @@
+{
+  "name": "farsikit",
+  "private": true,
+  "version": "0.1.0",
+  "description": "A lightweight toolkit for Persian text normalization and RTL-friendly web development.",
+  "workspaces": ["packages/*", "apps/*"],
+  "scripts": {
+    "dev": "npm run dev --workspace @farsikit/playground",
+    "build": "npm run build --workspace @farsikit/core && npm run build --workspace @farsikit/playground",
+    "test": "npm run test --workspace @farsikit/core"
+  },
+  "engines": { "node": ">=18" }
+}

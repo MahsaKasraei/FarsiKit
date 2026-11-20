@@ -1,121 +1,94 @@
-FarsiKit 🇮🇷
+# FarsiKit
 
 A lightweight, open-source toolkit for Persian text normalization, typography, and RTL-friendly web development.
 
-FarsiKit helps developers build better Persian-language experiences by providing simple, reliable utilities for cleaning, normalizing, and processing Persian text.
+FarsiKit helps developers build better Persian-language experiences with practical utilities for normalizing Arabic/Persian characters, converting digits, cleaning whitespace, and inspecting text.
 
-Whether you’re building a website, web application, or content management system, FarsiKit makes working with Persian text easier and more consistent.
+## Features
 
-✨ Features
+- Normalize Arabic Yeh/Kaf variants to Persian ی and ک
+- Convert digits between Persian, Arabic, and Latin forms
+- Clean repeated whitespace and punctuation spacing
+- Optional ZWNJ insertion for common Persian prefixes and suffixes
+- Get useful text statistics, including word count and ZWNJ count
+- A small RTL playground built with React and Vite
 
-* Persian Character Normalization — Convert Arabic Yeh (ي) and Kaf (ك) to their standard Persian equivalents (ی, ک).
-* Digit Conversion — Convert between Persian, Arabic-Indic, and Latin numerals.
-* Text Normalization — Clean repeated spaces and normalize common punctuation spacing.
-* Half-Space Support — Optionally apply ZWNJ (Zero-Width Non-Joiner) to common Persian prefixes.
-* Text Inspection — Count characters, words, and Persian letters, and detect common text inconsistencies.
-* Lightweight Core — TypeScript utilities with no runtime dependencies.
+## Project structure
 
-🚀 Getting Started
+```text
+FarsiKit/
+├── apps/
+│   └── playground/       # React + Vite demo
+├── packages/
+│   └── core/             # Framework-agnostic TypeScript utilities
+└── .github/workflows/    # CI
+```
 
-Installation
+## Getting started
 
-npm install @farsikit/core
+Requirements: Node.js 18+ and npm 9+.
 
-Basic Usage
+```bash
+npm install
+npm run test
+npm run dev
+```
 
+To build all workspaces:
+
+```bash
+npm run build
+```
+
+## Core usage
+
+```ts
 import {
   normalizePersian,
-  toPersianDigits,
-  toLatinDigits
+  convertDigits,
+  getTextStats
 } from "@farsikit/core";
-// Normalize Persian characters and spacing
-const text = normalizePersian("مي خواهم كد بنويسم");
-// Convert Latin digits to Persian
-const persianNumbers = toPersianDigits("Order 12345");
-// Convert Persian digits to Latin
-const latinNumbers = toLatinDigits("سفارش ۱۲۳۴۵");
-console.log(text);
-console.log(persianNumbers);
-console.log(latinNumbers);
 
-Enable Half-Space Normalization
+normalizePersian("كتاب و علي"); // "کتاب و علی"
+convertDigits("Order 123", "persian"); // "Order ۱۲۳"
+getTextStats("سلام دنیا"); // { characters: 9, ... }
+```
 
-import { normalizePersian } from "@farsikit/core";
-const result = normalizePersian("می روم و نمی دانم", {
-  halfSpace: true
-});
-console.log(result);
-// می‌روم و نمی‌دانم
+## API
 
-🧰 Available Utilities
+### `normalizePersian(text, options?)`
 
-Utility	Description
-normalizePersian()	Normalize common Persian text inconsistencies
-normalizeArabicLetters()	Convert Arabic Yeh and Kaf
-convertDigits()	Convert digits to a selected numeral system
-toPersianDigits()	Convert digits to Persian
-toArabicDigits()	Convert digits to Arabic-Indic
-toLatinDigits()	Convert digits to Latin
-countPersianLetters()	Count Persian/Arabic-script characters
-inspectPersianText()	Inspect text and detect common issues
+Normalizes common Arabic character variants and whitespace.
 
-🖥️ Playground
+Options:
+- `convertDigits`: `"persian" | "arabic" | "latin" | "none"` (default: `"none"`)
+- `normalizeWhitespace`: boolean (default: `true`)
+- `fixPunctuation`: boolean (default: `true`)
+- ` نیمSpace`: not applicable; use `addZwnj` separately.
 
-FarsiKit includes a web-based playground where you can:
+### `convertDigits(text, target)`
 
-* Enter Persian text and see normalized output.
-* Convert numbers between numeral systems.
-* Preview text-cleaning results.
-* Copy the processed output.
+Converts digits to `"persian"`, `"arabic"`, or `"latin"`.
 
-🛠️ Development
+### `addZwnj(text)`
 
-Clone the repository:
+Applies conservative ZWNJ rules for a small set of common Persian prefixes and suffixes. It is intentionally lightweight and is not a full Persian morphological analyzer.
 
-git clone https://github.com/YOUR_USERNAME/farsikit.git
-cd farsikit
+### `getTextStats(text)`
 
-Install dependencies:
+Returns character, word, line, Persian-letter, Arabic-variant, and ZWNJ counts.
 
-npm install
+## Roadmap
 
-Run tests:
+- Expand normalization rules with carefully tested examples
+- Add configurable typography helpers
+- Improve documentation and browser playground
+- Add framework integrations only when they provide clear value
 
-npm test
+## Contributing
 
-Start the playground:
+Contributions, bug reports, and Persian-language test cases are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
-npm run dev
+## License
 
-Build the project:
-
-npm run build
-
-🗺️ Roadmap
-
-* [x]	Persian character normalization
-* [x]	Persian, Arabic-Indic, and Latin digit conversion
-* [x]	Basic whitespace and punctuation normalization
-* [x]	Initial TypeScript test suite
-* [x]	React playground
-* [ ]	Expanded Persian typography rules
-* [ ]	RTL layout inspection utilities
-* [ ]	More comprehensive documentation and examples
-* [ ]	npm package release
-* [ ]	Community contributions and integrations
-
-🤝 Contributing
-
-Contributions are welcome!
-
-If you find a bug, have an idea for a new feature, or want to improve the documentation, feel free to open an issue or submit a pull request.
-
-Please read CONTRIBUTING.md before contributing.
-
-📄 License
-
-FarsiKit is released under the MIT License.
-
-⸻
-
-Built to make the Persian web better.
+MIT
