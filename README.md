@@ -1,17 +1,21 @@
 # FarsiKit
 
-A lightweight, open-source toolkit for Persian text normalization, typography, and RTL-friendly web development.
+A lightweight, open-source TypeScript toolkit for Persian text normalization, typography, and RTL-friendly web development.
 
-FarsiKit helps developers build better Persian-language experiences with practical utilities for normalizing Arabic/Persian characters, converting digits, cleaning whitespace, and inspecting text.
+FarsiKit provides framework-agnostic utilities for cleaning Persian text, handling Arabic/Persian character variants, converting digits, managing common ZWNJ patterns, and preparing readable URL slugs.
 
 ## Features
 
 - Normalize Arabic Yeh/Kaf variants to Persian ی and ک
-- Convert digits between Persian, Arabic, and Latin forms
-- Clean repeated whitespace and punctuation spacing
-- Optional ZWNJ insertion for common Persian prefixes and suffixes
-- Get useful text statistics, including word count and ZWNJ count
-- A small RTL playground built with React and Vite
+- Normalize canonically equivalent Unicode sequences (NFC)
+- Convert digits between Persian, Arabic-Indic, and Latin systems
+- Clean whitespace and punctuation spacing
+- Optionally remove Arabic diacritics (harakat)
+- Apply conservative ZWNJ rules for common Persian prefixes and suffixes
+- Generate Persian-friendly URL slugs
+- Detect Persian/Arabic-script text
+- Inspect text statistics, including characters, words, lines, ZWNJ, and diacritics
+- React + Vite playground for trying the utilities
 
 ## Project structure
 
@@ -24,70 +28,90 @@ FarsiKit/
 └── .github/workflows/    # CI
 ```
 
-## Getting started
+## Requirements
 
-Requirements: Node.js 18+ and npm 9+.
+- Node.js 18+
+- npm 9+
+
+## Getting started
 
 ```bash
 npm install
 npm run test
+npm run build
 npm run dev
 ```
 
-To build all workspaces:
+## Usage
 
-```bash
-npm run build
-```
-
-## Core usage
+Install the package when published, then import the helpers:
 
 ```ts
 import {
-  normalizePersian,
+  addZwnj,
+  containsPersian,
   convertDigits,
   getTextStats,
-  addZwnj
+  normalizePersian,
+  slugifyPersian,
+  stripArabicDiacritics
 } from "@farsikit/core";
 
-normalizePersian("كتاب و علي"); // "کتاب و علی"
-convertDigits("Order 123", "persian"); // "Order ۱۲۳"
-getTextStats("سلام دنیا"); // { characters: 9, ... }
-addZwnj("می رود"); // "می‌رود"
+normalizePersian("كتاب علي 123", { convertDigits: "persian" });
+// "کتاب علی ۱۲۳"
+
+addZwnj("می رود و کتاب ها");
+// "می‌رود و کتاب‌ها"
+
+slugifyPersian("راهنمای توسعه وب فارسی");
+// "راهنمای-توسعه-وب-فارسی"
+
+containsPersian("Hello فارسی");
+// true
+
+stripArabicDiacritics("عَرَبِيّ");
+// "عربي"
+
+getTextStats("سلام دنیا");
+// Includes characters, words, lines, Persian letters, ZWNJ, and diacritic counts.
 ```
 
 ## API
 
 ### `normalizePersian(text, options?)`
 
-Normalizes common Arabic character variants and whitespace.
+Normalizes common Arabic character variants, Unicode composition, whitespace, and punctuation.
 
-Options:
-- `convertDigits`: `"persian" | "arabic" | "latin" | "none"` (default: `"none"`)
-- `normalizeWhitespace`: boolean (default: `true`)
-- `fixPunctuation`: boolean (default: `true`)
-- Use `addZwnj(text)` separately for conservative ZWNJ insertion.
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `convertDigits` | `"persian" \| "arabic" \| "latin" \| "none"` | `"none"` | Convert all supported digit systems |
+| `normalizeWhitespace` | `boolean` | `true` | Normalize spacing and trim outer whitespace |
+| `fixPunctuation` | `boolean` | `true` | Normalize spacing around common punctuation |
+| `removeDiacritics` | `boolean` | `false` | Remove Arabic combining marks |
 
-### `convertDigits(text, target)`
+### Other helpers
 
-Converts digits to `"persian"`, `"arabic"`, or `"latin"`.
+- `convertDigits(text, target)`: convert Persian, Arabic-Indic, or Latin digits.
+- `normalizeUnicode(text)`: normalize Unicode to NFC.
+- `stripArabicDiacritics(text)`: remove Arabic combining marks.
+- `addZwnj(text)`: apply limited, conservative ZWNJ rules.
+- `slugifyPersian(text)`: create a URL-friendly slug while preserving Persian and Latin letters.
+- `containsPersian(text)`: detect characters in the Arabic Unicode block.
+- `getTextStats(text)`: count characters, words, lines, Persian letters, Arabic variants, ZWNJ, and diacritics.
 
-### `addZwnj(text)`
+## Important behavior notes
 
-Applies conservative ZWNJ rules for a small set of common Persian prefixes and suffixes. It is intentionally lightweight and is not a full Persian morphological analyzer.
+- ZWNJ insertion is heuristic and intentionally limited; it is not a Persian spell-checker or morphological analyzer.
+- `containsPersian` checks the Arabic Unicode block, which includes Persian and Arabic characters. It does not identify a language with certainty.
+- Slugs preserve letters and numbers from supported scripts; applications should still URL-encode values when constructing URLs.
 
-### `getTextStats(text)`
+## Development
 
-Returns character, word, line, Persian-letter, Arabic-variant, and ZWNJ counts.
-
-## Roadmap
-
-- Expand normalization rules with carefully tested examples
-- Add configurable typography helpers
-- Improve documentation and browser playground
-- Add framework integrations only when they provide clear value
-
-## Contributing
+```bash
+npm install
+npm test
+npm run build
+```
 
 Contributions, bug reports, and Persian-language test cases are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
