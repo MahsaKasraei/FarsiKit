@@ -141,3 +141,68 @@ export function getTextStats(text: string): TextStats {
     diacritics: (text.match(/[\u0610-\u061A\u064B-\u065F\u0670\u06D6-\u06ED]/g) ?? []).length
   };
 }
+
+
+/** Normalize common Iranian mobile formats to 09xxxxxxxxx. Returns an empty string for unsupported input. */
+export function normalizeIranianPhone(input: string): string {
+  let digits = convertDigits(input, "latin").replace(/[^0-9]/g, "");
+  if (digits.startsWith("0098")) digits = digits.slice(4);
+  else if (digits.startsWith("98")) digits = digits.slice(2);
+  if (digits.startsWith("0")) digits = digits.slice(1);
+  return /^9\\d{9}$/.test(digits) ? `0${digits}` : "";
+}
+
+/** Validate an Iranian mobile number in common local or international formats. */
+export function isValidIranianMobile(input: string): boolean {
+  return normalizeIranianPhone(input).length === 11;
+}
+
+export interface ReadingTime {
+  words: number;
+  seconds: number;
+  minutes: number;
+}
+
+/** Estimate reading time from whitespace-separated words (default: 200 words/minute). */
+export function getReadingTime(text: string, wordsPerMinute = 200): ReadingTime {
+  const words = text.trim() ? text.trim().split(/\\s+/u).length : 0;
+  const safeRate = Number.isFinite(wordsPerMinute) && wordsPerMinute > 0 ? wordsPerMinute : 200;
+  const seconds = words === 0 ? 0 : Math.ceil((words / safeRate) * 60);
+  return { words, seconds, minutes: seconds === 0 ? 0 : Math.ceil(seconds / 60) };
+}
+
+/** Create a plain-text meta description, truncated on a word boundary. */
+export function createMetaDescription(text: string, maxLength = 160): string {
+  const limit = Number.isFinite(maxLength) ? Math.max(0, Math.floor(maxLength)) : 160;
+  if (limit === 0) return "";
+  const clean = normalizePersian(text).replace(/\\s+/gu, " ").trim();
+  const chars = [...clean];
+  if (chars.length <= limit) return clean;
+  if (limit <= 1) return "…";
+  const candidate = chars.slice(0, limit - 1).join("");
+  const boundary = candidate.lastIndexOf(" ");
+  const shortened = boundary > Math.floor(limit * 0.55) ? candidate.slice(0, boundary) : candidate;
+  return `${shortened.trimEnd()}…`;
+}
+
+export interface KeywordStat {
+  keyword: string;
+  count: number;
+  density: number;
+}
+
+/** Simple token frequency analysis; this is a content hint, not a linguistic SEO analyzer. */
+export function getKeywordStats(text: string, limit = 10): KeywordStat[] {
+  const stopWords = new Set(["و", "در", "به", "از", "که", "را", "با", "برای", "این", "آن", "یک", "the", "and", "for", "with", "this", "that"]);
+  const tokens = normalizePersian(text).toLocaleLowerCase().match(/[\\p{L}\\p{N}]+/gu) ?? [];
+  const counts = new Map<string, number>();
+  for (const token of tokens) {
+    if (token.length < 2 || stopWords.has(token)) continue;
+    counts.set(token, (counts.get(token) ?? 0) + 1);
+  }
+  const safeLimit = Number.isFinite(limit) ? Math.max(0, Math.floor(limit)) : 10;
+  return [...counts.entries()]
+    .map(([keyword, count]) => ({ keyword, count, density: tokens.length === 0 ? 0 : Number(((count / tokens.length) * 100).toFixed(1)) }))
+    .sort((a, b) => b.count - a.count || a.keyword.localeCompare(b.keyword, "fa"))
+    .slice(0, safeLimit);
+}
