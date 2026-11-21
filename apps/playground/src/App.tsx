@@ -22,7 +22,8 @@ export default function App() {
   const [digits, setDigits] = useState<"persian" | "arabic" | "latin">("persian");
   const [removeDiacritics, setRemoveDiacritics] = useState(true);
   const [useZwnj, setUseZwnj] = useState(true);
-  const [copied, setCopied] = useState("");\n  const [phone, setPhone] = useState("۰۹۱۲ ۳۴۵ ۶۷۸۹");
+  const [copied, setCopied] = useState("");
+  const [phone, setPhone] = useState("۰۹۱۲ ۳۴۵ ۶۷۸۹");
 
   const normalized = useMemo(() => {
     const value = normalizePersian(input, {
@@ -38,7 +39,11 @@ export default function App() {
   const unicode = useMemo(() => normalizeUnicode(input), [input]);
   const withoutMarks = useMemo(() => stripArabicDiacritics(input), [input]);
   const stats = useMemo(() => getTextStats(input), [input]);
-  const hasPersian = containsPersian(input);\n  const phoneNormalized = normalizeIranianPhone(phone);\n  const reading = getReadingTime(input);\n  const metaDescription = createMetaDescription(input);\n  const keywords = getKeywordStats(input, 8);
+  const hasPersian = containsPersian(input);
+  const phoneNormalized = normalizeIranianPhone(phone);
+  const reading = getReadingTime(input);
+  const metaDescription = createMetaDescription(input);
+  const keywords = getKeywordStats(input, 8);
 
   const copy = async (value: string, label: string) => {
     try {
