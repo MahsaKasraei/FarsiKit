@@ -2,7 +2,7 @@
   "name": "farsikit",
   "private": true,
   "version": "0.3.0",
-  "description": "A lightweight toolkit for Persian text normalization and RTL-friendly web development.",
+  "description": "Open-source Persian text, content SEO, Iranian locale, and RTL developer toolkit.",
   "workspaces": [
     "packages/*",
     "apps/*"
