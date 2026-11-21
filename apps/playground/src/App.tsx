@@ -17,7 +17,7 @@ export default function App() {
   const [digits, setDigits] = useState<"persian" | "arabic" | "latin">("persian");
   const [removeDiacritics, setRemoveDiacritics] = useState(true);
   const [useZwnj, setUseZwnj] = useState(true);
-  const [copied, setCopied] = useState("");
+  const [copied, setCopied] = useState("");\n  const [phone, setPhone] = useState("۰۹۱۲ ۳۴۵ ۶۷۸۹");
 
   const normalized = useMemo(() => {
     const value = normalizePersian(input, {
@@ -33,7 +33,7 @@ export default function App() {
   const unicode = useMemo(() => normalizeUnicode(input), [input]);
   const withoutMarks = useMemo(() => stripArabicDiacritics(input), [input]);
   const stats = useMemo(() => getTextStats(input), [input]);
-  const hasPersian = containsPersian(input);
+  const hasPersian = containsPersian(input);\n  const phoneNormalized = normalizeIranianPhone(phone);\n  const reading = getReadingTime(input);\n  const metaDescription = createMetaDescription(input);\n  const keywords = getKeywordStats(input, 8);
 
   const copy = async (value: string, label: string) => {
     try {
@@ -51,7 +51,7 @@ export default function App() {
         <a className="brand" href="#" aria-label="FarsiKit home">
           <span className="brand-mark">ف</span><span>FarsiKit</span>
         </a>
-        <span className="version">نسخه ۰.۲.۰ · ابزارهای متن فارسی</span>
+        <span className="version">نسخه ۰.۳.۰ · جعبه‌ابزار هوشمند فارسی</span>
       </header>
 
       <section className="hero">
@@ -114,6 +114,42 @@ export default function App() {
           <Stat label="حروف عربی جایگزین" value={stats.arabicVariants} />
           <Stat label="نیم‌فاصله" value={stats.zwnj} />
           <Stat label="اعراب و حرکات" value={stats.diacritics} />
+        </div>
+      </section>
+
+      <section className="pro-tools">
+        <div className="section-heading"><span className="step">۰۵</span><h2>ابزارهای محتوا، سئو و شماره موبایل</h2></div>
+        <div className="pro-grid">
+          <div className="tool-card">
+            <div className="tool-top"><h3>تبدیل و اعتبارسنجی موبایل ایران</h3><code>Iranian phone</code></div>
+            <p>شماره را با ارقام فارسی، لاتین یا پیش‌شماره بین‌المللی وارد کن.</p>
+            <input className="phone-input" dir="auto" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="مثلاً ۰۹۱۲۱۲۳۴۵۶۷" />
+            <div className="phone-result">
+              <strong className={phoneNormalized ? "detected" : "not-detected"}>{phoneNormalized ? (isValidIranianMobile(phone) ? "شماره معتبر است" : "فرمت پشتیبانی نمی‌شود") : "شماره قابل تشخیص نیست"}</strong>
+              <span dir="ltr">{phoneNormalized || "—"}</span>
+            </div>
+            <button className="tool-copy" onClick={() => copy(phoneNormalized, "شماره نرمال‌شده کپی شد")} disabled={!phoneNormalized}>کپی شماره استاندارد</button>
+          </div>
+          <div className="tool-card">
+            <div className="tool-top"><h3>آماده‌سازی توضیحات متا</h3><code>createMetaDescription</code></div>
+            <p>پیشنهاد توضیحات متا با پاک‌سازی فاصله‌ها و محدودیت پیش‌فرض ۱۶۰ نویسه.</p>
+            <div className="tool-value" dir="rtl">{metaDescription || <span className="placeholder">متن مقاله را وارد کن...</span>}</div>
+            <div className="mini-meta"><span>{[...metaDescription].length} / ۱۶۰ نویسه</span><button className="tool-copy" onClick={() => copy(metaDescription, "توضیحات متا کپی شد")} disabled={!metaDescription}>کپی متا</button></div>
+          </div>
+          <div className="tool-card">
+            <div className="tool-top"><h3>زمان تقریبی مطالعه</h3><code>getReadingTime</code></div>
+            <p>برآورد بر اساس تعداد واژه و سرعت پیش‌فرض ۲۰۰ واژه در دقیقه.</p>
+            <div className="reading-metrics">
+              <div><strong>{reading.minutes.toLocaleString("fa-IR")}</strong><span>دقیقه</span></div>
+              <div><strong>{reading.words.toLocaleString("fa-IR")}</strong><span>واژه</span></div>
+              <div><strong>{reading.seconds.toLocaleString("fa-IR")}</strong><span>ثانیه</span></div>
+            </div>
+          </div>
+          <div className="tool-card">
+            <div className="tool-top"><h3>تکرار واژه‌های کلیدی</h3><code>getKeywordStats</code></div>
+            <p>نمایش فراوانی ساده واژه‌ها برای بازبینی محتوای مقاله؛ نه تحلیل‌گر کامل سئو.</p>
+            {keywords.length ? <div className="keyword-list">{keywords.map((item) => <div className="keyword-row" key={item.keyword}><strong>{item.keyword}</strong><span>{item.count.toLocaleString("fa-IR")} بار</span><span>{item.density.toLocaleString("fa-IR")}%</span></div>)}</div> : <div className="tool-value">برای تحلیل، متن وارد کن.</div>}
+          </div>
         </div>
       </section>
 
