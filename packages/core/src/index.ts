@@ -149,7 +149,7 @@ export function normalizeIranianPhone(input: string): string {
   if (digits.startsWith("0098")) digits = digits.slice(4);
   else if (digits.startsWith("98")) digits = digits.slice(2);
   if (digits.startsWith("0")) digits = digits.slice(1);
-  return /^9\\d{9}$/.test(digits) ? `0${digits}` : "";
+  return /^9\d{9}$/.test(digits) ? `0${digits}` : "";
 }
 
 /** Validate an Iranian mobile number in common local or international formats. */
@@ -165,7 +165,7 @@ export interface ReadingTime {
 
 /** Estimate reading time from whitespace-separated words (default: 200 words/minute). */
 export function getReadingTime(text: string, wordsPerMinute = 200): ReadingTime {
-  const words = text.trim() ? text.trim().split(/\\s+/u).length : 0;
+  const words = text.trim() ? text.trim().split(/\s+/u).length : 0;
   const safeRate = Number.isFinite(wordsPerMinute) && wordsPerMinute > 0 ? wordsPerMinute : 200;
   const seconds = words === 0 ? 0 : Math.ceil((words / safeRate) * 60);
   return { words, seconds, minutes: seconds === 0 ? 0 : Math.ceil(seconds / 60) };
@@ -175,7 +175,7 @@ export function getReadingTime(text: string, wordsPerMinute = 200): ReadingTime 
 export function createMetaDescription(text: string, maxLength = 160): string {
   const limit = Number.isFinite(maxLength) ? Math.max(0, Math.floor(maxLength)) : 160;
   if (limit === 0) return "";
-  const clean = normalizePersian(text).replace(/\\s+/gu, " ").trim();
+  const clean = normalizePersian(text).replace(/\s+/gu, " ").trim();
   const chars = [...clean];
   if (chars.length <= limit) return clean;
   if (limit <= 1) return "…";
@@ -194,7 +194,7 @@ export interface KeywordStat {
 /** Simple token frequency analysis; this is a content hint, not a linguistic SEO analyzer. */
 export function getKeywordStats(text: string, limit = 10): KeywordStat[] {
   const stopWords = new Set(["و", "در", "به", "از", "که", "را", "با", "برای", "این", "آن", "یک", "the", "and", "for", "with", "this", "that"]);
-  const tokens = normalizePersian(text).toLocaleLowerCase().match(/[\\p{L}\\p{N}]+/gu) ?? [];
+  const tokens = normalizePersian(text).toLocaleLowerCase().match(/[\p{L}\p{N}]+/gu) ?? [];
   const counts = new Map<string, number>();
   for (const token of tokens) {
     if (token.length < 2 || stopWords.has(token)) continue;
