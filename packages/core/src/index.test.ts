@@ -138,3 +138,43 @@ describe("getTextStats", () => {
     expect(getTextStats("")).toMatchObject({ words: 0, lines: 0, characters: 0 });
   });
 });
+
+
+describe("Iranian mobile helpers", () => {
+  it("normalizes local and international formats", async () => {
+    const { normalizeIranianPhone } = await import("./index.js");
+    expect(normalizeIranianPhone("۰۹۱۲ ۳۴۵ ۶۷۸۹")).toBe("09123456789");
+    expect(normalizeIranianPhone("+98 (912) 345-6789")).toBe("09123456789");
+    expect(normalizeIranianPhone("00989123456789")).toBe("09123456789");
+    expect(normalizeIranianPhone("12345")).toBe("");
+  });
+  it("validates Iranian mobile numbers", async () => {
+    const { isValidIranianMobile } = await import("./index.js");
+    expect(isValidIranianMobile("+989123456789")).toBe(true);
+    expect(isValidIranianMobile("۰۹۱۲۳۴۵۶۷۸۹")).toBe(true);
+    expect(isValidIranianMobile("02112345678")).toBe(false);
+  });
+});
+
+describe("content and SEO helpers", () => {
+  it("estimates reading time and handles empty content", async () => {
+    const { getReadingTime } = await import("./index.js");
+    expect(getReadingTime("یکی دو سه چهار", 200)).toEqual({ words: 4, seconds: 2, minutes: 1 });
+    expect(getReadingTime("")).toEqual({ words: 0, seconds: 0, minutes: 0 });
+    expect(getReadingTime("one two", 0).seconds).toBe(1);
+  });
+  it("creates normalized meta descriptions within the requested limit", async () => {
+    const { createMetaDescription } = await import("./index.js");
+    expect(createMetaDescription("كتاب  علي  و توسعه وب", 100)).toBe("کتاب علی و توسعه وب");
+    expect([...createMetaDescription("این یک متن آزمایشی برای توضیحات متای صفحه است", 20)].length).toBeLessThanOrEqual(20);
+    expect(createMetaDescription("سلام", 0)).toBe("");
+  });
+  it("ranks keyword frequency and skips common stop words", async () => {
+    const { getKeywordStats } = await import("./index.js");
+    expect(getKeywordStats("سئو فارسی سئو و محتوا فارسی", 2)).toEqual([
+      { keyword: "سئو", count: 2, density: 33.3 },
+      { keyword: "فارسی", count: 2, density: 33.3 }
+    ]);
+    expect(getKeywordStats("")).toEqual([]);
+  });
+});
