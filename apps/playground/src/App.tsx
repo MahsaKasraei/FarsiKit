@@ -1,22 +1,47 @@
 import { useMemo, useState } from "react";
-import { addZwnj, convertDigits, getTextStats, normalizePersian } from "@farsikit/core";
+import {
+  addZwnj,
+  containsPersian,
+  convertDigits,
+  getTextStats,
+  normalizePersian,
+  normalizeUnicode,
+  slugifyPersian,
+  stripArabicDiacritics
+} from "@farsikit/core";
 
 const sample = "كتاب علي 123 ، این یک متن آزمایشی است.";
 
 export default function App() {
   const [input, setInput] = useState(sample);
   const [digits, setDigits] = useState<"persian" | "arabic" | "latin">("persian");
-  const normalized = useMemo(
-    () => addZwnj(normalizePersian(input, { convertDigits: digits })),
-    [input, digits]
-  );
-  const stats = useMemo(() => getTextStats(input), [input]);
+  const [removeDiacritics, setRemoveDiacritics] = useState(true);
+  const [useZwnj, setUseZwnj] = useState(true);
+  const [copied, setCopied] = useState("");
 
-  const copy = async () => {
+  const normalized = useMemo(() => {
+    const value = normalizePersian(input, {
+      convertDigits: digits,
+      removeDiacritics,
+      normalizeWhitespace: true,
+      fixPunctuation: true
+    });
+    return useZwnj ? addZwnj(value) : value;
+  }, [input, digits, removeDiacritics, useZwnj]);
+
+  const slug = useMemo(() => slugifyPersian(input), [input]);
+  const unicode = useMemo(() => normalizeUnicode(input), [input]);
+  const withoutMarks = useMemo(() => stripArabicDiacritics(input), [input]);
+  const stats = useMemo(() => getTextStats(input), [input]);
+  const hasPersian = containsPersian(input);
+
+  const copy = async (value: string, label: string) => {
     try {
-      await navigator.clipboard.writeText(normalized);
+      await navigator.clipboard.writeText(value);
+      setCopied(label);
+      window.setTimeout(() => setCopied(""), 1600);
     } catch {
-      // Clipboard access may be unavailable in insecure contexts.
+      setCopied("کپی در این مرورگر در دسترس نیست");
     }
   };
 
@@ -24,16 +49,15 @@ export default function App() {
     <main className="page" dir="rtl">
       <header className="topbar">
         <a className="brand" href="#" aria-label="FarsiKit home">
-          <span className="brand-mark">ف</span>
-          <span>FarsiKit</span>
+          <span className="brand-mark">ف</span><span>FarsiKit</span>
         </a>
-        <span className="version">نسخه ۰.۲.۰</span>
+        <span className="version">نسخه ۰.۲.۰ · ابزارهای متن فارسی</span>
       </header>
 
       <section className="hero">
         <div className="eyebrow">ابزار متن‌باز توسعه فارسی</div>
         <h1>متن فارسی، <span>مرتب و استاندارد.</span></h1>
-        <p>ابزارهای کوچک و کاربردی برای نرمال‌سازی متن فارسی و تجربه بهتر راست‌به‌چپ در وب.</p>
+        <p>از نرمال‌سازی و نیم‌فاصله تا ساخت اسلاگ، پاک‌سازی اعراب و تحلیل دقیق متن؛ همه در یک محیط.</p>
       </section>
 
       <section className="workspace">
@@ -43,42 +67,70 @@ export default function App() {
             <button className="subtle" onClick={() => setInput("")}>پاک کردن</button>
           </div>
           <textarea value={input} onChange={(event) => setInput(event.target.value)} placeholder="متن فارسی‌ات را اینجا وارد کن..." />
-          <div className="panel-footer">
-            <span>متن شما در همین مرورگر پردازش می‌شود.</span>
-            <span>{stats.characters} نویسه</span>
-          </div>
+          <div className="panel-footer"><span>پردازش کاملاً در مرورگر انجام می‌شود.</span><span>{stats.characters.toLocaleString("fa-IR")} نویسه</span></div>
         </div>
 
         <div className="panel output-panel">
           <div className="panel-heading">
-            <div><span className="step">۰۲</span><h2>خروجی استاندارد</h2></div>
+            <div><span className="step">۰۲</span><h2>خروجی نرمال‌سازی</h2></div>
             <select value={digits} onChange={(event) => setDigits(event.target.value as typeof digits)} aria-label="نوع ارقام">
               <option value="persian">اعداد فارسی</option>
               <option value="arabic">اعداد عربی</option>
               <option value="latin">اعداد لاتین</option>
             </select>
           </div>
-          <div className="output" dir="rtl">{normalized || <span className="placeholder">خروجی اینجا نمایش داده می‌شود...</span>}</div>
-          <div className="panel-footer">
-            <span>یکسان‌سازی حروف، فاصله‌ها و ارقام</span>
-            <button className="copy" onClick={copy}>کپی خروجی ↗</button>
+          <div className="toggles">
+            <label><input type="checkbox" checked={removeDiacritics} onChange={(e) => setRemoveDiacritics(e.target.checked)} /> حذف اعراب</label>
+            <label><input type="checkbox" checked={useZwnj} onChange={(e) => setUseZwnj(e.target.checked)} /> اصلاح نیم‌فاصله</label>
           </div>
+          <div className="output" dir="rtl">{normalized || <span className="placeholder">خروجی اینجا نمایش داده می‌شود...</span>}</div>
+          <div className="panel-footer"><span>یکسان‌سازی حروف، فاصله‌ها، ارقام و نیم‌فاصله</span><button className="copy" onClick={() => copy(normalized, "خروجی نرمال‌سازی کپی شد")}>کپی خروجی ↗</button></div>
         </div>
       </section>
 
+      <section className="tools-section">
+        <div className="section-heading"><span className="step">۰۳</span><h2>ابزارهای سریع متن</h2></div>
+        <div className="tool-grid">
+          <Tool title="اسلاگ فارسی" code="slugifyPersian" description="ساخت آدرس خوانا برای URL؛ تبدیل ارقام به لاتین و حذف نشانه‌های اضافی." value={slug} onCopy={() => copy(slug, "اسلاگ کپی شد")} />
+          <Tool title="حذف اعراب" code="stripArabicDiacritics" description="حذف حرکات و اعراب عربی بدون حذف حروف اصلی." value={withoutMarks} onCopy={() => copy(withoutMarks, "متن بدون اعراب کپی شد")} />
+          <Tool title="نرمال‌سازی یونیکد" code="normalizeUnicode" description="یکسان‌سازی نمایش نویسه‌های معادل با استاندارد NFC." value={unicode} onCopy={() => copy(unicode, "متن یونیکد کپی شد")} />
+          <div className="tool-card detector">
+            <div className="tool-top"><h3>تشخیص متن فارسی</h3><code>containsPersian</code></div>
+            <p>بررسی وجود نویسه‌هایی از بلوک یونیکد فارسی و عربی در متن ورودی.</p>
+            <strong className={hasPersian ? "detected" : "not-detected"}>{hasPersian ? "متن فارسی/عربی دارد" : "حروف فارسی/عربی پیدا نشد"}</strong>
+          </div>
+        </div>
+        {copied && <div className="toast" role="status">{copied}</div>}
+      </section>
+
       <section className="stats">
-        <div className="stats-title"><span className="step">۰۳</span><h2>آمار متن</h2></div>
+        <div className="stats-title"><span className="step">۰۴</span><h2>آمار پیشرفته متن</h2></div>
         <div className="stat-grid">
           <Stat label="تعداد واژه" value={stats.words} />
           <Stat label="تعداد نویسه" value={stats.characters} />
+          <Stat label="بدون فاصله" value={stats.charactersWithoutWhitespace} />
+          <Stat label="تعداد خطوط" value={stats.lines} />
           <Stat label="حروف فارسی" value={stats.persianLetters} />
+          <Stat label="حروف عربی جایگزین" value={stats.arabicVariants} />
           <Stat label="نیم‌فاصله" value={stats.zwnj} />
+          <Stat label="اعراب و حرکات" value={stats.diacritics} />
         </div>
       </section>
 
       <footer><span>FarsiKit</span><span>ساخته‌شده برای وب فارسی · متن‌باز با مجوز MIT</span></footer>
     </main>
   );
+}
+
+function Tool({ title, code, description, value, onCopy }: {
+  title: string; code: string; description: string; value: string; onCopy: () => void;
+}) {
+  return <div className="tool-card">
+    <div className="tool-top"><h3>{title}</h3><code>{code}</code></div>
+    <p>{description}</p>
+    <div className="tool-value" dir="rtl">{value || <span className="placeholder">—</span>}</div>
+    <button className="tool-copy" onClick={onCopy} disabled={!value}>کپی نتیجه</button>
+  </div>;
 }
 
 function Stat({ label, value }: { label: string; value: number }) {
