@@ -27,7 +27,7 @@ export default function App() {
           <span className="brand-mark">ف</span>
           <span>FarsiKit</span>
         </a>
-        <span className="version">نسخه آزمایشی ۰.۱</span>
+        <span className="version">نسخه ۰.۲.۰</span>
       </header>
 
       <section className="hero">
