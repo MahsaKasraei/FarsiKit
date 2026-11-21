@@ -4,6 +4,7 @@ export interface NormalizeOptions {
   convertDigits?: DigitSystem | "none";
   normalizeWhitespace?: boolean;
   fixPunctuation?: boolean;
+  removeDiacritics?: boolean;
 }
 
 const PERSIAN_DIGITS = "۰۱۲۳۴۵۶۷۸۹";
@@ -16,6 +17,7 @@ const digitMaps: Record<DigitSystem, string> = {
   latin: LATIN_DIGITS
 };
 
+/** Convert Persian, Arabic-Indic, and Latin digits to the requested system. */
 export function convertDigits(text: string, target: DigitSystem): string {
   const output = digitMaps[target];
   return text.replace(/[0-9۰-۹٠-٩]/g, (digit) => {
@@ -28,6 +30,20 @@ export function convertDigits(text: string, target: DigitSystem): string {
   });
 }
 
+/** Normalize canonically equivalent Unicode sequences using NFC. */
+export function normalizeUnicode(text: string): string {
+  return text.normalize("NFC");
+}
+
+/** Remove Arabic combining marks (harakat) without changing base letters. */
+export function stripArabicDiacritics(text: string): string {
+  return text.replace(/[\u0610-\u061A\u064B-\u065F\u0670\u06D6-\u06ED]/g, "");
+}
+
+/**
+ * Normalize common Persian character variants and typography.
+ * This is a practical text cleanup helper, not a spell-checker.
+ */
 export function normalizePersian(
   text: string,
   options: NormalizeOptions = {}
@@ -35,13 +51,18 @@ export function normalizePersian(
   const {
     convertDigits: digitTarget = "none",
     normalizeWhitespace = true,
-    fixPunctuation = true
+    fixPunctuation = true,
+    removeDiacritics = false
   } = options;
 
-  let result = text
+  let result = normalizeUnicode(text)
     .replace(/[يى]/g, "ی")
     .replace(/ك/g, "ک")
     .replace(/\u0640/g, "");
+
+  if (removeDiacritics) {
+    result = stripArabicDiacritics(result);
+  }
 
   if (normalizeWhitespace) {
     result = result
@@ -66,12 +87,34 @@ export function normalizePersian(
 
 /**
  * Applies conservative ZWNJ rules for common Persian prefixes and suffixes.
- * This heuristic is not a complete Persian morphology or spell-check engine.
+ * This heuristic is intentionally limited and is not a morphology engine.
  */
 export function addZwnj(text: string): string {
   return text
     .replace(/(^|\s)(نمی|می)\s+(?=[\u0600-\u06FF])/gu, "$1$2‌")
     .replace(/([\u0600-\u06FF]+)\s+(ها|های|تر|ترین)(?=\s|$|[،؛؟.!:])/gu, "$1‌$2");
+}
+
+/** Return true when text contains at least one character in the Persian block. */
+export function containsPersian(text: string): boolean {
+  return /[\u0600-\u06FF]/u.test(text);
+}
+
+/**
+ * Create a URL-friendly slug while preserving Persian and Latin letters.
+ * Diacritics and punctuation are removed; whitespace and underscores become hyphens.
+ */
+export function slugifyPersian(text: string): string {
+  return normalizePersian(stripArabicDiacritics(text), {
+    convertDigits: "latin",
+    normalizeWhitespace: true,
+    fixPunctuation: false
+  })
+    .toLocaleLowerCase()
+    .replace(/[\s_]+/gu, "-")
+    .replace(/[^\p{L}\p{N}-]/gu, "")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
 }
 
 export interface TextStats {
@@ -82,6 +125,7 @@ export interface TextStats {
   persianLetters: number;
   arabicVariants: number;
   zwnj: number;
+  diacritics: number;
 }
 
 export function getTextStats(text: string): TextStats {
@@ -93,6 +137,7 @@ export function getTextStats(text: string): TextStats {
     lines: text.length === 0 ? 0 : text.split(/\r\n|\r|\n/).length,
     persianLetters: (text.match(/[آ-ی]/g) ?? []).length,
     arabicVariants: (text.match(/[يىك]/g) ?? []).length,
-    zwnj: (text.match(/\u200c/g) ?? []).length
+    zwnj: (text.match(/\u200c/g) ?? []).length,
+    diacritics: (text.match(/[\u0610-\u061A\u064B-\u065F\u0670\u06D6-\u06ED]/g) ?? []).length
   };
 }
