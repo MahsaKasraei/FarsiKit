@@ -1,7 +1,7 @@
 {
   "name": "@farsikit/core",
-  "version": "0.2.0",
-  "description": "Persian text normalization and typography utilities.",
+  "version": "0.3.0",
+  "description": "Persian text, content SEO, and Iranian locale utilities.",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -19,4 +19,4 @@
     "typescript": "^5.7.3",
     "vitest": "^2.1.8"
   }
-}
+}\n
