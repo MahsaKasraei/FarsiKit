@@ -1,6 +1,6 @@
 # FarsiKit
 
-A lightweight, open-source TypeScript toolkit for Persian text normalization, typography, and RTL-friendly web development.
+An open-source TypeScript toolkit for Persian text, content SEO, Iranian locale utilities, typography, and RTL-friendly web development.
 
 FarsiKit provides framework-agnostic utilities for cleaning Persian text, handling Arabic/Persian character variants, converting digits, managing common ZWNJ patterns, and preparing readable URL slugs.
 
@@ -15,7 +15,7 @@ FarsiKit provides framework-agnostic utilities for cleaning Persian text, handli
 - Generate Persian-friendly URL slugs
 - Detect Persian/Arabic-script text
 - Inspect text statistics, including characters, words, lines, ZWNJ, and diacritics
-- React + Vite playground for trying the utilities
+- Iranian mobile number normalization and validation\n- Reading-time estimates and meta-description generation\n- Lightweight keyword frequency analysis for Persian and mixed-language content\n- React + Vite playground for trying the utilities
 
 ## Project structure
 
