@@ -2,7 +2,12 @@ import { useMemo, useState } from "react";
 import {
   addZwnj,
   containsPersian,
+  createMetaDescription,
   convertDigits,
+  getKeywordStats,
+  getReadingTime,
+  isValidIranianMobile,
+  normalizeIranianPhone,
   getTextStats,
   normalizePersian,
   normalizeUnicode,
