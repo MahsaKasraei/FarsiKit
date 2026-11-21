@@ -49,3 +49,31 @@ footer span:first-child { direction: ltr; font-weight: 700; color: #536c59; }
   .stat-grid { grid-template-columns: repeat(2, 1fr); }
   footer { flex-direction: column; }
 }
+
+
+/* Feature-rich playground */
+.toggles { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 16px; color: #667267; font-size: 12px; }
+.toggles label { display: inline-flex; align-items: center; gap: 7px; cursor: pointer; }
+.toggles input { accent-color: #285c48; width: 14px; height: 14px; }
+.tools-section { margin-top: 28px; position: relative; }
+.section-heading { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.tool-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.tool-card { min-width: 0; padding: 18px; border: 1px solid #e5e7df; border-radius: 16px; background: #fff; }
+.tool-top { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+.tool-top h3 { margin: 0; font-size: 14px; }
+.tool-top code { direction: ltr; color: #63816c; background: #f0f5ef; padding: 5px 8px; border-radius: 7px; font-size: 10px; }
+.tool-card p { min-height: 42px; color: #858d83; font-size: 11px; line-height: 1.9; margin: 12px 0; }
+.tool-value { min-height: 52px; max-height: 120px; overflow: auto; overflow-wrap: anywhere; white-space: pre-wrap; border-radius: 10px; background: #f7f9f5; padding: 11px; color: #3d5142; font-size: 12px; line-height: 1.9; }
+.tool-copy { margin-top: 10px; border: 1px solid #dce6dc; background: #fff; color: #315e49; border-radius: 8px; padding: 7px 11px; font-size: 11px; cursor: pointer; }
+.tool-copy:disabled { opacity: .4; cursor: not-allowed; }
+.detector { display: flex; flex-direction: column; }
+.detector strong { display: inline-flex; align-self: flex-start; margin-top: auto; padding: 8px 11px; border-radius: 8px; font-size: 12px; }
+.detected { background: #eaf3eb; color: #286044; }
+.not-detected { background: #f4f1e9; color: #806c3c; }
+.toast { position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%); z-index: 5; padding: 11px 18px; border-radius: 10px; color: #fff; background: #285c48; box-shadow: 0 8px 28px #1b332533; font-size: 12px; }
+.stat-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 720px) {
+  .tool-grid { grid-template-columns: 1fr; }
+  .stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tool-card p { min-height: 0; }
+}
