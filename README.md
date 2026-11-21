@@ -50,7 +50,12 @@ Install the package when published, then import the helpers:
 import {
   addZwnj,
   containsPersian,
+  createMetaDescription,
   convertDigits,
+  getKeywordStats,
+  getReadingTime,
+  isValidIranianMobile,
+  normalizeIranianPhone,
   getTextStats,
   normalizePersian,
   slugifyPersian,
@@ -74,6 +79,17 @@ stripArabicDiacritics("عَرَبِيّ");
 
 getTextStats("سلام دنیا");
 // Includes characters, words, lines, Persian letters, ZWNJ, and diacritic counts.
+
+normalizeIranianPhone("+98 912 345 6789");
+// "09123456789"
+isValidIranianMobile("۰۹۱۲۳۴۵۶۷۸۹");
+// true
+
+getReadingTime("یک متن نمونه برای برآورد زمان مطالعه");
+// { words: 7, seconds: 3, minutes: 1 }
+
+createMetaDescription("متن مقاله برای توضیحات متا");
+getKeywordStats("سئو فارسی و تولید محتوای فارسی");
 ```
 
 ## API
@@ -104,6 +120,14 @@ Normalizes common Arabic character variants, Unicode composition, whitespace, an
 - ZWNJ insertion is heuristic and intentionally limited; it is not a Persian spell-checker or morphological analyzer.
 - `containsPersian` checks the Arabic Unicode block, which includes Persian and Arabic characters. It does not identify a language with certainty.
 - Slugs preserve letters and numbers from supported scripts; applications should still URL-encode values when constructing URLs.
+
+## Content and SEO helpers
+
+- `normalizeIranianPhone(input)`: normalize common Iranian mobile formats to `09xxxxxxxxx`; returns an empty string for unsupported input.
+- `isValidIranianMobile(input)`: validate common Iranian mobile number formats.
+- `getReadingTime(text, wordsPerMinute?)`: estimate reading time using whitespace-separated words (default 200 words/minute).
+- `createMetaDescription(text, maxLength?)`: normalize text and create a word-boundary-aware meta description (default 160 Unicode code points).
+- `getKeywordStats(text, limit?)`: show simple token frequency and density, excluding a small built-in stop-word list. This is a lightweight hint, not a full linguistic analyzer.
 
 ## Development
 
