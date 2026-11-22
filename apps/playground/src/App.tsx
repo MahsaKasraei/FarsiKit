@@ -26,6 +26,7 @@ export default function App() {
   const [fixEzafe, setFixEzafe] = useState(false);
   const [copied, setCopied] = useState("");
   const [phone, setPhone] = useState("۰۹۱۲ ۳۴۵ ۶۷۸۹");
+  const [activePanel, setActivePanel] = useState<"review" | "quick" | "stats" | "content" | null>(null);
   const normalized = useMemo(() => {
     const value = normalizePersian(input, {
       convertDigits: digits,
@@ -103,6 +104,20 @@ export default function App() {
         </div>
       </section>
 
+      <section className="extras">
+        <div className="extras-heading">
+          <div><span className="eyebrow">امکانات تکمیلی</span><h2>ابزارهای بیشتر، فقط وقتی به آن‌ها نیاز داری</h2></div>
+          <p>برای باز کردن هر بخش، یکی از گزینه‌ها را انتخاب کن.</p>
+        </div>
+        <div className="extras-tabs" role="tablist" aria-label="امکانات تکمیلی">
+          <button role="tab" aria-selected={activePanel === "review"} className={activePanel === "review" ? "active" : ""} onClick={() => setActivePanel(activePanel === "review" ? null : "review")}>بازرس کیفیت متن</button>
+          <button role="tab" aria-selected={activePanel === "quick"} className={activePanel === "quick" ? "active" : ""} onClick={() => setActivePanel(activePanel === "quick" ? null : "quick")}>ابزارهای سریع</button>
+          <button role="tab" aria-selected={activePanel === "stats"} className={activePanel === "stats" ? "active" : ""} onClick={() => setActivePanel(activePanel === "stats" ? null : "stats")}>آمار متن</button>
+          <button role="tab" aria-selected={activePanel === "content"} className={activePanel === "content" ? "active" : ""} onClick={() => setActivePanel(activePanel === "content" ? null : "content")}>سئو و شماره موبایل</button>
+        </div>
+      </section>
+
+      {activePanel === "review" && (
       <section className="inspector">
         <div className="section-heading"><span className="step">۰۶</span><h2>بازرس کیفیت متن فارسی</h2></div>
         <div className="inspector-card">
@@ -118,7 +133,9 @@ export default function App() {
           ))}</div> : <div className="clean-report">متن از نظر قواعدی که بررسی می‌کنیم، موردی برای گزارش ندارد. ✨</div>}
         </div>
       </section>
+      )}
 
+      {activePanel === "quick" && (
       <section className="tools-section">
         <div className="section-heading"><span className="step">۰۳</span><h2>ابزارهای سریع متن</h2></div>
         <div className="tool-grid">
@@ -131,9 +148,10 @@ export default function App() {
             <strong className={hasPersian ? "detected" : "not-detected"}>{hasPersian ? "متن فارسی/عربی دارد" : "حروف فارسی/عربی پیدا نشد"}</strong>
           </div>
         </div>
-        {copied && <div className="toast" role="status">{copied}</div>}
       </section>
+      )}
 
+      {activePanel === "stats" && (
       <section className="stats">
         <div className="stats-title"><span className="step">۰۴</span><h2>آمار پیشرفته متن</h2></div>
         <div className="stat-grid">
@@ -147,7 +165,9 @@ export default function App() {
           <Stat label="اعراب و حرکات" value={stats.diacritics} />
         </div>
       </section>
+      )}
 
+      {activePanel === "content" && (
       <section className="pro-tools">
         <div className="section-heading"><span className="step">۰۵</span><h2>ابزارهای محتوا، سئو و شماره موبایل</h2></div>
         <div className="pro-grid">
@@ -183,9 +203,12 @@ export default function App() {
           </div>
         </div>
       </section>
+      )}
 
 
 
+
+      {copied && <div className="toast" role="status">{copied}</div>}
 
       <footer><span>FarsiKit</span><span>ساخته‌شده برای وب فارسی · متن‌باز با مجوز MIT</span></footer>
     </main>
