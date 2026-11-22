@@ -16,7 +16,7 @@ import {
   stripArabicDiacritics
 } from "@farsikit/core";
 
-const sample = "هٰذَا كِتَابٌ جَدِيدٌ، وَفِيهِ مَدْرَسَةٌ وَمَسْؤُولِيَّةٌ. علي يكتب في كتابٍ رقم 123؛ خانهٔ زیبا و مسئلهٔ مهم.";
+const sample = "اين يك متن فارسی برای آزماييش حروف عربي است؛ علي در اين كتاب دربارهٔ زندگي، مسئوليت‌های مهم و خانهٔ زيبايش می‌نويسد. شماره 123 را هم ببينيد.";
 
 export default function App() {
   const [input, setInput] = useState(sample);
