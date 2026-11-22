@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.3.3] - 2026-11-22
+
+### Added
+- Added in-browser Word `.docx` import to the Playground using Mammoth; extracted text is placed directly in the editor without uploading the document to a server.
+- Added file type and 10 MB size checks, loading feedback, and readable import errors.
+
+### Changed
+- Synchronized root, core, and Playground package versions at 0.3.3.
+
+
 All notable changes to FarsiKit are documented here.
 
 ## [0.3.2] - 2026-11-22
