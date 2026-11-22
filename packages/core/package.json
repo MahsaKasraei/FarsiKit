@@ -1,6 +1,6 @@
 {
   "name": "@farsikit/core",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Persian text, content SEO, and Iranian locale utilities.",
   "type": "module",
   "main": "./dist/index.js",
