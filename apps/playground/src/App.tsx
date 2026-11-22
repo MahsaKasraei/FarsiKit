@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import mammoth from "mammoth/mammoth.browser";
 import {
   addZwnj,
   analyzePersianText,
@@ -26,6 +27,37 @@ export default function App() {
   const [fixEzafe, setFixEzafe] = useState(true);
   const [copied, setCopied] = useState("");
   const [phone, setPhone] = useState("۰۹۱۲ ۳۴۵ ۶۷۸۹");
+  const [wordFileName, setWordFileName] = useState("");
+  const [wordFileError, setWordFileError] = useState("");
+  const [isReadingWord, setIsReadingWord] = useState(false);
+
+  const importWordFile = async (file: File | null) => {
+    if (!file) return;
+    setWordFileError("");
+    if (!file.name.toLowerCase().endsWith(".docx")) {
+      setWordFileError("فعلاً فقط فایل Word با فرمت DOCX پشتیبانی می‌شود.");
+      return;
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      setWordFileError("حجم فایل باید کمتر از ۱۰ مگابایت باشد.");
+      return;
+    }
+    setIsReadingWord(true);
+    try {
+      const result = await mammoth.extractRawText({ arrayBuffer: await file.arrayBuffer() });
+      const extractedText = result.value.trim();
+      if (!extractedText) {
+        setWordFileError("متنی از این فایل استخراج نشد. مطمئن شو فایل Word متن قابل انتخاب دارد.");
+        return;
+      }
+      setInput(extractedText);
+      setWordFileName(file.name);
+    } catch {
+      setWordFileError("خواندن فایل ناموفق بود. لطفاً یک فایل DOCX سالم و غیررمزگذاری‌شده انتخاب کن.");
+    } finally {
+      setIsReadingWord(false);
+    }
+  };
 
   const normalized = useMemo(() => {
     const value = normalizePersian(input, {
@@ -65,7 +97,7 @@ export default function App() {
         <a className="brand" href="#" aria-label="FarsiKit home">
           <span className="brand-mark">ف</span><span>FarsiKit</span>
         </a>
-        <span className="version">نسخه ۰.۳.۲ · جعبه‌ابزار هوشمند فارسی</span>
+        <span className="version">نسخه ۰.۳.۳ · جعبه‌ابزار هوشمند فارسی</span>
       </header>
 
       <section className="hero">
@@ -80,7 +112,14 @@ export default function App() {
             <div><span className="step">۰۱</span><h2>متن ورودی</h2></div>
             <button className="subtle" onClick={() => setInput("")}>پاک کردن</button>
           </div>
-          <textarea value={input} onChange={(event) => setInput(event.target.value)} placeholder="متن فارسی‌ات را اینجا وارد کن..." />
+          <div className="input-actions"><label className={`word-upload ${isReadingWord ? "is-loading" : ""}`}>
+            <input type="file" accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document" disabled={isReadingWord} onChange={(event) => { void importWordFile(event.target.files?.[0] ?? null); event.currentTarget.value = ""; }} />
+            <span>{isReadingWord ? "در حال خواندن فایل..." : "＋ بارگذاری فایل Word"}</span>
+          </label>
+          {wordFileName && <span className="word-file-name" title={wordFileName}>فایل واردشده: {wordFileName}</span>}
+        </div>
+        {wordFileError && <div className="word-error" role="alert">{wordFileError}</div>}
+        <textarea value={input} onChange={(event) => { setInput(event.target.value); setWordFileName(""); }} placeholder="متن را اینجا بنویس یا فایل Word را بارگذاری کن..." />
           <div className="panel-footer"><span>پردازش کاملاً در مرورگر انجام می‌شود.</span><span>{stats.characters.toLocaleString("fa-IR")} نویسه</span></div>
         </div>
 
