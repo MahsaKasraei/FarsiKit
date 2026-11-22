@@ -15,7 +15,12 @@ FarsiKit provides framework-agnostic utilities for cleaning Persian text, handli
 - Generate Persian-friendly URL slugs
 - Detect Persian/Arabic-script text
 - Inspect text statistics, including characters, words, lines, ZWNJ, and diacritics
-- Iranian mobile number normalization and validation\n- Reading-time estimates and meta-description generation\n- Lightweight keyword frequency analysis for Persian and mixed-language content\n- React + Vite playground for trying the utilities
+- Iranian mobile number normalization and validation
+- Reading-time estimates and meta-description generation
+- Lightweight keyword frequency analysis for Persian and mixed-language content
+- Rule-based Persian text inspection with actionable typography findings
+- Optional ezafe normalization from hamza forms (ۀ / هٔ) to ZWNJ + Persian Yeh (ه‌ی)
+- React + Vite playground for trying the utilities
 
 ## Project structure
 
@@ -49,6 +54,7 @@ Install the package when published, then import the helpers:
 ```ts
 import {
   addZwnj,
+  analyzePersianText,
   containsPersian,
   createMetaDescription,
   convertDigits,
@@ -58,6 +64,7 @@ import {
   normalizeIranianPhone,
   getTextStats,
   normalizePersian,
+  normalizeEzafe,
   slugifyPersian,
   stripArabicDiacritics
 } from "@farsikit/core";
@@ -67,6 +74,12 @@ normalizePersian("كتاب علي 123", { convertDigits: "persian" });
 
 addZwnj("می رود و کتاب ها");
 // "می‌رود و کتاب‌ها"
+
+normalizeEzafe("برنامهٔ آماده روی هاست");
+// "برنامه‌ی آماده روی هاست"
+
+analyzePersianText("كتاب  علي ، برنامهٔ آماده");
+// Returns a list of detected typography issues.
 
 slugifyPersian("راهنمای توسعه وب فارسی");
 // "راهنمای-توسعه-وب-فارسی"
@@ -103,7 +116,9 @@ Normalizes common Arabic character variants, Unicode composition, whitespace, an
 | `convertDigits` | `"persian" \| "arabic" \| "latin" \| "none"` | `"none"` | Convert all supported digit systems |
 | `normalizeWhitespace` | `boolean` | `true` | Normalize spacing and trim outer whitespace |
 | `fixPunctuation` | `boolean` | `true` | Normalize spacing around common punctuation |
-| `removeDiacritics` | `boolean` | `false` | Remove Arabic combining marks |\n| `normalizeEzafe` | `boolean` | `false` | Convert ezafe hamza forms to ZWNJ + Persian Yeh |
+| `removeDiacritics` | `boolean` | `false` | Remove Arabic combining marks |
+| `normalizeEzafe` | `boolean` | `false` | Convert ezafe hamza forms to ZWNJ + Persian Yeh |
+| `normalizeEzafe` | `boolean` | `false` | Convert ezafe hamza forms to ZWNJ + Persian Yeh |
 
 ### Other helpers
 
@@ -113,7 +128,11 @@ Normalizes common Arabic character variants, Unicode composition, whitespace, an
 - `addZwnj(text)`: apply limited, conservative ZWNJ rules.
 - `slugifyPersian(text)`: create a URL-friendly slug while preserving Persian and Latin letters.
 - `containsPersian(text)`: detect characters in the Arabic Unicode block.
-- `getTextStats(text)`: count characters, words, lines, Persian letters, Arabic variants, ZWNJ, and diacritics.\n- `normalizeEzafe(text)`: convert `ۀ` and `هٔ` to `ه‌ی` without changing unrelated hamza characters.\n- `analyzePersianText(text)`: report common issues such as Arabic letter variants, ezafe hamza, mixed digit systems, repeated spaces, and punctuation spacing.
+- `getTextStats(text)`: count characters, words, lines, Persian letters, Arabic variants, ZWNJ, and diacritics.
+- `normalizeEzafe(text)`: convert `ۀ` and `هٔ` to `ه‌ی` without changing unrelated hamza characters.
+- `analyzePersianText(text)`: report common issues such as Arabic letter variants, ezafe hamza, mixed digit systems, repeated spaces, and punctuation spacing.
+- `normalizeEzafe(text)`: convert `ۀ` and `هٔ` to `ه‌ی` without changing unrelated hamza characters.
+- `analyzePersianText(text)`: report common issues such as Arabic letter variants, ezafe hamza, mixed digit systems, repeated spaces, and punctuation spacing.
 
 ## Important behavior notes
 
