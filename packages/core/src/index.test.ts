@@ -185,8 +185,8 @@ describe("content and SEO helpers", () => {
 describe("normalizeEzafe", () => {
   it("converts precomposed and decomposed ezafe hamza to ZWNJ + Persian Yeh", () => {
     expect(normalizeEzafe("برنامهٔ آماده روی هاست")).toBe("برنامه‌ی آماده روی هاست");
-    expect(normalizeEzafe("خانهۀ بزرگ")).toBe("خانه‌ی بزرگ");
-    expect(normalizeEzafe("نوشتهٔ فارسی و خانهۀ قدیمی")).toBe("نوشته‌ی فارسی و خانه‌ی قدیمی");
+    expect(normalizeEzafe("خانهٔ بزرگ")).toBe("خانه‌ی بزرگ");
+    expect(normalizeEzafe("نوشتهٔ فارسی و خانهٔ قدیمی")).toBe("نوشته‌ی فارسی و خانه‌ی قدیمی");
   });
 
   it("does not alter unrelated hamza characters", () => {
