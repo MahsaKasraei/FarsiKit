@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import {
   addZwnj,
-  inspectPersianText,
+  analyzePersianText,
   containsPersian,
   createMetaDescription,
   convertDigits,
@@ -17,18 +17,16 @@ import {
 } from "@farsikit/core";
 
 const sample = "اين يك متن فارسی برای آزمايش حروف عربي است؛ علي در اين كتاب دربارهٔ زندگي، مسئوليت‌ های مهم و خانهٔ زيبايش می‌نويسد. شماره 123 را هم ببينيد.";
-type ToolTab = "inspect" | "content" | "utilities";
 
 export default function App() {
   const [input, setInput] = useState(sample);
-  const [digits, setDigits] = useState<"persian" | "arabic" | "latin" | "none">("persian");
+  const [digits, setDigits] = useState<"persian" | "arabic" | "latin">("latin");
   const [removeDiacritics, setRemoveDiacritics] = useState(false);
   const [useZwnj, setUseZwnj] = useState(true);
-  const [fixEzafe, setFixEzafe] = useState(true);
-  const [activeTab, setActiveTab] = useState<ToolTab>("inspect");
+  const [fixEzafe, setFixEzafe] = useState(false);
+  const [copied, setCopied] = useState("");
   const [phone, setPhone] = useState("۰۹۱۲ ۳۴۵ ۶۷۸۹");
-  const [toast, setToast] = useState("");
-
+  const [activePanel, setActivePanel] = useState<"review" | "quick" | "stats" | "content" | null>(null);
   const normalized = useMemo(() => {
     const value = normalizePersian(input, {
       convertDigits: digits,
@@ -40,162 +38,194 @@ export default function App() {
     return useZwnj ? addZwnj(value) : value;
   }, [input, digits, removeDiacritics, fixEzafe, useZwnj]);
 
-  const inspection = useMemo(() => inspectPersianText(input), [input]);
-  const stats = useMemo(() => getTextStats(input), [input]);
   const slug = useMemo(() => slugifyPersian(input), [input]);
   const unicode = useMemo(() => normalizeUnicode(input), [input]);
   const withoutMarks = useMemo(() => stripArabicDiacritics(input), [input]);
+  const stats = useMemo(() => getTextStats(input), [input]);
+  const hasPersian = containsPersian(input);
   const phoneNormalized = normalizeIranianPhone(phone);
   const reading = getReadingTime(input);
   const metaDescription = createMetaDescription(input);
   const keywords = getKeywordStats(input, 8);
+  const issues = useMemo(() => analyzePersianText(input), [input]);
 
-  const copy = async (value: string, label = "Copied to clipboard") => {
-    if (!value) return;
+  const copy = async (value: string, label: string) => {
     try {
       await navigator.clipboard.writeText(value);
-      setToast(label);
-      window.setTimeout(() => setToast(""), 1800);
+      setCopied(label);
+      window.setTimeout(() => setCopied(""), 1600);
     } catch {
-      setToast("Clipboard access is unavailable in this browser");
-      window.setTimeout(() => setToast(""), 2200);
+      setCopied("کپی در این مرورگر در دسترس نیست");
     }
   };
 
-  const tabs: { id: ToolTab; label: string; detail: string }[] = [
-    { id: "inspect", label: "Text inspector", detail: "Quality & cleanup" },
-    { id: "content", label: "Content tools", detail: "SEO & locale" },
-    { id: "utilities", label: "Utilities", detail: "Text helpers" }
-  ];
-
   return (
-    <main className="shell">
+    <main className="page" dir="rtl">
       <header className="topbar">
         <a className="brand" href="#" aria-label="FarsiKit home">
-          <span className="brand-mark">F</span><span>farsikit</span><span className="brand-beta">OPEN SOURCE</span>
+          <span className="brand-mark">ف</span><span>FarsiKit</span>
         </a>
-        <div className="top-meta"><span className="status-dot" /> Runs locally in your browser <span className="version">v0.4.0</span></div>
+        <span className="version">نسخه ۰.۳.۵ · جعبه‌ابزار هوشمند فارسی</span>
       </header>
 
       <section className="hero">
-        <div className="eyebrow"><span className="eyebrow-line" /> THE PERSIAN WEB TOOLKIT</div>
-        <h1>Make Persian text<br /><em>work beautifully.</em></h1>
-        <p>Clean, inspect and prepare Persian content with a focused set of developer-friendly tools.</p>
+        <div className="eyebrow">ابزار متن‌باز توسعه فارسی</div>
+        <h1>متن فارسی، <span>مرتب و استاندارد.</span></h1>
+        <p>از نرمال‌سازی و نیم‌فاصله تا ساخت اسلاگ، پاک‌سازی اعراب و تحلیل دقیق متن؛ همه در یک محیط.</p>
       </section>
 
-      <section className="editor-grid" aria-label="Persian text normalization workspace">
-        <article className="editor-card">
-          <div className="card-head">
-            <div><span className="overline">01 / INPUT</span><h2>Your text</h2></div>
-            <button className="text-button" onClick={() => setInput("")}>Clear</button>
+      <section className="workspace">
+        <div className="panel">
+          <div className="panel-heading">
+            <div><span className="step">۰۱</span><h2>متن ورودی</h2></div>
+            <button className="subtle" onClick={() => setInput("")}>پاک کردن</button>
           </div>
-          <textarea dir="auto" maxLength={5000} value={input} onChange={e => setInput(e.target.value)} placeholder="Paste or type Persian text…" />
-          <div className="editor-foot"><span>Processed locally · Nothing is uploaded</span><span className="count">{input.length.toLocaleString("en-US")} <i>/ 5,000</i></span></div>
-        </article>
+          <p className="input-hint">هر بار یک بخش از متن را وارد کن؛ برای حفظ دقت و سرعت، حداکثر ۵۰۰۰ کاراکتر در هر نوبت.</p>
+          <textarea maxLength={5000} value={input} onChange={(event) => setInput(event.target.value)} placeholder="یک بخش از متن فارسی را اینجا وارد یا جای‌گذاری کن..." />
+          <div className="panel-footer"><span>متن فقط در همین مرورگر پردازش می‌شود.</span><span>{input.length.toLocaleString("fa-IR")} از ۵۰۰۰ کاراکتر</span></div>
+        </div>
 
-        <article className="editor-card result-card">
-          <div className="card-head">
-            <div><span className="overline">02 / RESULT</span><h2>Normalized text</h2></div>
-            <button className="primary-button small" onClick={() => copy(normalized, "Normalized text copied")} disabled={!normalized}>Copy result <span>↗</span></button>
+        <div className="panel output-panel">
+          <div className="panel-heading">
+            <div><span className="step">۰۲</span><h2>خروجی نرمال‌سازی</h2></div>
+            <select value={digits} onChange={(event) => setDigits(event.target.value as typeof digits)} aria-label="نوع ارقام">
+              <option value="persian">اعداد فارسی</option>
+              <option value="arabic">اعداد عربی</option>
+              <option value="latin">اعداد لاتین</option>
+            </select>
           </div>
-          <div className="options">
-            <label>Digits
-              <select value={digits} onChange={e => setDigits(e.target.value as typeof digits)}>
-                <option value="persian">Persian ۱۲۳</option><option value="latin">Latin 123</option><option value="arabic">Arabic ١٢٣</option><option value="none">Keep as-is</option>
-              </select>
-            </label>
-            <label className="check"><input type="checkbox" checked={useZwnj} onChange={e => setUseZwnj(e.target.checked)} /><span />Fix half-spaces</label>
-            <label className="check"><input type="checkbox" checked={fixEzafe} onChange={e => setFixEzafe(e.target.checked)} /><span />Normalize ezafe</label>
-            <label className="check"><input type="checkbox" checked={removeDiacritics} onChange={e => setRemoveDiacritics(e.target.checked)} /><span />Remove diacritics</label>
+          <div className="toggles">
+            <label><input type="checkbox" checked={removeDiacritics} onChange={(e) => setRemoveDiacritics(e.target.checked)} /> حذف اعراب</label>
+            <label><input type="checkbox" checked={useZwnj} onChange={(e) => setUseZwnj(e.target.checked)} /> اصلاح نیم‌فاصله</label>
+            <label><input type="checkbox" checked={fixEzafe} onChange={(e) => setFixEzafe(e.target.checked)} /> تبدیل همزهٔ اضافه به نیم‌فاصله + ی</label>
           </div>
-          <div className="result-output" dir="auto">{normalized || <span className="muted">Your cleaned text will appear here…</span>}</div>
-          <div className="editor-foot"><span>Arabic variants · spacing · punctuation · ZWNJ</span><span className="live-label"><span className="status-dot" /> LIVE</span></div>
-        </article>
+          <div className="output" dir="rtl">{normalized || <span className="placeholder">خروجی اینجا نمایش داده می‌شود...</span>}</div>
+          <div className="panel-footer"><span>یکسان‌سازی حروف، فاصله‌ها، ارقام و نیم‌فاصله</span><button className="copy" onClick={() => copy(normalized, "خروجی نرمال‌سازی کپی شد")}>کپی خروجی ↗</button></div>
+        </div>
       </section>
 
-      <section className="insights-strip">
-        <div className="strip-title"><span className="overline">AT A GLANCE</span><strong>Text snapshot</strong></div>
-        <Metric label="Words" value={stats.words} /><Metric label="Characters" value={stats.characters} /><Metric label="Persian letters" value={stats.persianLetters} /><Metric label="Issues found" value={inspection.issues.length} />
+      <section className="extras">
+        <div className="extras-heading">
+          <div><span className="eyebrow">امکانات تکمیلی</span><h2>ابزارهای بیشتر، فقط وقتی به آن‌ها نیاز داری</h2></div>
+          <p>برای باز کردن هر بخش، یکی از گزینه‌ها را انتخاب کن.</p>
+        </div>
+        <div className="extras-tabs" role="tablist" aria-label="امکانات تکمیلی">
+          <button role="tab" aria-selected={activePanel === "review"} className={activePanel === "review" ? "active" : ""} onClick={() => setActivePanel(activePanel === "review" ? null : "review")}>بازرس کیفیت متن</button>
+          <button role="tab" aria-selected={activePanel === "quick"} className={activePanel === "quick" ? "active" : ""} onClick={() => setActivePanel(activePanel === "quick" ? null : "quick")}>ابزارهای سریع</button>
+          <button role="tab" aria-selected={activePanel === "stats"} className={activePanel === "stats" ? "active" : ""} onClick={() => setActivePanel(activePanel === "stats" ? null : "stats")}>آمار متن</button>
+          <button role="tab" aria-selected={activePanel === "content"} className={activePanel === "content" ? "active" : ""} onClick={() => setActivePanel(activePanel === "content" ? null : "content")}>سئو و شماره موبایل</button>
+        </div>
       </section>
 
-      <section className="tools-area">
-        <div className="tools-heading"><div><span className="overline">YOUR WORKSPACE</span><h2>More ways to work with text</h2></div><p>One focused workspace. The tools you need, when you need them.</p></div>
-        <nav className="tool-tabs" aria-label="Tool categories">
-          {tabs.map(tab => <button key={tab.id} className={activeTab === tab.id ? "tab active" : "tab"} onClick={() => setActiveTab(tab.id)} aria-pressed={activeTab === tab.id}><span>{tab.label}</span><small>{tab.detail}</small></button>)}
-        </nav>
-
-        {activeTab === "inspect" && <div className="tool-panel">
-          <div className="panel-intro"><div><span className="overline">QUALITY CHECK</span><h3>Persian text inspector</h3></div><span className={inspection.issues.length ? "issue-count" : "clean-count"}>{inspection.issues.length} {inspection.issues.length === 1 ? "issue" : "issues"}</span></div>
-          <p className="panel-description">Find common typography problems and review a suggested cleanup. This is a rule-based assistant, not a spell-checker.</p>
-          <div className="inspection-grid">
-            <div className="suggestion">
-              <div className="mini-heading"><strong>Suggested correction</strong><button className="text-button" onClick={() => copy(inspection.correctedText, "Suggested correction copied")} disabled={!inspection.correctedText}>Copy</button></div>
-              <div className="suggestion-text" dir="auto">{inspection.correctedText || <span className="muted">Enter text to see a suggested correction.</span>}</div>
+      {activePanel === "review" && (
+      <section className="inspector">
+        <div className="section-heading"><span className="step">۰۶</span><h2>بازرس کیفیت متن فارسی</h2></div>
+        <div className="inspector-card">
+          <div className="inspector-summary">
+            <div><strong>{issues.length.toLocaleString("fa-IR")}</strong><span>دستهٔ ایرادهای شناسایی‌شده</span></div>
+            <p>بررسی خودکار متن برای پیدا کردن چند خطای رایج تایپی و نگارشی فارسی. این ابزار پیشنهاددهنده است و جایگزین ویراستار انسانی نیست.</p>
+          </div>
+          {issues.length ? <div className="issue-list">{issues.map((issue) => (
+            <div className="issue-row" key={issue.code}>
+              <span className={issue.severity === "warning" ? "issue-dot warning" : "issue-dot"} />
+              <div><strong>{issue.message}</strong><span>تعداد موارد: {issue.count.toLocaleString("fa-IR")}</span></div>
             </div>
-            <div className="issue-list">
-              {inspection.issues.length ? inspection.issues.map(issue => <div className="issue-row" key={issue.code}><span className={issue.severity === "warning" ? "issue-icon warning" : "issue-icon"}>!</span><div><strong>{issueTitle(issue.code)}</strong><span>{issue.count} {issue.count === 1 ? "occurrence" : "occurrences"} · {issue.message}</span></div></div>) : <div className="empty-state"><span>✓</span><strong>No common issues found</strong><small>Your text passed the available typography checks.</small></div>}
+          ))}</div> : <div className="clean-report">متن از نظر قواعدی که بررسی می‌کنیم، موردی برای گزارش ندارد. ✨</div>}
+        </div>
+      </section>
+      )}
+
+      {activePanel === "quick" && (
+      <section className="tools-section">
+        <div className="section-heading"><span className="step">۰۳</span><h2>ابزارهای سریع متن</h2></div>
+        <div className="tool-grid">
+          <Tool title="اسلاگ فارسی" code="slugifyPersian" description="ساخت آدرس خوانا برای URL؛ تبدیل ارقام به لاتین و حذف نشانه‌های اضافی." value={slug} onCopy={() => copy(slug, "اسلاگ کپی شد")} />
+          <Tool title="حذف اعراب" code="stripArabicDiacritics" description="حذف حرکات و اعراب عربی بدون حذف حروف اصلی." value={withoutMarks} onCopy={() => copy(withoutMarks, "متن بدون اعراب کپی شد")} />
+          <Tool title="نرمال‌سازی یونیکد" code="normalizeUnicode" description="یکسان‌سازی نمایش کاراکتر‌های معادل با استاندارد NFC." value={unicode} onCopy={() => copy(unicode, "متن یونیکد کپی شد")} />
+          <div className="tool-card detector">
+            <div className="tool-top"><h3>تشخیص متن فارسی</h3><code>containsPersian</code></div>
+            <p>بررسی وجود کاراکتر‌هایی از بلوک یونیکد فارسی و عربی در متن ورودی.</p>
+            <strong className={hasPersian ? "detected" : "not-detected"}>{hasPersian ? "متن فارسی/عربی دارد" : "حروف فارسی/عربی پیدا نشد"}</strong>
+          </div>
+        </div>
+      </section>
+      )}
+
+      {activePanel === "stats" && (
+      <section className="stats">
+        <div className="stats-title"><span className="step">۰۴</span><h2>آمار پیشرفته متن</h2></div>
+        <div className="stat-grid">
+          <Stat label="تعداد واژه" value={stats.words} />
+          <Stat label="تعداد کاراکتر" value={stats.characters} />
+          <Stat label="بدون فاصله" value={stats.charactersWithoutWhitespace} />
+          <Stat label="تعداد خطوط" value={stats.lines} />
+          <Stat label="حروف فارسی" value={stats.persianLetters} />
+          <Stat label="حروف عربی جایگزین" value={stats.arabicVariants} />
+          <Stat label="نیم‌فاصله" value={stats.zwnj} />
+          <Stat label="اعراب و حرکات" value={stats.diacritics} />
+        </div>
+      </section>
+      )}
+
+      {activePanel === "content" && (
+      <section className="pro-tools">
+        <div className="section-heading"><span className="step">۰۵</span><h2>ابزارهای محتوا، سئو و شماره موبایل</h2></div>
+        <div className="pro-grid">
+          <div className="tool-card">
+            <div className="tool-top"><h3>تبدیل و اعتبارسنجی موبایل ایران</h3><code>Iranian phone</code></div>
+            <p>شماره را با ارقام فارسی، لاتین یا پیش‌شماره بین‌المللی وارد کن.</p>
+            <input className="phone-input" dir="auto" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="مثلاً ۰۹۱۲۱۲۳۴۵۶۷" />
+            <div className="phone-result">
+              <strong className={phoneNormalized ? "detected" : "not-detected"}>{phoneNormalized ? (isValidIranianMobile(phone) ? "شماره معتبر است" : "فرمت پشتیبانی نمی‌شود") : "شماره قابل تشخیص نیست"}</strong>
+              <span dir="ltr">{phoneNormalized || "—"}</span>
+            </div>
+            <button className="tool-copy" onClick={() => copy(phoneNormalized, "شماره نرمال‌شده کپی شد")} disabled={!phoneNormalized}>کپی شماره استاندارد</button>
+          </div>
+          <div className="tool-card">
+            <div className="tool-top"><h3>آماده‌سازی توضیحات متا</h3><code>createMetaDescription</code></div>
+            <p>پیشنهاد توضیحات متا با پاک‌سازی فاصله‌ها و محدودیت پیش‌فرض ۱۶۰ کاراکتر.</p>
+            <div className="tool-value" dir="rtl">{metaDescription || <span className="placeholder">متن مقاله را وارد کن...</span>}</div>
+            <div className="mini-meta"><span>{[...metaDescription].length} / ۱۶۰ کاراکتر</span><button className="tool-copy" onClick={() => copy(metaDescription, "توضیحات متا کپی شد")} disabled={!metaDescription}>کپی متا</button></div>
+          </div>
+          <div className="tool-card">
+            <div className="tool-top"><h3>زمان تقریبی مطالعه</h3><code>getReadingTime</code></div>
+            <p>برآورد بر اساس تعداد واژه و سرعت پیش‌فرض ۲۰۰ واژه در دقیقه.</p>
+            <div className="reading-metrics">
+              <div><strong>{reading.minutes.toLocaleString("fa-IR")}</strong><span>دقیقه</span></div>
+              <div><strong>{reading.words.toLocaleString("fa-IR")}</strong><span>واژه</span></div>
+              <div><strong>{reading.seconds.toLocaleString("fa-IR")}</strong><span>ثانیه</span></div>
             </div>
           </div>
-        </div>}
-
-        {activeTab === "content" && <div className="content-grid">
           <div className="tool-card">
-            <div className="mini-heading"><div><span className="overline">SEO</span><h3>Meta description</h3></div><code>160 chars</code></div>
-            <p>A concise, normalized description for search snippets.</p>
-            <div className="tool-result" dir="auto">{metaDescription || <span className="muted">Enter content to generate a description.</span>}</div>
-            <div className="tool-card-foot"><span>{[...metaDescription].length} / 160 characters</span><button className="text-button" onClick={() => copy(metaDescription, "Meta description copied")} disabled={!metaDescription}>Copy</button></div>
+            <div className="tool-top"><h3>تکرار واژه‌های کلیدی</h3><code>getKeywordStats</code></div>
+            <p>نمایش فراوانی ساده واژه‌ها برای بازبینی محتوای مقاله؛ نه تحلیل‌گر کامل سئو.</p>
+            {keywords.length ? <div className="keyword-list">{keywords.map((item) => <div className="keyword-row" key={item.keyword}><strong>{item.keyword}</strong><span>{item.count.toLocaleString("fa-IR")} بار</span><span>{item.density.toLocaleString("fa-IR")}%</span></div>)}</div> : <div className="tool-value">برای تحلیل، متن وارد کن.</div>}
           </div>
-          <div className="tool-card">
-            <div className="mini-heading"><div><span className="overline">READABILITY</span><h3>Reading time</h3></div><code>200 WPM</code></div>
-            <p>Estimated reading time based on whitespace-separated words.</p>
-            <div className="reading-result"><strong>{reading.minutes}</strong><span>min read</span><i>{reading.words.toLocaleString("en-US")} words</i></div>
-          </div>
-          <div className="tool-card">
-            <div className="mini-heading"><div><span className="overline">KEYWORDS</span><h3>Keyword frequency</h3></div><code>TOP 8</code></div>
-            <p>A lightweight frequency hint for reviewing your content.</p>
-            {keywords.length ? <div className="keyword-list">{keywords.map(item => <div className="keyword-row" key={item.keyword}><strong>{item.keyword}</strong><span>{item.count}×</span><div className="keyword-bar"><i style={{width: item.density + "%"}} /></div><small>{item.density}%</small></div>)}</div> : <div className="empty-inline">Add some text to see keyword frequency.</div>}
-          </div>
-          <div className="tool-card">
-            <div className="mini-heading"><div><span className="overline">IRAN LOCALE</span><h3>Mobile number validator</h3></div><code>IR +98</code></div>
-            <p>Normalize common Iranian mobile formats.</p>
-            <input className="phone-input" dir="auto" value={phone} onChange={e => setPhone(e.target.value)} placeholder="e.g. +98 912 345 6789" />
-            <div className="phone-result"><strong className={isValidIranianMobile(phone) ? "valid" : "invalid"}>{isValidIranianMobile(phone) ? "Valid mobile number" : "Not a valid mobile format"}</strong><button className="text-button" onClick={() => copy(phoneNormalized, "Phone number copied")} disabled={!phoneNormalized}>Copy normalized</button></div>
-            {phoneNormalized && <div className="normalized-phone">{phoneNormalized}</div>}
-          </div>
-        </div>}
-
-        {activeTab === "utilities" && <div className="utilities-grid">
-          <Utility title="Persian URL slug" code="slugifyPersian" description="Readable URL slugs with Persian letters preserved." value={slug} onCopy={() => copy(slug, "Slug copied")} />
-          <Utility title="Unicode normalization" code="normalizeUnicode" description="Normalize canonically equivalent Unicode sequences (NFC)." value={unicode} onCopy={() => copy(unicode, "Unicode text copied")} />
-          <Utility title="Remove diacritics" code="stripArabicDiacritics" description="Remove Arabic marks while preserving base characters." value={withoutMarks} onCopy={() => copy(withoutMarks, "Text without diacritics copied")} />
-          <div className="tool-card utility-card"><div className="mini-heading"><div><span className="overline">SCRIPT DETECTION</span><h3>Persian / Arabic script</h3></div><code>containsPersian</code></div><p>Checks whether the text contains characters from the Arabic Unicode block.</p><div className={containsPersian(input) ? "detection-result detected" : "detection-result"}>{containsPersian(input) ? "Script detected" : "No matching script found"}</div></div>
-          <div className="tool-card utility-card"><div className="mini-heading"><div><span className="overline">TEXT STATISTICS</span><h3>Detailed counts</h3></div><code>getTextStats</code></div><div className="detail-stats"><Metric label="Lines" value={stats.lines}/><Metric label="No whitespace" value={stats.charactersWithoutWhitespace}/><Metric label="Arabic variants" value={stats.arabicVariants}/><Metric label="Half-spaces" value={stats.zwnj}/><Metric label="Diacritics" value={stats.diacritics}/></div></div>
-          <div className="tool-card utility-card"><div className="mini-heading"><div><span className="overline">DIGIT CONVERSION</span><h3>Convert numeral systems</h3></div><code>convertDigits</code></div><div className="digit-actions"><button onClick={() => copy(convertDigits(input, "persian"), "Persian digits copied")}>To Persian ۱۲۳</button><button onClick={() => copy(convertDigits(input, "latin"), "Latin digits copied")}>To Latin 123</button><button onClick={() => copy(convertDigits(input, "arabic"), "Arabic digits copied")}>To Arabic ١٢٣</button></div></div>
-        </div>}
+        </div>
       </section>
+      )}
 
-      <footer className="footer"><a className="brand footer-brand" href="#"><span className="brand-mark">F</span><span>farsikit</span></a><span>Open-source tools for the Persian web.</span><a href="https://github.com/MahsaKasraei/FarsiKit" target="_blank" rel="noreferrer">View on GitHub ↗</a></footer>
-      {toast && <div className="toast" role="status">{toast}</div>}
+
+
+
+      {copied && <div className="toast" role="status">{copied}</div>}
+
+      <footer><span>FarsiKit</span><span>ساخته‌شده برای وب فارسی · متن‌باز با مجوز MIT</span></footer>
     </main>
   );
 }
 
-function issueTitle(code: string): string {
-  const titles: Record<string, string> = {
-    "arabic-variants": "Arabic letter variants",
-    "ezafe-hamza": "Ezafe hamza spelling",
-    "mixed-digit-systems": "Mixed numeral systems",
-    "extra-spaces": "Repeated spaces",
-    "space-before-punctuation": "Space before punctuation",
-    "missing-space-after-punctuation": "Missing space after punctuation"
-  };
-  return titles[code] ?? code;
+function Tool({ title, code, description, value, onCopy }: {
+  title: string; code: string; description: string; value: string; onCopy: () => void;
+}) {
+  return <div className="tool-card">
+    <div className="tool-top"><h3>{title}</h3><code>{code}</code></div>
+    <p>{description}</p>
+    <div className="tool-value" dir="rtl">{value || <span className="placeholder">—</span>}</div>
+    <button className="tool-copy" onClick={onCopy} disabled={!value}>کپی نتیجه</button>
+  </div>;
 }
 
-function Metric({ label, value }: { label: string; value: number }) {
-  return <div className="metric"><span>{label}</span><strong>{value.toLocaleString("en-US")}</strong></div>;
-}
-
-function Utility({ title, code, description, value, onCopy }: { title: string; code: string; description: string; value: string; onCopy: () => void }) {
-  return <div className="tool-card utility-card"><div className="mini-heading"><div><span className="overline">TEXT UTILITY</span><h3>{title}</h3></div><code>{code}</code></div><p>{description}</p><div className="tool-result" dir="auto">{value || <span className="muted">—</span>}</div><div className="tool-card-foot"><span>Live preview</span><button className="text-button" onClick={onCopy} disabled={!value}>Copy</button></div></div>;
+function Stat({ label, value }: { label: string; value: number }) {
+  return <div className="stat"><span>{label}</span><strong>{value.toLocaleString("fa-IR")}</strong></div>;
 }
