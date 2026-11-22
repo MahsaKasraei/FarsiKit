@@ -2,6 +2,23 @@
 
 All notable changes to FarsiKit are documented here.
 
+## [0.3.1] - 2026-11-22
+
+### Added
+- Added `normalizeEzafe` to convert Persian ezafe hamza forms (`ۀ` and `هٔ`) to ZWNJ + Persian Yeh (`ه‌ی`).
+- Added the opt-in `normalizeEzafe` option to `normalizePersian`.
+- Added `analyzePersianText`, a rule-based inspector for Arabic character variants, ezafe hamza, mixed digit systems, repeated spaces, and punctuation spacing.
+- Added a Persian text quality report and an ezafe correction toggle to the Playground.
+- Added unit tests for ezafe normalization and text inspection.
+
+### Changed
+- Synchronized workspace, core, and Playground package versions at 0.3.1.
+- Updated README API documentation and usage examples.
+
+### Notes
+- Ezafe normalization is deliberately targeted; unrelated hamza characters are preserved.
+- The inspector reports common typographic patterns. It is not a full spell-checker or linguistic analyzer.
+
 ## [0.2.0] - 2026-11-21
 
 ### Added
