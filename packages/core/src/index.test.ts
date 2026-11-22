@@ -199,6 +199,20 @@ describe("normalizePersian ezafe option", () => {
     expect(normalizePersian("برنامهٔ آماده")).toBe("برنامهٔ آماده");
     expect(normalizePersian("برنامهٔ آماده", { normalizeEzafe: true })).toBe("برنامه‌ی آماده");
   });
+
+  it("preserves ezafe normalization when diacritic removal is also enabled", () => {
+    expect(normalizePersian("یک برنامهٔ آماده روی هاست", {
+      normalizeEzafe: true,
+      removeDiacritics: true
+    })).toBe("یک برنامه‌ی آماده روی هاست");
+  });
+
+  it("supports the precomposed heh-with-yeh-above character", () => {
+    expect(normalizePersian("خانهۀ بزرگ", {
+      normalizeEzafe: true,
+      removeDiacritics: true
+    })).toBe("خانه‌ی بزرگ");
+  });
 });
 
 describe("analyzePersianText", () => {
