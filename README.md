@@ -18,7 +18,7 @@ FarsiKit provides framework-agnostic utilities for cleaning Persian text, handli
 - Iranian mobile number normalization and validation
 - Reading-time estimates and meta-description generation
 - Lightweight keyword frequency analysis for Persian and mixed-language content
-- Rule-based Persian text inspection with actionable typography findings
+- Rule-based Persian text inspection with actionable typography findings and a conservative suggested correction
 - Optional ezafe normalization from hamza forms (ۀ / هٔ) to ZWNJ + Persian Yeh (ه‌ی)
 - React + Vite playground for trying the utilities
 
@@ -55,6 +55,7 @@ Install the package when published, then import the helpers:
 import {
   addZwnj,
   analyzePersianText,
+  inspectPersianText,
   containsPersian,
   createMetaDescription,
   convertDigits,
@@ -80,6 +81,9 @@ normalizeEzafe("برنامهٔ آماده روی هاست");
 
 analyzePersianText("كتاب  علي ، برنامهٔ آماده");
 // Returns a list of detected typography issues.
+
+inspectPersianText("كتاب  علي ، خانهٔ بزرگ و می رود");
+// { correctedText: "...", issues: [...] }
 
 slugifyPersian("راهنمای توسعه وب فارسی");
 // "راهنمای-توسعه-وب-فارسی"
@@ -134,7 +138,7 @@ Normalizes common Arabic character variants, Unicode composition, whitespace, an
 - `containsPersian(text)`: detect characters in the Arabic Unicode block.
 - `getTextStats(text)`: count characters, words, lines, Persian letters, Arabic variants, ZWNJ, and diacritics.
 - `normalizeEzafe(text)`: convert `ۀ` and `هٔ` to `ه‌ی` without changing unrelated hamza characters.
-- `analyzePersianText(text)`: report common issues such as Arabic letter variants, ezafe hamza, mixed digit systems, repeated spaces, and punctuation spacing.
+- `analyzePersianText(text)`: report common issues such as Arabic letter variants, ezafe hamza, mixed digit systems, repeated spaces, and punctuation spacing.\n- `inspectPersianText(text)`: return the same findings plus a conservative suggested correction for review.
 
 ## Important behavior notes
 
