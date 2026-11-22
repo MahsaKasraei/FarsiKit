@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.3.5] - 2026-11-22
+
+### Changed
+- Replaced the minimal sample with a mixed Arabic/Persian example containing Arabic ك and ي, diacritics, Latin digits (123), and Persian ezafe examples so users can see normalization clearly.
+- Updated the Playground version label and synchronized root, core, and Playground package versions at 0.3.5.
+
+### Fixed
+- Corrected ezafe normalization for the precomposed heh-with-yeh-above spelling when it follows a Persian heh; this fixes the regression test that failed in 0.3.4.
+
+
 ## [0.3.4] - 2026-11-22
 
 ### Changed
