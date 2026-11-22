@@ -1,10 +1,12 @@
 import { describe, expect, it } from "vitest";
 import {
   addZwnj,
+  analyzePersianText,
   containsPersian,
   convertDigits,
   getTextStats,
   normalizePersian,
+  normalizeEzafe,
   normalizeUnicode,
   slugifyPersian,
   stripArabicDiacritics
@@ -176,5 +178,42 @@ describe("content and SEO helpers", () => {
       { keyword: "فارسی", count: 2, density: 33.3 }
     ]);
     expect(getKeywordStats("")).toEqual([]);
+  });
+});
+
+
+describe("normalizeEzafe", () => {
+  it("converts precomposed and decomposed ezafe hamza to ZWNJ + Persian Yeh", () => {
+    expect(normalizeEzafe("برنامهٔ آماده روی هاست")).toBe("برنامه‌ی آماده روی هاست");
+    expect(normalizeEzafe("خانهۀ بزرگ")).toBe("خانه‌ی بزرگ");
+    expect(normalizeEzafe("نوشتهٔ فارسی و خانهۀ قدیمی")).toBe("نوشته‌ی فارسی و خانه‌ی قدیمی");
+  });
+
+  it("does not alter unrelated hamza characters", () => {
+    expect(normalizeEzafe("مسئله و سؤال")).toBe("مسئله و سؤال");
+  });
+});
+
+describe("normalizePersian ezafe option", () => {
+  it("normalizes ezafe only when explicitly enabled", () => {
+    expect(normalizePersian("برنامهٔ آماده")).toBe("برنامهٔ آماده");
+    expect(normalizePersian("برنامهٔ آماده", { normalizeEzafe: true })).toBe("برنامه‌ی آماده");
+  });
+});
+
+describe("analyzePersianText", () => {
+  it("reports common Persian typography issues with counts", () => {
+    const report = analyzePersianText("كتاب  علي ، برنامهٔ آماده، عدد 12 و ۱۲");
+    expect(report).toEqual(expect.arrayContaining([
+      expect.objectContaining({ code: "arabic-variants", count: 2 }),
+      expect.objectContaining({ code: "ezafe-hamza", count: 1 }),
+      expect.objectContaining({ code: "mixed-digit-systems", count: 2 }),
+      expect.objectContaining({ code: "extra-spaces", count: 1 }),
+      expect.objectContaining({ code: "space-before-punctuation", count: 1 })
+    ]));
+  });
+
+  it("returns an empty report for clean text", () => {
+    expect(analyzePersianText("متن فارسی تمیز است.")).toEqual([]);
   });
 });
