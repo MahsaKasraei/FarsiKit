@@ -223,8 +223,9 @@ export function getKeywordStats(text: string, limit = 10): KeywordStat[] {
  */
 export function normalizeEzafe(text: string): string {
   return normalizeUnicode(text)
-    .replace(/\u06C0/g, "ه‌ي".replace("ي", "ی"))
-    .replace(/ه\u0654/g, "ه‌ي".replace("ي", "ی"));
+    .replace(/ه\u06C0/g, "ه‌ی")
+    .replace(/\u06C0/g, "ه‌ی")
+    .replace(/ه\u0654/g, "ه‌ی");
 }
 
 export type TextIssueCode =
