@@ -2,6 +2,13 @@
 
 All notable changes to FarsiKit are documented here.
 
+## [0.3.2] - 2026-11-22
+
+### Fixed
+- Fixed ezafe normalization order so the hamza above heh is converted before optional diacritic removal.
+- Added regression tests for ezafe normalization with diacritic removal enabled and for the precomposed heh-with-yeh-above character.
+- Moved the Persian Text Inspector directly below the main input/output workspace so it is immediately visible.
+
 ## [0.3.1] - 2026-11-22
 
 ### Added
