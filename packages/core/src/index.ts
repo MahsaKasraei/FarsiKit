@@ -5,6 +5,7 @@ export interface NormalizeOptions {
   normalizeWhitespace?: boolean;
   fixPunctuation?: boolean;
   removeDiacritics?: boolean;
+  normalizeEzafe?: boolean;
 }
 
 const PERSIAN_DIGITS = "۰۱۲۳۴۵۶۷۸۹";
@@ -52,7 +53,8 @@ export function normalizePersian(
     convertDigits: digitTarget = "none",
     normalizeWhitespace = true,
     fixPunctuation = true,
-    removeDiacritics = false
+    removeDiacritics = false,
+    normalizeEzafe: fixEzafe = false
   } = options;
 
   let result = normalizeUnicode(text)
@@ -62,6 +64,10 @@ export function normalizePersian(
 
   if (removeDiacritics) {
     result = stripArabicDiacritics(result);
+  }
+
+  if (fixEzafe) {
+    result = normalizeEzafe(result);
   }
 
   if (normalizeWhitespace) {
@@ -205,4 +211,52 @@ export function getKeywordStats(text: string, limit = 10): KeywordStat[] {
     .map(([keyword, count]) => ({ keyword, count, density: tokens.length === 0 ? 0 : Number(((count / tokens.length) * 100).toFixed(1)) }))
     .sort((a, b) => b.count - a.count || a.keyword.localeCompare(b.keyword, "fa"))
     .slice(0, safeLimit);
+}
+
+
+/**
+ * Convert the Persian ezafe written with hamza above heh (ۀ / هٔ) to
+ * the explicit ZWNJ + Persian Yeh form (ه‌ی). This intentionally targets
+ * ezafe spellings only; it does not remove unrelated hamza characters.
+ */
+export function normalizeEzafe(text: string): string {
+  return normalizeUnicode(text)
+    .replace(/\u06C0/g, "ه‌ي".replace("ي", "ی"))
+    .replace(/ه\u0654/g, "ه‌ي".replace("ي", "ی"));
+}
+
+export type TextIssueCode =
+  | "arabic-variants"
+  | "ezafe-hamza"
+  | "mixed-digit-systems"
+  | "extra-spaces"
+  | "space-before-punctuation"
+  | "missing-space-after-punctuation";
+
+export interface TextIssue {
+  code: TextIssueCode;
+  count: number;
+  severity: "info" | "warning";
+  message: string;
+}
+
+/** Return a lightweight, rule-based quality report for common Persian typography issues. */
+export function analyzePersianText(text: string): TextIssue[] {
+  const issues: TextIssue[] = [];
+  const add = (code: TextIssueCode, count: number, severity: TextIssue["severity"], message: string) => {
+    if (count > 0) issues.push({ code, count, severity, message });
+  };
+
+  add("arabic-variants", (text.match(/[يىك]/g) ?? []).length, "warning", "حروف عربی ي، ى و ك را به حروف فارسی تبدیل کنید.");
+  add("ezafe-hamza", (text.match(/\u06C0|ه\u0654/g) ?? []).length, "warning", "همزهٔ اضافه را به نیم‌فاصله و ی فارسی تبدیل کنید.");
+  const digitSystems = [
+    /[0-9]/u.test(text),
+    /[۰-۹]/u.test(text),
+    /[٠-٩]/u.test(text)
+  ].filter(Boolean).length;
+  add("mixed-digit-systems", digitSystems > 1 ? digitSystems : 0, "info", "چند شیوه نگارش رقم در متن استفاده شده است.");
+  add("extra-spaces", (text.match(/[ \t]{2,}/g) ?? []).length, "warning", "فاصله‌های تکراری را به یک فاصله تبدیل کنید.");
+  add("space-before-punctuation", (text.match(/[ \t]+[،؛؟.!:]/g) ?? []).length, "warning", "پیش از نشانه‌گذاری فاصله اضافی وجود دارد.");
+  add("missing-space-after-punctuation", (text.match(/[،؛؟.!:](?=\S)/g) ?? []).length, "warning", "پس از نشانه‌گذاری، در صورت نیاز فاصله بگذارید.");
+  return issues;
 }
