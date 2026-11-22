@@ -79,9 +79,9 @@ export default function App() {
             <div><span className="step">۰۱</span><h2>متن ورودی</h2></div>
             <button className="subtle" onClick={() => setInput("")}>پاک کردن</button>
           </div>
-          <p className="input-hint">هر بار یک بخش از متن را وارد کن؛ برای حفظ دقت و سرعت، حداکثر ۵۰۰۰ نویسه در هر نوبت.</p>
+          <p className="input-hint">هر بار یک بخش از متن را وارد کن؛ برای حفظ دقت و سرعت، حداکثر ۵۰۰۰ کاراکتر در هر نوبت.</p>
           <textarea maxLength={5000} value={input} onChange={(event) => setInput(event.target.value)} placeholder="یک بخش از متن فارسی را اینجا وارد یا جای‌گذاری کن..." />
-          <div className="panel-footer"><span>متن فقط در همین مرورگر پردازش می‌شود.</span><span>{input.length.toLocaleString("fa-IR")} از ۵۰۰۰ نویسه</span></div>
+          <div className="panel-footer"><span>متن فقط در همین مرورگر پردازش می‌شود.</span><span>{input.length.toLocaleString("fa-IR")} از ۵۰۰۰ کاراکتر</span></div>
         </div>
 
         <div className="panel output-panel">
@@ -124,10 +124,10 @@ export default function App() {
         <div className="tool-grid">
           <Tool title="اسلاگ فارسی" code="slugifyPersian" description="ساخت آدرس خوانا برای URL؛ تبدیل ارقام به لاتین و حذف نشانه‌های اضافی." value={slug} onCopy={() => copy(slug, "اسلاگ کپی شد")} />
           <Tool title="حذف اعراب" code="stripArabicDiacritics" description="حذف حرکات و اعراب عربی بدون حذف حروف اصلی." value={withoutMarks} onCopy={() => copy(withoutMarks, "متن بدون اعراب کپی شد")} />
-          <Tool title="نرمال‌سازی یونیکد" code="normalizeUnicode" description="یکسان‌سازی نمایش نویسه‌های معادل با استاندارد NFC." value={unicode} onCopy={() => copy(unicode, "متن یونیکد کپی شد")} />
+          <Tool title="نرمال‌سازی یونیکد" code="normalizeUnicode" description="یکسان‌سازی نمایش کاراکتر‌های معادل با استاندارد NFC." value={unicode} onCopy={() => copy(unicode, "متن یونیکد کپی شد")} />
           <div className="tool-card detector">
             <div className="tool-top"><h3>تشخیص متن فارسی</h3><code>containsPersian</code></div>
-            <p>بررسی وجود نویسه‌هایی از بلوک یونیکد فارسی و عربی در متن ورودی.</p>
+            <p>بررسی وجود کاراکتر‌هایی از بلوک یونیکد فارسی و عربی در متن ورودی.</p>
             <strong className={hasPersian ? "detected" : "not-detected"}>{hasPersian ? "متن فارسی/عربی دارد" : "حروف فارسی/عربی پیدا نشد"}</strong>
           </div>
         </div>
@@ -138,7 +138,7 @@ export default function App() {
         <div className="stats-title"><span className="step">۰۴</span><h2>آمار پیشرفته متن</h2></div>
         <div className="stat-grid">
           <Stat label="تعداد واژه" value={stats.words} />
-          <Stat label="تعداد نویسه" value={stats.characters} />
+          <Stat label="تعداد کاراکتر" value={stats.characters} />
           <Stat label="بدون فاصله" value={stats.charactersWithoutWhitespace} />
           <Stat label="تعداد خطوط" value={stats.lines} />
           <Stat label="حروف فارسی" value={stats.persianLetters} />
@@ -163,9 +163,9 @@ export default function App() {
           </div>
           <div className="tool-card">
             <div className="tool-top"><h3>آماده‌سازی توضیحات متا</h3><code>createMetaDescription</code></div>
-            <p>پیشنهاد توضیحات متا با پاک‌سازی فاصله‌ها و محدودیت پیش‌فرض ۱۶۰ نویسه.</p>
+            <p>پیشنهاد توضیحات متا با پاک‌سازی فاصله‌ها و محدودیت پیش‌فرض ۱۶۰ کاراکتر.</p>
             <div className="tool-value" dir="rtl">{metaDescription || <span className="placeholder">متن مقاله را وارد کن...</span>}</div>
-            <div className="mini-meta"><span>{[...metaDescription].length} / ۱۶۰ نویسه</span><button className="tool-copy" onClick={() => copy(metaDescription, "توضیحات متا کپی شد")} disabled={!metaDescription}>کپی متا</button></div>
+            <div className="mini-meta"><span>{[...metaDescription].length} / ۱۶۰ کاراکتر</span><button className="tool-copy" onClick={() => copy(metaDescription, "توضیحات متا کپی شد")} disabled={!metaDescription}>کپی متا</button></div>
           </div>
           <div className="tool-card">
             <div className="tool-top"><h3>زمان تقریبی مطالعه</h3><code>getReadingTime</code></div>
