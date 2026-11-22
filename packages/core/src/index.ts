@@ -258,9 +258,29 @@ export function analyzePersianText(text: string): TextIssue[] {
     /[۰-۹]/u.test(text),
     /[٠-٩]/u.test(text)
   ].filter(Boolean).length;
-  add("mixed-digit-systems", digitSystems > 1 ? digitSystems : 0, "info", "چند شیوه نگارش رقم در متن استفاده شده است.");
+  const mixedDigitCount = digitSystems > 1 ? (text.match(/[0-9۰-۹٠-٩]/g) ?? []).length : 0;
+  add("mixed-digit-systems", mixedDigitCount, "info", "چند شیوه نگارش رقم در متن استفاده شده است.");
   add("extra-spaces", (text.match(/[ \t]{2,}/g) ?? []).length, "warning", "فاصله‌های تکراری را به یک فاصله تبدیل کنید.");
   add("space-before-punctuation", (text.match(/[ \t]+[،؛؟.!:]/g) ?? []).length, "warning", "پیش از نشانه‌گذاری فاصله اضافی وجود دارد.");
   add("missing-space-after-punctuation", (text.match(/[،؛؟.!:](?=\S)/g) ?? []).length, "warning", "پس از نشانه‌گذاری، در صورت نیاز فاصله بگذارید.");
   return issues;
+}
+
+
+export interface PersianTextInspection {
+  correctedText: string;
+  issues: TextIssue[];
+}
+
+/** Inspect common typography issues and return a conservative suggested cleanup. */
+export function inspectPersianText(text: string): PersianTextInspection {
+  const correctedText = addZwnj(normalizePersian(text, {
+    normalizeWhitespace: true,
+    fixPunctuation: true,
+    normalizeEzafe: true
+  }));
+  return {
+    correctedText,
+    issues: analyzePersianText(text)
+  };
 }
