@@ -21,6 +21,7 @@ FarsiKit provides framework-agnostic utilities for cleaning Persian text, handli
 - Rule-based Persian text inspection with actionable typography findings
 - Optional ezafe normalization from hamza forms (ۀ / هٔ) to ZWNJ + Persian Yeh (ه‌ی)
 - React + Vite playground for trying the utilities
+- Import `.docx` Word documents directly in the browser; extracted text is placed in the editor and is not uploaded to a server
 
 ## Project structure
 
@@ -104,6 +105,10 @@ getReadingTime("یک متن نمونه برای برآورد زمان مطالع
 createMetaDescription("متن مقاله برای توضیحات متا");
 getKeywordStats("سئو فارسی و تولید محتوای فارسی");
 ```
+
+## Playground: importing Word documents
+
+In the Playground, choose **بارگذاری فایل Word** and select a `.docx` file. FarsiKit extracts its text locally in the browser and places it in the input editor for normalization and inspection. Files are not sent to a server. Legacy `.doc` files and scanned-image text require conversion or OCR and are not supported by this importer. The current file-size limit is 10 MB.
 
 ## API
 
