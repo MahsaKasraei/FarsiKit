@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import {
   addZwnj,
+  analyzePersianText,
   containsPersian,
   createMetaDescription,
   convertDigits,
@@ -22,6 +23,7 @@ export default function App() {
   const [digits, setDigits] = useState<"persian" | "arabic" | "latin">("persian");
   const [removeDiacritics, setRemoveDiacritics] = useState(true);
   const [useZwnj, setUseZwnj] = useState(true);
+  const [fixEzafe, setFixEzafe] = useState(true);
   const [copied, setCopied] = useState("");
   const [phone, setPhone] = useState("۰۹۱۲ ۳۴۵ ۶۷۸۹");
 
@@ -29,11 +31,12 @@ export default function App() {
     const value = normalizePersian(input, {
       convertDigits: digits,
       removeDiacritics,
+      normalizeEzafe: fixEzafe,
       normalizeWhitespace: true,
       fixPunctuation: true
     });
     return useZwnj ? addZwnj(value) : value;
-  }, [input, digits, removeDiacritics, useZwnj]);
+  }, [input, digits, removeDiacritics, fixEzafe, useZwnj]);
 
   const slug = useMemo(() => slugifyPersian(input), [input]);
   const unicode = useMemo(() => normalizeUnicode(input), [input]);
@@ -44,6 +47,7 @@ export default function App() {
   const reading = getReadingTime(input);
   const metaDescription = createMetaDescription(input);
   const keywords = getKeywordStats(input, 8);
+  const issues = useMemo(() => analyzePersianText(input), [input]);
 
   const copy = async (value: string, label: string) => {
     try {
@@ -61,7 +65,7 @@ export default function App() {
         <a className="brand" href="#" aria-label="FarsiKit home">
           <span className="brand-mark">ف</span><span>FarsiKit</span>
         </a>
-        <span className="version">نسخه ۰.۳.۰ · جعبه‌ابزار هوشمند فارسی</span>
+        <span className="version">نسخه ۰.۳.۱ · جعبه‌ابزار هوشمند فارسی</span>
       </header>
 
       <section className="hero">
@@ -92,6 +96,7 @@ export default function App() {
           <div className="toggles">
             <label><input type="checkbox" checked={removeDiacritics} onChange={(e) => setRemoveDiacritics(e.target.checked)} /> حذف اعراب</label>
             <label><input type="checkbox" checked={useZwnj} onChange={(e) => setUseZwnj(e.target.checked)} /> اصلاح نیم‌فاصله</label>
+            <label><input type="checkbox" checked={fixEzafe} onChange={(e) => setFixEzafe(e.target.checked)} /> تبدیل همزهٔ اضافه به نیم‌فاصله + ی</label>
           </div>
           <div className="output" dir="rtl">{normalized || <span className="placeholder">خروجی اینجا نمایش داده می‌شود...</span>}</div>
           <div className="panel-footer"><span>یکسان‌سازی حروف، فاصله‌ها، ارقام و نیم‌فاصله</span><button className="copy" onClick={() => copy(normalized, "خروجی نرمال‌سازی کپی شد")}>کپی خروجی ↗</button></div>
@@ -163,7 +168,23 @@ export default function App() {
         </div>
       </section>
 
-      <footer><span>FarsiKit</span><span>ساخته‌شده برای وب فارسی · متن‌باز با مجوز MIT</span></footer>
+
+      <section className="inspector">
+        <div className="section-heading"><span className="step">۰۶</span><h2>بازرس کیفیت متن فارسی</h2></div>
+        <div className="inspector-card">
+          <div className="inspector-summary">
+            <div><strong>{issues.length.toLocaleString("fa-IR")}</strong><span>نوع ایراد شناسایی‌شده</span></div>
+            <p>بررسی خودکار متن برای پیدا کردن چند خطای رایج تایپی و نگارشی فارسی. این ابزار پیشنهاددهنده است و جایگزین ویراستار انسانی نیست.</p>
+          </div>
+          {issues.length ? <div className="issue-list">{issues.map((issue) => (
+            <div className="issue-row" key={issue.code}>
+              <span className={issue.severity === "warning" ? "issue-dot warning" : "issue-dot"} />
+              <div><strong>{issue.message}</strong><span>تعداد موارد: {issue.count.toLocaleString("fa-IR")}</span></div>
+            </div>
+          ))}</div> : <div className="clean-report">متن از نظر قواعدی که بررسی می‌کنیم، موردی برای گزارش ندارد. ✨</div>}
+        </div>
+      </section>
+\n      <footer><span>FarsiKit</span><span>ساخته‌شده برای وب فارسی · متن‌باز با مجوز MIT</span></footer>
     </main>
   );
 }
