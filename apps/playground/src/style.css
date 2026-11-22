@@ -119,3 +119,13 @@ footer span:first-child { direction: ltr; font-weight: 700; color: #536c59; }
   .inspector-summary { align-items: flex-start; flex-direction: column; gap: 12px; }
   .issue-list { grid-template-columns: 1fr; }
 }
+
+
+/* FarsiKit 0.3.3 — local Word document import */
+.input-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+.word-upload { display: inline-flex; align-items: center; justify-content: center; padding: 9px 13px; border: 1px dashed #9db4a1; border-radius: 9px; color: #315e49; background: #f4f8f2; cursor: pointer; font-size: 11px; font-weight: 600; transition: background .2s, border-color .2s; }
+.word-upload:hover { background: #eaf2e9; border-color: #668b70; }
+.word-upload input { position: absolute; width: 1px; height: 1px; overflow: hidden; opacity: 0; }
+.word-upload.is-loading { opacity: .65; cursor: wait; }
+.word-file-name { max-width: 100%; overflow: hidden; color: #7c887c; font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }
+.word-error { margin-top: 9px; padding: 9px 11px; border-radius: 8px; color: #94533f; background: #fbefeb; font-size: 11px; line-height: 1.8; }
