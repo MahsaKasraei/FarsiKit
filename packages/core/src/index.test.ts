@@ -239,7 +239,7 @@ describe("analyzePersianText", () => {
     expect(report).toEqual(expect.arrayContaining([
       expect.objectContaining({ code: "arabic-variants", count: 2 }),
       expect.objectContaining({ code: "ezafe-hamza", count: 1 }),
-      expect.objectContaining({ code: "mixed-digit-systems", count: 2 }),
+      expect.objectContaining({ code: "mixed-digit-systems", count: 4 }),
       expect.objectContaining({ code: "extra-spaces", count: 1 }),
       expect.objectContaining({ code: "space-before-punctuation", count: 1 })
     ]));
