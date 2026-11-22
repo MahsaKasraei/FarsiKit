@@ -62,12 +62,14 @@ export function normalizePersian(
     .replace(/ك/g, "ک")
     .replace(/\u0640/g, "");
 
-  if (removeDiacritics) {
-    result = stripArabicDiacritics(result);
-  }
-
+  // Normalize ezafe before stripping combining marks: the hamza above heh
+  // is meaningful here and must not be removed as a generic diacritic.
   if (fixEzafe) {
     result = normalizeEzafe(result);
+  }
+
+  if (removeDiacritics) {
+    result = stripArabicDiacritics(result);
   }
 
   if (normalizeWhitespace) {
