@@ -1,6 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700;800&family=Vazirmatn:wght@400;500;600;700&display=swap');
 
-:root{font-family:"Vazirmatn",sans-serif;direction:rtl;color:#20251f;background:#f6f7f4;font-synthesis:none;text-rendering:optimizeLegibility;font-optical-sizing:auto;font-weight:400}
+:root{font-family:"DM Sans","Vazirmatn",sans-serif;color:#20251f;background:#f6f7f4;font-synthesis:none;text-rendering:optimizeLegibility;font-optical-sizing:auto;font-weight:400}
 *{box-sizing:border-box}
 body{margin:0;min-width:320px}
 button,input,textarea,select{font:inherit}
@@ -105,23 +105,3 @@ button:disabled{opacity:.42;cursor:not-allowed}
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:10;padding:11px 16px;border-radius:7px;background:#263f2d;color:#fff;box-shadow:0 8px 30px #172a1b26;font-size:11px}
 @media(max-width:800px){.shell{padding:0 20px 24px}.editor-grid{grid-template-columns:1fr}.editor-card textarea,.result-output{height:175px}.insights-strip{grid-template-columns:repeat(2,1fr)}.strip-title{grid-column:1/-1}.metric{border-left:0;padding:0}.tools-heading{align-items:flex-start;flex-direction:column;gap:7px}.inspection-grid{grid-template-columns:1fr}.issue-list{max-height:none}}
 @media(max-width:560px){.shell{padding:0 14px 22px}.topbar{height:64px}.top-meta{font-size:0;gap:6px}.top-meta .version{font-size:9px}.brand-beta{display:none}.hero{padding:49px 0 30px}.hero h1{font-size:42px}.editor-card{padding:16px}.options{gap:10px}.content-grid,.utilities-grid{grid-template-columns:1fr}.tool-tabs{display:grid;grid-template-columns:repeat(3,1fr)}.tab{padding:11px 7px}.tab span{font-size:10px}.tab small{font-size:8px}.footer{flex-wrap:wrap;gap:10px}.footer-brand{width:100%}.detail-stats{grid-template-columns:repeat(2,1fr)}}
-
-/* Persian-first RTL interface */
-:root,body,#root{direction:rtl;font-family:"Vazirmatn",sans-serif}
-body,button,input,textarea,select{font-family:"Vazirmatn",sans-serif}
-.shell{text-align:right}
-.topbar,.card-head,.editor-foot,.tools-heading,.panel-intro,.mini-heading,.tool-card-foot,.phone-result,.footer{direction:rtl}
-.brand{letter-spacing:0}
-.brand-beta{letter-spacing:0;margin-left:0;margin-right:5px}
-.hero h1{letter-spacing:-1.4px;line-height:1.45}
-.eyebrow,.overline{letter-spacing:0;font-family:"Vazirmatn",sans-serif;font-weight:600}
-.count,.version,.tool-card code,.live-label,.issue-count,.clean-count,.keyword-row span,.keyword-row small{font-family:"Vazirmatn",sans-serif;letter-spacing:0}
-.editor-card textarea,.result-output,.suggestion-text,.tool-result,.keyword-row strong{font-family:"Vazirmatn",sans-serif;text-align:right}
-.editor-card textarea,.result-output,.suggestion-text,.tool-result{direction:rtl}
-.metric{padding-left:0;padding-right:16px;border-left:0;border-right:1px solid #dce4d9}
-.detail-stats .metric{padding-right:0;border:0}
-.reading-result i{margin-left:0;margin-right:auto}
-.keyword-row{direction:rtl}
-.keyword-row strong{text-align:right}
-.footer-brand{margin-right:0;margin-left:auto}
-@media(max-width:800px){.metric{padding-right:0;border-right:0}}
