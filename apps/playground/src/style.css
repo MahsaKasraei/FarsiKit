@@ -27,11 +27,11 @@ h1 span { color: #39745a; }
 .step { color: #8a9a8c; font-size: 11px; font-weight: 700; letter-spacing: 1px; }
 h2 { font-size: 15px; margin: 0; font-weight: 700; }
 .subtle { border: 0; background: transparent; color: #7b8179; cursor: pointer; font-size: 12px; }
-textarea { width: 100%; min-height: 190px; resize: vertical; border: 1px solid #eceee8; border-radius: 12px; padding: 14px; margin: 18px 0 12px; outline: none; color: #30362f; background: #fbfcf9; line-height: 2; }
+textarea { width: 100%; min-height: 190px; max-height: 260px; overflow-y: auto; resize: vertical; border: 1px solid #eceee8; border-radius: 12px; padding: 14px; margin: 18px 0 12px; outline: none; color: #30362f; background: #fbfcf9; line-height: 2; }
 textarea:focus { border-color: #8eaa96; }
 .panel-footer { color: #92988f; font-size: 11px; }
 select { border: 1px solid #e8ebe4; border-radius: 9px; background: #fff; color: #525c51; padding: 7px 9px; font-size: 11px; }
-.output { min-height: 190px; margin: 18px 0 12px; padding: 14px; border-radius: 12px; background: #f2f6f1; line-height: 2; white-space: pre-wrap; overflow-wrap: anywhere; }
+.output { min-height: 190px; max-height: 260px; overflow: auto; margin: 18px 0 12px; padding: 14px; border-radius: 12px; background: #f2f6f1; line-height: 2; white-space: pre-wrap; overflow-wrap: anywhere; }
 .placeholder { color: #a0a79e; }
 .copy { border: 0; background: #285c48; color: #fff; border-radius: 8px; padding: 8px 12px; cursor: pointer; font-size: 11px; }
 .stats { margin-top: 16px; }
@@ -121,11 +121,6 @@ footer span:first-child { direction: ltr; font-weight: 700; color: #536c59; }
 }
 
 
-/* FarsiKit 0.3.3 — local Word document import */
-.input-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
-.word-upload { display: inline-flex; align-items: center; justify-content: center; padding: 9px 13px; border: 1px dashed #9db4a1; border-radius: 9px; color: #315e49; background: #f4f8f2; cursor: pointer; font-size: 11px; font-weight: 600; transition: background .2s, border-color .2s; }
-.word-upload:hover { background: #eaf2e9; border-color: #668b70; }
-.word-upload input { position: absolute; width: 1px; height: 1px; overflow: hidden; opacity: 0; }
-.word-upload.is-loading { opacity: .65; cursor: wait; }
-.word-file-name { max-width: 100%; overflow: hidden; color: #7c887c; font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }
-.word-error { margin-top: 9px; padding: 9px 11px; border-radius: 8px; color: #94533f; background: #fbefeb; font-size: 11px; line-height: 1.8; }
+
+/* Chunk-based text input and bounded result panel */
+.input-hint { margin: 14px 0 -7px; color: #7d897d; font-size: 11px; line-height: 1.9; }
