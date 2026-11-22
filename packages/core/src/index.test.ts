@@ -84,6 +84,10 @@ describe("addZwnj", () => {
     expect(addZwnj("کتاب ها و خانه های بزرگ")).toBe("کتاب‌ها و خانه‌های بزرگ");
   });
 
+  it("joins suffixes when a ZWNJ is followed by an accidental space", () => {
+    expect(addZwnj("مسئوليت‌ های مهم")).toBe("مسئوليت‌های مهم");
+  });
+
   it("does not alter unrelated spaces", () => {
     expect(addZwnj("خانه بزرگ")).toBe("خانه بزرگ");
   });
