@@ -88,6 +88,19 @@ describe("addZwnj", () => {
     expect(addZwnj("مسئوليت‌ های مهم")).toBe("مسئوليت‌های مهم");
   });
 
+
+  it("normalizes the FarsiKit playground example exactly as intended", () => {
+    const input = "اين يك متن فارسی برای آزمايش حروف عربي است؛ علي در اين كتاب دربارهٔ زندگي، مسئوليت‌ های مهم و خانهٔ زيبايش می‌نويسد. شماره 123 را هم ببينيد.";
+    const normalized = normalizePersian(input, {
+      convertDigits: "latin",
+      removeDiacritics: false,
+      normalizeEzafe: false,
+      normalizeWhitespace: true,
+      fixPunctuation: true
+    });
+    expect(addZwnj(normalized)).toBe("این یک متن فارسی برای آزمایش حروف عربی است؛ علی در این کتاب دربارهٔ زندگی، مسئولیت‌های مهم و خانهٔ زیبایش می‌نویسد. شماره 123 را هم ببینید.");
+  });
+
   it("does not alter unrelated spaces", () => {
     expect(addZwnj("خانه بزرگ")).toBe("خانه بزرگ");
   });
