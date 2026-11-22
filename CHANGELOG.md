@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.4.0] - 2026-11-22
+
+### Added
+- Rebuilt the Playground as a focused English-first workspace with a calmer visual hierarchy and three progressive tool categories.
+- Added a suggested Persian text correction beside the rule-based quality report.
+- Added quick numeral conversion actions and a detailed text snapshot.
+
+### Improved
+- Made the primary normalization workspace the clear starting point and moved secondary tools into three compact tabs.
+- Improved mixed numeral-system reporting so the count represents affected digits rather than the number of numeral systems.
+- Synchronized root, core, and Playground package versions at 0.4.0.
+
+### Tests
+- Added regression coverage for suggested text corrections and mixed numeral counts.
+
+
 ## [0.3.5] - 2026-11-22
 
 ### Changed
