@@ -21,7 +21,7 @@ const sample = "اين يك متن فارسی برای آزمايش حروف ع�
 export default function App() {
   const [input, setInput] = useState(sample);
   const [digits, setDigits] = useState<"persian" | "arabic" | "latin">("latin");
-  const [removeDiacritics, setRemoveDiacritics] = useState(true);
+  const [removeDiacritics, setRemoveDiacritics] = useState(false);
   const [useZwnj, setUseZwnj] = useState(true);
   const [fixEzafe, setFixEzafe] = useState(false);
   const [copied, setCopied] = useState("");
