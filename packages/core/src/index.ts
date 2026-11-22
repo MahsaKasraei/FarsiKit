@@ -100,7 +100,8 @@ export function normalizePersian(
 export function addZwnj(text: string): string {
   return text
     .replace(/(^|\s)(نمی|می)\s+(?=[\u0600-\u06FF])/gu, "$1$2‌")
-    .replace(/([\u0600-\u06FF]+)\s+(ها|های|تر|ترین)(?=\s|$|[،؛؟.!:])/gu, "$1‌$2");
+    .replace(/([\u0600-\u06FF]+)\s+(ها|های|تر|ترین)(?=\s|$|[،؛؟.!:])/gu, "$1‌$2")
+    .replace(/([\u0600-\u06FF]+)\u200c?\s+(ها|های|تر|ترین)(?=\s|$|[،؛؟.!:])/gu, "$1‌$2");
 }
 
 /** Return true when text contains at least one character in the Persian block. */
