@@ -21,7 +21,6 @@ FarsiKit provides framework-agnostic utilities for cleaning Persian text, handli
 - Rule-based Persian text inspection with actionable typography findings
 - Optional ezafe normalization from hamza forms (ۀ / هٔ) to ZWNJ + Persian Yeh (ه‌ی)
 - React + Vite playground for trying the utilities
-- Import `.docx` Word documents directly in the browser; extracted text is placed in the editor and is not uploaded to a server
 
 ## Project structure
 
@@ -106,9 +105,9 @@ createMetaDescription("متن مقاله برای توضیحات متا");
 getKeywordStats("سئو فارسی و تولید محتوای فارسی");
 ```
 
-## Playground: importing Word documents
+## Playground: text input
 
-In the Playground, choose **بارگذاری فایل Word** and select a `.docx` file. FarsiKit extracts its text locally in the browser and places it in the input editor for normalization and inspection. Files are not sent to a server. Legacy `.doc` files and scanned-image text require conversion or OCR and are not supported by this importer. The current file-size limit is 10 MB.
+The Playground is designed for focused text chunks rather than whole-document processing. Paste or type up to 5,000 characters per pass, review the normalized result in the bounded output panel, and copy it before moving to the next section. The editor and result panels scroll internally so long text does not stretch the page.
 
 ## API
 
@@ -134,8 +133,6 @@ Normalizes common Arabic character variants, Unicode composition, whitespace, an
 - `slugifyPersian(text)`: create a URL-friendly slug while preserving Persian and Latin letters.
 - `containsPersian(text)`: detect characters in the Arabic Unicode block.
 - `getTextStats(text)`: count characters, words, lines, Persian letters, Arabic variants, ZWNJ, and diacritics.
-- `normalizeEzafe(text)`: convert `ۀ` and `هٔ` to `ه‌ی` without changing unrelated hamza characters.
-- `analyzePersianText(text)`: report common issues such as Arabic letter variants, ezafe hamza, mixed digit systems, repeated spaces, and punctuation spacing.
 - `normalizeEzafe(text)`: convert `ۀ` and `هٔ` to `ه‌ی` without changing unrelated hamza characters.
 - `analyzePersianText(text)`: report common issues such as Arabic letter variants, ezafe hamza, mixed digit systems, repeated spaces, and punctuation spacing.
 
