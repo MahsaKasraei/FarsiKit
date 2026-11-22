@@ -7,6 +7,7 @@ import {
   getTextStats,
   normalizePersian,
   normalizeEzafe,
+  inspectPersianText,
   normalizeUnicode,
   slugifyPersian,
   stripArabicDiacritics
@@ -246,5 +247,21 @@ describe("analyzePersianText", () => {
 
   it("returns an empty report for clean text", () => {
     expect(analyzePersianText("متن فارسی تمیز است.")).toEqual([]);
+  });
+});
+
+
+describe("inspectPersianText", () => {
+  it("returns a suggested correction alongside actionable findings", () => {
+    const result = inspectPersianText("كتاب  علي ، خانهٔ بزرگ و می رود");
+    expect(result.correctedText).toBe("کتاب علی، خانه‌ی بزرگ و می‌رود");
+    expect(result.issues.map(issue => issue.code)).toEqual(expect.arrayContaining([
+      "arabic-variants", "ezafe-hamza", "extra-spaces", "space-before-punctuation"
+    ]));
+  });
+
+  it("counts all digits when multiple numeral systems are mixed", () => {
+    const issue = analyzePersianText("12 و ۳۴ و ٥٦").find(item => item.code === "mixed-digit-systems");
+    expect(issue?.count).toBe(6);
   });
 });
