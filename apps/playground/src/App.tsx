@@ -16,7 +16,7 @@ import {
   stripArabicDiacritics
 } from "@farsikit/core";
 
-const sample = "كتاب علي 123 ، این یک متن آزمایشی است.";
+const sample = "هٰذَا كِتَابٌ جَدِيدٌ، وَفِيهِ مَدْرَسَةٌ وَمَسْؤُولِيَّةٌ. علي يكتب في كتابٍ رقم 123؛ خانهٔ زیبا و مسئلهٔ مهم.";
 
 export default function App() {
   const [input, setInput] = useState(sample);
@@ -64,7 +64,7 @@ export default function App() {
         <a className="brand" href="#" aria-label="FarsiKit home">
           <span className="brand-mark">ف</span><span>FarsiKit</span>
         </a>
-        <span className="version">نسخه ۰.۳.۳ · جعبه‌ابزار هوشمند فارسی</span>
+        <span className="version">نسخه ۰.۳.۵ · جعبه‌ابزار هوشمند فارسی</span>
       </header>
 
       <section className="hero">
