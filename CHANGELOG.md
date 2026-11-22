@@ -1,14 +1,20 @@
 # Changelog
 
+## [0.3.4] - 2026-11-22
+
+### Changed
+- Removed Word document import because the Playground does not generate a corrected Word file; accepting a full document without a downloadable document output was misleading.
+- Replaced whole-document import with focused text input, limited to 5,000 characters per pass.
+- Bounded the input and normalized-output panels with internal scrolling so long text does not stretch the page.
+- Removed the unused Mammoth dependency and synchronized workspace versions at 0.3.4.
+
 ## [0.3.3] - 2026-11-22
 
 ### Added
-- Added in-browser Word `.docx` import to the Playground using Mammoth; extracted text is placed directly in the editor without uploading the document to a server.
-- Added file type and 10 MB size checks, loading feedback, and readable import errors.
+- Added in-browser Word DOCX text extraction to the Playground (removed in 0.3.4 because no corrected Word document was produced).
 
 ### Changed
 - Synchronized root, core, and Playground package versions at 0.3.3.
-
 
 All notable changes to FarsiKit are documented here.
 
