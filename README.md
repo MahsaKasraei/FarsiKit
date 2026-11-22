@@ -103,7 +103,7 @@ Normalizes common Arabic character variants, Unicode composition, whitespace, an
 | `convertDigits` | `"persian" \| "arabic" \| "latin" \| "none"` | `"none"` | Convert all supported digit systems |
 | `normalizeWhitespace` | `boolean` | `true` | Normalize spacing and trim outer whitespace |
 | `fixPunctuation` | `boolean` | `true` | Normalize spacing around common punctuation |
-| `removeDiacritics` | `boolean` | `false` | Remove Arabic combining marks |
+| `removeDiacritics` | `boolean` | `false` | Remove Arabic combining marks |\n| `normalizeEzafe` | `boolean` | `false` | Convert ezafe hamza forms to ZWNJ + Persian Yeh |
 
 ### Other helpers
 
@@ -113,7 +113,7 @@ Normalizes common Arabic character variants, Unicode composition, whitespace, an
 - `addZwnj(text)`: apply limited, conservative ZWNJ rules.
 - `slugifyPersian(text)`: create a URL-friendly slug while preserving Persian and Latin letters.
 - `containsPersian(text)`: detect characters in the Arabic Unicode block.
-- `getTextStats(text)`: count characters, words, lines, Persian letters, Arabic variants, ZWNJ, and diacritics.
+- `getTextStats(text)`: count characters, words, lines, Persian letters, Arabic variants, ZWNJ, and diacritics.\n- `normalizeEzafe(text)`: convert `ۀ` and `هٔ` to `ه‌ی` without changing unrelated hamza characters.\n- `analyzePersianText(text)`: report common issues such as Arabic letter variants, ezafe hamza, mixed digit systems, repeated spaces, and punctuation spacing.
 
 ## Important behavior notes
 
