@@ -124,3 +124,74 @@ footer span:first-child { direction: ltr; font-weight: 700; color: #536c59; }
 
 /* Chunk-based text input and bounded result panel */
 .input-hint { margin: 14px 0 -7px; color: #7d897d; font-size: 11px; line-height: 1.9; }
+
+
+/* Extras section — compact tabs matching the reference layout */
+.extras {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid #e6e7df;
+}
+.extras-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+.extras-heading > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+.extras-heading .eyebrow {
+  padding: 0;
+  background: transparent;
+  color: #315d49;
+  font-size: 11px;
+}
+.extras-heading h2 {
+  color: #30362f;
+  font-size: 15px;
+}
+.extras-heading p {
+  margin: 0;
+  color: #92988f;
+  font-size: 11px;
+}
+.extras-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.extras-tabs button {
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid #e1e7de;
+  border-radius: 11px;
+  background: #fff;
+  color: #68766a;
+  font-size: 11px;
+  cursor: pointer;
+  transition: border-color .15s ease, background .15s ease, color .15s ease;
+}
+.extras-tabs button:hover,
+.extras-tabs button.active {
+  border-color: #b9cdbd;
+  background: #f1f6f0;
+  color: #285c48;
+}
+@media (max-width: 720px) {
+  .extras-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .extras-tabs {
+    justify-content: flex-start;
+  }
+}
