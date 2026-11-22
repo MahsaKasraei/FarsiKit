@@ -184,7 +184,8 @@ export default function App() {
           ))}</div> : <div className="clean-report">متن از نظر قواعدی که بررسی می‌کنیم، موردی برای گزارش ندارد. ✨</div>}
         </div>
       </section>
-\n      <footer><span>FarsiKit</span><span>ساخته‌شده برای وب فارسی · متن‌باز با مجوز MIT</span></footer>
+
+      <footer><span>FarsiKit</span><span>ساخته‌شده برای وب فارسی · متن‌باز با مجوز MIT</span></footer>
     </main>
   );
 }
