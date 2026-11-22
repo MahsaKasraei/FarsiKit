@@ -16,14 +16,14 @@ import {
   stripArabicDiacritics
 } from "@farsikit/core";
 
-const sample = "اين يك متن فارسی برای آزماييش حروف عربي است؛ علي در اين كتاب دربارهٔ زندگي، مسئوليت‌های مهم و خانهٔ زيبايش می‌نويسد. شماره 123 را هم ببينيد.";
+const sample = "اين يك متن فارسی برای آزمايش حروف عربي است؛ علي در اين كتاب دربارهٔ زندگي، مسئوليت‌ های مهم و خانهٔ زيبايش می‌نويسد. شماره 123 را هم ببينيد.";
 
 export default function App() {
   const [input, setInput] = useState(sample);
-  const [digits, setDigits] = useState<"persian" | "arabic" | "latin">("persian");
+  const [digits, setDigits] = useState<"persian" | "arabic" | "latin">("latin");
   const [removeDiacritics, setRemoveDiacritics] = useState(true);
   const [useZwnj, setUseZwnj] = useState(true);
-  const [fixEzafe, setFixEzafe] = useState(true);
+  const [fixEzafe, setFixEzafe] = useState(false);
   const [copied, setCopied] = useState("");
   const [phone, setPhone] = useState("۰۹۱۲ ۳۴۵ ۶۷۸۹");
   const normalized = useMemo(() => {
