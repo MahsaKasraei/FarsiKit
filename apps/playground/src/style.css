@@ -164,3 +164,19 @@ footer{position:relative;overflow:hidden;display:flex;justify-content:center;gap
 .topbar>.brand{order:0;margin-right:0;margin-left:auto;}
 .topbar>.main-nav{order:1;margin-right:auto;margin-left:auto;}
 .topbar>.top-actions{order:2;margin-left:0;margin-right:auto;direction:ltr;}
+
+/* Tablet and mobile: hide the hero artwork, keep the original soft background */
+@media (max-width:1050px){
+  .hero-art{display:none!important;}
+  .hero{
+    grid-template-columns:minmax(0,1fr);
+    background:radial-gradient(ellipse at 28% 58%,#d9eee0 0,transparent 36%),radial-gradient(ellipse at 90% 15%,#e5f2e6 0,transparent 34%),linear-gradient(100deg,#f6f7f2,#fbfcf8);
+  }
+  .hero-copy{grid-column:1;grid-row:1;justify-self:center;width:100%;max-width:760px;text-align:center;padding:8px 12px;}
+  .hero-brand{text-align:center;}
+  .hero-actions{justify-content:center;}
+}
+@media (max-width:700px){
+  .hero{background:linear-gradient(160deg,#f3f7ef,#e9f2e8);}
+  .hero-copy{padding:4px 2px 0;}
+}
