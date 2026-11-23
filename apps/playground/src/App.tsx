@@ -86,7 +86,7 @@ export default function App() {
           <button className="more-settings" onClick={()=>setActivePanel(activePanel==="quick"?null:"quick")}>تنظیمات بیشتر　<FontAwesomeIcon icon={faGear} /></button>
         </aside>
         <div className="editor-shell">
-          <div className="editor-toolbar"><h2><FontAwesomeIcon icon={faPenToSquare} /> ویرایشگر فارسی</h2><div><button className="subtle" onClick={()=>setInput("")}><FontAwesomeIcon icon={faTrashCan} /> پاک کردن</button><button className="subtle" onClick={()=>copy(sample,"متن نمونه کپی شد")}><FontAwesomeIcon icon={faFileLines} /> نمونه متن</button></div></div>
+          <div className="editor-toolbar"><h2><FontAwesomeIcon icon={faPenToSquare} /> ویرایشگر فارسی</h2><div><button className="subtle" onClick={()=>setInput("")}><FontAwesomeIcon icon={faTrashCan} /> پاک کردن</button><button className="subtle" onClick={()=>{setInput(sample);setCopied("متن نمونه در ویرایشگر قرار گرفت")}}><FontAwesomeIcon icon={faFileLines} /> نمونه متن</button></div></div>
           <div className="editor-panels">
             <div className="panel output-panel">
               <div className="output-status">خروجی اصلاح‌شده　<FontAwesomeIcon icon={faCircleCheck} /></div>
