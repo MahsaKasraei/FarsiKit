@@ -13,3 +13,17 @@ footer{position:relative;overflow:hidden;display:flex;justify-content:center;gap
 @media(max-width:1000px){.page{padding:0 18px}.hero{margin:0 -18px;padding:12px 30px}.tool-shortcuts{grid-template-columns:repeat(3,1fr)}.workspace{grid-template-columns:250px 1fr}.hero-brand{font-size:52px}}
 @media(max-width:700px){.page{padding:0 12px}.topbar{height:64px;gap:8px}.main-nav{display:none}.brand{font-size:20px}.brand-mark{width:32px;height:34px}.top-actions{gap:5px}.round-action,.github-link{width:34px;height:34px}.version{font-size:10px;padding:6px 9px}.hero{margin:0 -12px;grid-template-columns:1fr;padding:14px 20px 20px;gap:0}.hero-copy{grid-row:1;padding:5px 0;text-align:center}.hero-brand{font-size:43px;text-align:center}.hero-copy h1{font-size:21px}.hero-copy p{font-size:13px}.hero-actions{justify-content:center}.hero-art{grid-row:2;height:190px}.laptop{height:145px;width:65%}.laptop-screen{height:130px}.laptop-screen b{font-size:70px}.plant{transform:scale(.7);transform-origin:bottom left}.book-stack{transform:scale(.7);transform-origin:bottom left}.workspace{grid-template-columns:1fr;gap:10px}.quick-settings{order:0;padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:10px}.quick-settings h2,.more-settings{grid-column:1/-1}.quick-settings label{font-size:12px}.editor-shell{padding:12px}.editor-toolbar h2{font-size:16px}.editor-panels{grid-template-columns:1fr}.panel{min-height:180px}.output{min-height:90px}.input-panel textarea{min-height:130px}.extras{padding:18px 0}.extras-heading h2{font-size:17px}.tool-shortcuts{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.shortcut{min-height:122px;padding:12px}.shortcut strong{font-size:12px}.shortcut small{font-size:10px}.tool-grid,.pro-grid{grid-template-columns:1fr}.stat-grid{grid-template-columns:repeat(2,1fr)}.issue-list{grid-template-columns:1fr}footer{margin:0 -12px;gap:20px;font-size:11px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition-duration:.01ms!important}}
+
+/* Reference-matched hero artwork and editor direction */
+.hero{direction:ltr;grid-template-columns:1.03fr 1fr;min-height:300px}
+.hero-copy{direction:rtl}
+.hero-art{width:100%;height:275px;overflow:hidden}
+.hero-art img{display:block;width:100%;height:100%;object-fit:contain;object-position:center}
+.editor-panels{direction:ltr}
+.editor-panels>.panel{direction:rtl}
+@media(max-width:700px){
+  .hero{direction:ltr;grid-template-columns:1fr}
+  .hero-copy{direction:rtl;grid-row:1}
+  .hero-art{grid-row:2;height:190px}
+  .hero-art img{object-fit:contain}
+}
