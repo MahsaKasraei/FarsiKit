@@ -158,3 +158,9 @@ footer{position:relative;overflow:hidden;display:flex;justify-content:center;gap
   .hero-brand{text-align:center}
   .hero-actions{justify-content:center}
 }
+
+/* Header layout: brand on the right, utilities on the left */
+.topbar{direction:rtl;}
+.topbar>.brand{order:0;margin-right:0;margin-left:auto;}
+.topbar>.main-nav{order:1;margin-right:auto;margin-left:auto;}
+.topbar>.top-actions{order:2;margin-left:0;margin-right:auto;direction:ltr;}
