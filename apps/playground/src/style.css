@@ -127,4 +127,4 @@ footer{position:relative;overflow:hidden;display:flex;justify-content:center;gap
 .round-action svg{font-size:17px}
 .github-link svg{font-size:19px}
 .shortcut b svg{font-size:19px}
-.shortcut:after{content:"";font-family:inherit}
+.shortcut:after{display:none}.shortcut-arrow{position:absolute;left:13px;bottom:13px;width:29px;height:29px;display:grid;place-items:center;border:1px solid #dce2dd;border-radius:50%;background:#fff;color:#176348;font-size:12px}
