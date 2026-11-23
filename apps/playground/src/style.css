@@ -106,3 +106,16 @@ footer{position:relative;overflow:hidden;display:flex;justify-content:center;gap
   .hero-copy h1{font-size:19px}
   .hero-copy p{font-size:13px}
 }
+
+
+/* Header alignment to match the supplied reference */
+.topbar{direction:rtl}
+.topbar>.brand{order:0;margin-right:0;margin-left:auto}
+.topbar>.main-nav{order:1;margin-right:auto;margin-left:auto}
+.topbar>.top-actions{order:2;margin-left:0;margin-right:auto}
+@media(max-width:700px){
+  .topbar{display:flex;flex-wrap:wrap}
+  .topbar>.brand{order:0;margin-left:auto}
+  .topbar>.top-actions{order:1;margin-right:auto}
+  .topbar>.main-nav{order:2;width:100%;justify-content:center;margin:8px 0 0}
+}
