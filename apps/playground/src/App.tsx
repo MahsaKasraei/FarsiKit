@@ -68,7 +68,7 @@ export default function App() {
       </header>
 
       <section className="hero">
-        <div className="hero-art"><img src="/farsikit-hero.jpg" alt="لپ‌تاپ با حرف ف فارسی، گلدان و ابزارهای تایپوگرافی" /></div>
+        <div className="hero-art"><img src="/farsikit-hero-hq.jpg" alt="لپ‌تاپ با حرف ف فارسی، گلدان و ابزارهای تایپوگرافی" /></div>
         <div className="hero-copy"><div className="hero-brand">FarsiKit</div><h1>جعبه‌ابزار حرفه‌ای پردازش متن فارسی</h1><p>اصلاح متن، نیم‌فاصله، تبدیل اعداد، و ابزارهای کاربردی دیگر<br/>همه در یک محیط زیبا و قدرتمند!</p><div className="hero-actions"><a href="#workspace" className="primary-cta">شروع کنید ↗</a><a href="#tools" className="secondary-cta">مشاهده همه ابزارها ⠿</a></div></div>
       </section>
 
