@@ -27,3 +27,13 @@ footer{position:relative;overflow:hidden;display:flex;justify-content:center;gap
   .hero-art{grid-row:2;height:190px}
   .hero-art img{object-fit:contain}
 }
+
+/* Hero artwork must occupy the full visual column */
+.hero{min-height:360px}
+.hero-art{width:100%;min-width:0;height:100%;min-height:330px;align-self:stretch;overflow:hidden}
+.hero-art img{display:block;width:100%;height:100%;min-height:330px;object-fit:cover;object-position:center}
+@media(max-width:700px){
+  .hero{min-height:0}
+  .hero-art{width:100%;height:250px;min-height:250px}
+  .hero-art img{width:100%;height:100%;min-height:250px;object-fit:contain}
+}
