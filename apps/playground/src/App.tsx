@@ -19,7 +19,7 @@ import {
 const sample = "اين يك متن فارسی برای آزمايش حروف عربي است؛ علي در اين كتاب دربارهٔ زندگي، مسئوليت‌ های مهم و خانهٔ زيبايش می‌نويسد. شماره 123 را هم ببينيد.";
 
 export default function App() {
-  const [input, setInput] = useState(sample);
+  const [input, setInput] = useState("");
   const [digits, setDigits] = useState<"persian" | "arabic" | "latin">("latin");
   const [removeDiacritics, setRemoveDiacritics] = useState(false);
   const [useZwnj, setUseZwnj] = useState(true);
@@ -62,13 +62,13 @@ export default function App() {
   return (
     <main className="page" dir="rtl">
       <header className="topbar">
-        <div className="top-actions"><span className="version"><i /> نسخه ۰.۴.۱</span><button className="round-action" aria-label="تغییر پوسته">☾</button><a className="github-link" href="https://github.com/MahsaKasraei/FarsiKit" target="_blank" rel="noreferrer" aria-label="گیت‌هاب">●</a></div>
+        <div className="top-actions"><span className="version"><i /> نسخه ۰.۴.۲</span><button className="round-action" aria-label="تغییر پوسته">☾</button><a className="github-link" href="https://github.com/MahsaKasraei/FarsiKit" target="_blank" rel="noreferrer" aria-label="گیت‌هاب">●</a></div>
         <nav className="main-nav"><a href="#tools">ابزارها⌂</a><a href="#about">درباره ما⌄</a><a href="#help">راهنما ؟</a></nav>
         <a className="brand" href="#" aria-label="FarsiKit home"><span>FarsiKit</span><span className="brand-mark">ف</span></a>
       </header>
 
       <section className="hero">
-        <div className="hero-art" aria-label="تصویر لپ‌تاپ با حرف ف فارسی"><div className="plant plant-left"><i/><i/><i/><i/><i/></div><div className="book-stack"><i/><i/></div><div className="laptop"><div className="laptop-screen"><b>ف</b><i/></div><div className="laptop-base"/></div><span className="float-chip chip-type">T</span><span className="float-chip chip-check">✓</span><span className="float-chip chip-code">&lt;/&gt;</span></div>
+        <div className="hero-art"><img src="/farsikit-hero.jpg" alt="لپ‌تاپ با حرف ف فارسی، گلدان و ابزارهای تایپوگرافی" /></div>
         <div className="hero-copy"><div className="hero-brand">FarsiKit</div><h1>جعبه‌ابزار حرفه‌ای پردازش متن فارسی</h1><p>اصلاح متن، نیم‌فاصله، تبدیل اعداد، و ابزارهای کاربردی دیگر<br/>همه در یک محیط زیبا و قدرتمند!</p><div className="hero-actions"><a href="#workspace" className="primary-cta">شروع کنید ↗</a><a href="#tools" className="secondary-cta">مشاهده همه ابزارها ⠿</a></div></div>
       </section>
 
@@ -91,7 +91,7 @@ export default function App() {
               <div className="panel-footer"><button className="copy" onClick={()=>copy(normalized,"خروجی کپی شد")}>کپی خروجی ▢</button><button className="download-output" onClick={()=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([normalized],{type:"text/plain;charset=utf-8"}));a.download="farsikit-output.txt";a.click();URL.revokeObjectURL(a.href)}}>دانلود ↓</button></div>
             </div>
             <div className="panel input-panel">
-              <textarea maxLength={5000} value={input} onChange={e=>setInput(e.target.value)} placeholder="متن خود را اینجا وارد کنید..." />
+              <textarea maxLength={5000} value={input} onChange={e=>setInput(e.target.value)} placeholder="اینجا متن فارسی خود را وارد کنید؛ مثلاً: این یک متن نمونه برای بررسی نیم‌فاصله و اصلاح حروف فارسی است..." />
               <div className="panel-footer"><span>{input.length.toLocaleString("fa-IR")} کاراکتر</span></div>
             </div>
           </div>
