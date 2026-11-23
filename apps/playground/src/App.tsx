@@ -62,7 +62,7 @@ export default function App() {
   return (
     <main className="page" dir="rtl">
       <header className="topbar">
-        <div className="top-actions"><span className="version"><i /> نسخه ۰.۳.۵</span><button className="round-action" aria-label="تغییر پوسته">☾</button><a className="github-link" href="https://github.com/MahsaKasraei/FarsiKit" target="_blank" rel="noreferrer" aria-label="گیت‌هاب">●</a></div>
+        <div className="top-actions"><span className="version"><i /> نسخه ۰.۴.۱</span><button className="round-action" aria-label="تغییر پوسته">☾</button><a className="github-link" href="https://github.com/MahsaKasraei/FarsiKit" target="_blank" rel="noreferrer" aria-label="گیت‌هاب">●</a></div>
         <nav className="main-nav"><a href="#tools">ابزارها⌂</a><a href="#about">درباره ما⌄</a><a href="#help">راهنما ؟</a></nav>
         <a className="brand" href="#" aria-label="FarsiKit home"><span>FarsiKit</span><span className="brand-mark">ف</span></a>
       </header>
