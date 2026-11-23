@@ -180,3 +180,23 @@ footer{position:relative;overflow:hidden;display:flex;justify-content:center;gap
   .hero{background:linear-gradient(160deg,#f3f7ef,#e9f2e8);}
   .hero-copy{padding:4px 2px 0;}
 }
+
+
+/* Desktop hero: give the artwork more room and let it fill its frame */
+@media (min-width:1051px){
+  .hero{grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);}
+  .hero-art{
+    width:100%;
+    height:100%;
+    min-height:320px;
+    aspect-ratio:auto;
+    transform:scale(1.08);
+    transform-origin:center;
+  }
+  .hero-art img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center;
+  }
+}
