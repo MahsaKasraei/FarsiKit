@@ -62,26 +62,24 @@ export default function App() {
   return (
     <main className="page" dir="rtl">
       <header className="topbar">
-        <a className="brand" href="#" aria-label="FarsiKit home">
-          <span className="brand-mark">ف</span><span>FarsiKit</span>
-        </a>
-        <span className="version">نسخه ۰.۳.۵ · جعبه‌ابزار هوشمند فارسی</span>
+        <div className="top-actions"><span className="version"><i /> نسخه ۰.۳.۵</span><button className="round-action" aria-label="تغییر پوسته">☾</button><a className="github-link" href="https://github.com/MahsaKasraei/FarsiKit" target="_blank" rel="noreferrer" aria-label="گیت‌هاب">●</a></div>
+        <nav className="main-nav"><a href="#tools">ابزارها⌂</a><a href="#about">درباره ما⌄</a><a href="#help">راهنما ؟</a></nav>
+        <a className="brand" href="#" aria-label="FarsiKit home"><span>FarsiKit</span><span className="brand-mark">ف</span></a>
       </header>
 
       <section className="hero">
-        <div className="eyebrow">ابزار متن‌باز توسعه فارسی</div>
-        <h1>متن فارسی، <span>مرتب و استاندارد.</span></h1>
-        <p>از نرمال‌سازی و نیم‌فاصله تا ساخت اسلاگ، پاک‌سازی اعراب و تحلیل دقیق متن؛ همه در یک محیط.</p>
+        <div className="hero-art" aria-label="تصویر لپ‌تاپ با حرف ف فارسی"><div className="plant plant-left"><i/><i/><i/><i/><i/></div><div className="book-stack"><i/><i/></div><div className="laptop"><div className="laptop-screen"><b>ف</b><i/></div><div className="laptop-base"/></div><span className="float-chip chip-type">T</span><span className="float-chip chip-check">✓</span><span className="float-chip chip-code">&lt;/&gt;</span></div>
+        <div className="hero-copy"><div className="hero-brand">FarsiKit</div><h1>جعبه‌ابزار حرفه‌ای پردازش متن فارسی</h1><p>اصلاح متن، نیم‌فاصله، تبدیل اعداد، و ابزارهای کاربردی دیگر<br/>همه در یک محیط زیبا و قدرتمند!</p><div className="hero-actions"><a href="#workspace" className="primary-cta">شروع کنید ↗</a><a href="#tools" className="secondary-cta">مشاهده همه ابزارها ⠿</a></div></div>
       </section>
 
-      <section className="workspace">
+      <section className="workspace" id="workspace">
         <div className="panel">
           <div className="panel-heading">
             <div><span className="step">۰۱</span><h2>متن ورودی</h2></div>
             <button className="subtle" onClick={() => setInput("")}>پاک کردن</button>
           </div>
           <p className="input-hint">هر بار یک بخش از متن را وارد کن؛ برای حفظ دقت و سرعت، حداکثر ۵۰۰۰ کاراکتر در هر نوبت.</p>
-          <textarea maxLength={5000} value={input} onChange={(event) => setInput(event.target.value)} placeholder="یک بخش از متن فارسی را اینجا وارد یا جای‌گذاری کن..." />
+          <textarea maxLength={5000} value={input} onChange={(event) => setInput(event.target.value)} placeholder="متن خود را اینجا وارد کنید..." />
           <div className="panel-footer"><span>متن فقط در همین مرورگر پردازش می‌شود.</span><span>{input.length.toLocaleString("fa-IR")} از ۵۰۰۰ کاراکتر</span></div>
         </div>
 
@@ -110,10 +108,10 @@ export default function App() {
           <p>برای باز کردن هر بخش، یکی از گزینه‌ها را انتخاب کن.</p>
         </div>
         <div className="extras-tabs" role="tablist" aria-label="امکانات تکمیلی">
-          <button role="tab" aria-selected={activePanel === "review"} className={activePanel === "review" ? "active" : ""} onClick={() => setActivePanel(activePanel === "review" ? null : "review")}>بازرس کیفیت متن</button>
-          <button role="tab" aria-selected={activePanel === "quick"} className={activePanel === "quick" ? "active" : ""} onClick={() => setActivePanel(activePanel === "quick" ? null : "quick")}>ابزارهای سریع</button>
-          <button role="tab" aria-selected={activePanel === "stats"} className={activePanel === "stats" ? "active" : ""} onClick={() => setActivePanel(activePanel === "stats" ? null : "stats")}>آمار متن</button>
-          <button role="tab" aria-selected={activePanel === "content"} className={activePanel === "content" ? "active" : ""} onClick={() => setActivePanel(activePanel === "content" ? null : "content")}>سئو و شماره موبایل</button>
+          <button role="tab" aria-selected={activePanel === "review"} className="shortcut quality" onClick={() => setActivePanel(activePanel === "review" ? null : "review")}><b>✓</b><strong>بازرس کیفیت متن</strong><small>بررسی و رفع خطاها</small></button>
+          <button role="tab" aria-selected={activePanel === "quick"} className="shortcut dev" onClick={() => setActivePanel(activePanel === "quick" ? null : "quick")}><b>&lt;/&gt;</b><strong>ابزارهای توسعه</strong><small>ابزارهای مفید برنامه‌نویسان</small></button>
+          <button role="tab" aria-selected={activePanel === "stats"} className="shortcut analytics" onClick={() => setActivePanel(activePanel === "stats" ? null : "stats")}><b>▥</b><strong>تحلیل و آمار متن</strong><small>بررسی و نمایش آمار</small></button>
+          <button role="tab" aria-selected={activePanel === "content"} className="shortcut seo" onClick={() => setActivePanel(activePanel === "content" ? null : "content")}><b>⌕</b><strong>ابزارهای سئو</strong><small>بهینه‌سازی محتوای وب</small></button>
         </div>
       </section>
 
@@ -210,7 +208,7 @@ export default function App() {
 
       {copied && <div className="toast" role="status">{copied}</div>}
 
-      <footer><span>FarsiKit</span><span>ساخته‌شده برای وب فارسی · متن‌باز با مجوز MIT</span></footer>
+      <footer id="about"><span>FarsiKit</span><span>رایگان برای همه متن‌باز با مجوز MIT　│　سریع و سبک ⚡</span></footer>
     </main>
   );
 }
