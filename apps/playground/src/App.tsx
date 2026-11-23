@@ -73,45 +73,40 @@ export default function App() {
       </section>
 
       <section className="workspace" id="workspace">
-        <div className="panel">
-          <div className="panel-heading">
-            <div><span className="step">۰۱</span><h2>متن ورودی</h2></div>
-            <button className="subtle" onClick={() => setInput("")}>پاک کردن</button>
+        <aside className="quick-settings">
+          <h2>تنظیمات سریع <span>⚡</span></h2>
+          <label><span>نیم‌فاصله</span><input type="checkbox" checked={useZwnj} onChange={e=>setUseZwnj(e.target.checked)} /></label>
+          <label><span>اصلاح حروف عربی</span><input type="checkbox" checked={removeDiacritics} onChange={e=>setRemoveDiacritics(e.target.checked)} /></label>
+          <label><span>تبدیل ارقام</span><input type="checkbox" checked={digits==="persian"} onChange={e=>setDigits(e.target.checked?"persian":"latin")} /></label>
+          <label><span>حذف اعراب</span><input type="checkbox" checked={removeDiacritics} onChange={e=>setRemoveDiacritics(e.target.checked)} /></label>
+          <label><span>اصلاح همزه</span><input type="checkbox" checked={fixEzafe} onChange={e=>setFixEzafe(e.target.checked)} /></label>
+          <button className="more-settings" onClick={()=>setActivePanel(activePanel==="quick"?null:"quick")}>تنظیمات بیشتر　⚙</button>
+        </aside>
+        <div className="editor-shell">
+          <div className="editor-toolbar"><h2>✎ ویرایشگر فارسی</h2><div><button className="subtle" onClick={()=>setInput("")}>♜ پاک کردن</button><button className="subtle" onClick={()=>copy(sample,"متن نمونه کپی شد")}>▢ نمونه متن</button></div></div>
+          <div className="editor-panels">
+            <div className="panel output-panel">
+              <div className="output-status">خروجی اصلاح‌شده　🟢</div>
+              <div className="output" dir="rtl">{normalized || <span className="placeholder">متن شما اینجا نمایش داده می‌شود</span>}</div>
+              <div className="panel-footer"><button className="copy" onClick={()=>copy(normalized,"خروجی کپی شد")}>کپی خروجی ▢</button><button className="download-output" onClick={()=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([normalized],{type:"text/plain;charset=utf-8"}));a.download="farsikit-output.txt";a.click();URL.revokeObjectURL(a.href)}}>دانلود ↓</button></div>
+            </div>
+            <div className="panel input-panel">
+              <textarea maxLength={5000} value={input} onChange={e=>setInput(e.target.value)} placeholder="متن خود را اینجا وارد کنید..." />
+              <div className="panel-footer"><span>{input.length.toLocaleString("fa-IR")} کاراکتر</span></div>
+            </div>
           </div>
-          <p className="input-hint">هر بار یک بخش از متن را وارد کن؛ برای حفظ دقت و سرعت، حداکثر ۵۰۰۰ کاراکتر در هر نوبت.</p>
-          <textarea maxLength={5000} value={input} onChange={(event) => setInput(event.target.value)} placeholder="متن خود را اینجا وارد کنید..." />
-          <div className="panel-footer"><span>متن فقط در همین مرورگر پردازش می‌شود.</span><span>{input.length.toLocaleString("fa-IR")} از ۵۰۰۰ کاراکتر</span></div>
-        </div>
-
-        <div className="panel output-panel">
-          <div className="panel-heading">
-            <div><span className="step">۰۲</span><h2>خروجی نرمال‌سازی</h2></div>
-            <select value={digits} onChange={(event) => setDigits(event.target.value as typeof digits)} aria-label="نوع ارقام">
-              <option value="persian">اعداد فارسی</option>
-              <option value="arabic">اعداد عربی</option>
-              <option value="latin">اعداد لاتین</option>
-            </select>
-          </div>
-          <div className="toggles">
-            <label><input type="checkbox" checked={removeDiacritics} onChange={(e) => setRemoveDiacritics(e.target.checked)} /> حذف اعراب</label>
-            <label><input type="checkbox" checked={useZwnj} onChange={(e) => setUseZwnj(e.target.checked)} /> اصلاح نیم‌فاصله</label>
-            <label><input type="checkbox" checked={fixEzafe} onChange={(e) => setFixEzafe(e.target.checked)} /> تبدیل همزهٔ اضافه به نیم‌فاصله + ی</label>
-          </div>
-          <div className="output" dir="rtl">{normalized || <span className="placeholder">خروجی اینجا نمایش داده می‌شود...</span>}</div>
-          <div className="panel-footer"><span>یکسان‌سازی حروف، فاصله‌ها، ارقام و نیم‌فاصله</span><button className="copy" onClick={() => copy(normalized, "خروجی نرمال‌سازی کپی شد")}>کپی خروجی ↗</button></div>
         </div>
       </section>
 
-      <section className="extras">
-        <div className="extras-heading">
-          <div><span className="eyebrow">امکانات تکمیلی</span><h2>ابزارهای بیشتر، فقط وقتی به آن‌ها نیاز داری</h2></div>
-          <p>برای باز کردن هر بخش، یکی از گزینه‌ها را انتخاب کن.</p>
-        </div>
-        <div className="extras-tabs" role="tablist" aria-label="امکانات تکمیلی">
-          <button role="tab" aria-selected={activePanel === "review"} className="shortcut quality" onClick={() => setActivePanel(activePanel === "review" ? null : "review")}><b>✓</b><strong>بازرس کیفیت متن</strong><small>بررسی و رفع خطاها</small></button>
-          <button role="tab" aria-selected={activePanel === "quick"} className="shortcut dev" onClick={() => setActivePanel(activePanel === "quick" ? null : "quick")}><b>&lt;/&gt;</b><strong>ابزارهای توسعه</strong><small>ابزارهای مفید برنامه‌نویسان</small></button>
-          <button role="tab" aria-selected={activePanel === "stats"} className="shortcut analytics" onClick={() => setActivePanel(activePanel === "stats" ? null : "stats")}><b>▥</b><strong>تحلیل و آمار متن</strong><small>بررسی و نمایش آمار</small></button>
-          <button role="tab" aria-selected={activePanel === "content"} className="shortcut seo" onClick={() => setActivePanel(activePanel === "content" ? null : "content")}><b>⌕</b><strong>ابزارهای سئو</strong><small>بهینه‌سازی محتوای وب</small></button>
+      <section className="extras" id="tools">
+        <div className="extras-heading"><div><h2>ابزارهای تخصصی　▦</h2><p>ابزارهای کاربردی برای کاربران حرفه‌ای‌تر</p></div><button className="all-tools" onClick={()=>setActivePanel("quick")}>مشاهده همه ‹</button></div>
+        <div className="tool-shortcuts">
+          <button className="shortcut dev" onClick={()=>setActivePanel("quick")}><b>&lt;/&gt;</b><strong>ابزارهای توسعه</strong><small>ابزارهای مفید برنامه‌نویسان</small></button>
+          <button className="shortcut quality" onClick={()=>setActivePanel("review")}><b>✓</b><strong>بازرس کیفیت متن</strong><small>بررسی و رفع خطاها</small></button>
+          <button className="shortcut analytics" onClick={()=>setActivePanel("stats")}><b>▥</b><strong>تحلیل و آمار متن</strong><small>بررسی و نمایش آمار</small></button>
+          <button className="shortcut seo" onClick={()=>setActivePanel("content")}><b>⌕</b><strong>ابزارهای سئو</strong><small>بهینه‌سازی محتوای وب</small></button>
+          <button className="shortcut phone" onClick={()=>setActivePanel("content")}><b>☎</b><strong>ابزار شماره موبایل</strong><small>استانداردسازی شماره‌ها</small></button>
+          <button className="shortcut slug" onClick={()=>setActivePanel("quick")}><b>↗</b><strong>ساخت اسلاگ</strong><small>تبدیل متن به اسلاگ استاندارد</small></button>
         </div>
       </section>
 
