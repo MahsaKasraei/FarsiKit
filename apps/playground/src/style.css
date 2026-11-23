@@ -244,3 +244,22 @@ footer{position:relative;overflow:hidden;display:flex;justify-content:center;gap
     align-items:stretch;
   }
 }
+
+
+/* Correct full-bleed alignment against the actual .page content box */
+@media (min-width:1051px) and (max-width:1536px){
+  .hero{
+    width:calc(100% + 68px);
+    max-width:none;
+    margin-left:-34px;
+    margin-right:-34px;
+  }
+}
+@media (min-width:1537px){
+  .hero{
+    width:100vw;
+    max-width:none;
+    margin-left:calc((1536px - 100vw)/2 - 34px);
+    margin-right:calc((1536px - 100vw)/2 - 34px);
+  }
+}
