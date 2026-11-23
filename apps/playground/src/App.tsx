@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHouse, faChevronDown, faCircleQuestion, faMoon, faArrowUpRightFromSquare, faBolt, faGear, faPenToSquare, faTrashCan, faFileLines, faCircleCheck, faCopy, faDownload, faCode, faCheck, faChartColumn, faMagnifyingGlass, faPhone, faArrowUpRight, faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faHouse, faChevronDown, faCircleQuestion, faMoon, faArrowUpRightFromSquare, faBolt, faGear, faPenToSquare, faTrashCan, faFileLines, faCircleCheck, faCopy, faDownload, faCode, faCheck, faChartColumn, faMagnifyingGlass, faPhone, faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import {
   addZwnj,
@@ -109,7 +109,7 @@ export default function App() {
           <button className="shortcut analytics" onClick={()=>setActivePanel("stats")}><b><FontAwesomeIcon icon={faChartColumn} /></b><strong>تحلیل و آمار متن</strong><small>بررسی و نمایش آمار</small><span className="shortcut-arrow"><FontAwesomeIcon icon={faArrowLeft} /></span></button>
           <button className="shortcut seo" onClick={()=>setActivePanel("content")}><b><FontAwesomeIcon icon={faMagnifyingGlass} /></b><strong>ابزارهای سئو</strong><small>بهینه‌سازی محتوای وب</small><span className="shortcut-arrow"><FontAwesomeIcon icon={faArrowLeft} /></span></button>
           <button className="shortcut phone" onClick={()=>setActivePanel("content")}><b><FontAwesomeIcon icon={faPhone} /></b><strong>ابزار شماره موبایل</strong><small>استانداردسازی شماره‌ها</small><span className="shortcut-arrow"><FontAwesomeIcon icon={faArrowLeft} /></span></button>
-          <button className="shortcut slug" onClick={()=>setActivePanel("quick")}><b><FontAwesomeIcon icon={faArrowUpRight} /></b><strong>ساخت اسلاگ</strong><small>تبدیل متن به اسلاگ استاندارد</small><span className="shortcut-arrow"><FontAwesomeIcon icon={faArrowLeft} /></span></button>
+          <button className="shortcut slug" onClick={()=>setActivePanel("quick")}><b><FontAwesomeIcon icon={faArrowUpRightFromSquare} /></b><strong>ساخت اسلاگ</strong><small>تبدیل متن به اسلاگ استاندارد</small><span className="shortcut-arrow"><FontAwesomeIcon icon={faArrowLeft} /></span></button>
         </div>
       </section>
 
