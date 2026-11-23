@@ -69,7 +69,7 @@ export default function App() {
         <div className="top-actions">
           <button className="theme-switch" onClick={() => setDark(!dark)} aria-label="تغییر پوسته">{dark ? "☀" : "☾"} <span>☼</span></button>
           <a className="github-link" href="https://github.com/MahsaKasraei/FarsiKit" target="_blank" rel="noreferrer" aria-label="GitHub">●</a>
-          <span className="version"><i /> نسخه ۰.۳.۵</span>
+          <span className="version"><i /> نسخه ۰.۴.۱</span>
         </div>
       </header>
 
@@ -119,7 +119,7 @@ export default function App() {
               </div>
             </section>
             <section className="input-box">
-              <textarea maxLength={5000} value={input} onChange={(event) => setInput(event.target.value)} placeholder="متن خود را اینجا وارد کنید..." />
+              <textarea maxLength={5000} value={input} onChange={(event) => setInput(event.target.value)} placeholder="نمونه متن: اين يك متن فارسی برای آزمايش حروف عربي است؛ علي در اين كتاب دربارهٔ زندگي می‌نويسد..." />
               <div className="character-count">{input.length.toLocaleString("fa-IR")} کاراکتر</div>
             </section>
           </div>
