@@ -182,21 +182,45 @@ footer{position:relative;overflow:hidden;display:flex;justify-content:center;gap
 }
 
 
-/* Desktop hero: give the artwork more room and let it fill its frame */
+
+/* Desktop: artwork is the full-bleed hero background, with copy layered above */
 @media (min-width:1051px){
-  .hero{grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);}
+  .hero{
+    display:grid;
+    grid-template-columns:minmax(0,1fr);
+    position:relative;
+    isolation:isolate;
+    overflow:hidden;
+  }
   .hero-art{
+    position:absolute;
+    inset:0;
+    z-index:0;
+    display:block;
     width:100%;
     height:100%;
-    min-height:320px;
+    min-height:0;
     aspect-ratio:auto;
-    transform:scale(1.08);
-    transform-origin:center;
+    overflow:hidden;
+    transform:none;
   }
   .hero-art img{
+    display:block;
     width:100%;
     height:100%;
+    max-width:none;
+    min-height:0;
     object-fit:cover;
-    object-position:center;
+    object-position:right center;
+  }
+  .hero-copy{
+    grid-column:1;
+    grid-row:1;
+    justify-self:end;
+    position:relative;
+    z-index:1;
+    max-width:680px;
+    direction:rtl;
+    text-align:right;
   }
 }
