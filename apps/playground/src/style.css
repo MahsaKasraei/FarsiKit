@@ -119,3 +119,12 @@ footer{position:relative;overflow:hidden;display:flex;justify-content:center;gap
   .topbar>.top-actions{order:1;margin-right:auto}
   .topbar>.main-nav{order:2;width:100%;justify-content:center;margin:8px 0 0}
 }
+
+
+/* Font Awesome icon alignment */
+.main-nav a,.hero-actions a,.editor-toolbar button,.panel-footer button,.more-settings,.all-tools,.tool-copy{display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.main-nav a svg{font-size:12px;color:#39745a}
+.round-action svg{font-size:17px}
+.github-link svg{font-size:19px}
+.shortcut b svg{font-size:19px}
+.shortcut:after{content:"";font-family:inherit}
