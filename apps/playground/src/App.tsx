@@ -104,12 +104,12 @@ export default function App() {
       <section className="extras" id="tools">
         <div className="extras-heading"><div><h2>ابزارهای تخصصی</h2><p>ابزارهای کاربردی برای کاربران حرفه‌ای‌تر</p></div><button className="all-tools" onClick={()=>setActivePanel("quick")}>مشاهده همه <FontAwesomeIcon icon={faArrowLeft} /></button></div>
         <div className="tool-shortcuts">
-          <button className="shortcut dev" onClick={()=>setActivePanel("quick")}><b><FontAwesomeIcon icon={faCode} /></b><strong>ابزارهای توسعه</strong><small>ابزارهای مفید برنامه‌نویسان</small></button>
-          <button className="shortcut quality" onClick={()=>setActivePanel("review")}><b><FontAwesomeIcon icon={faCheck} /></b><strong>بازرس کیفیت متن</strong><small>بررسی و رفع خطاها</small></button>
-          <button className="shortcut analytics" onClick={()=>setActivePanel("stats")}><b><FontAwesomeIcon icon={faChartColumn} /></b><strong>تحلیل و آمار متن</strong><small>بررسی و نمایش آمار</small></button>
-          <button className="shortcut seo" onClick={()=>setActivePanel("content")}><b><FontAwesomeIcon icon={faMagnifyingGlass} /></b><strong>ابزارهای سئو</strong><small>بهینه‌سازی محتوای وب</small></button>
-          <button className="shortcut phone" onClick={()=>setActivePanel("content")}><b><FontAwesomeIcon icon={faPhone} /></b><strong>ابزار شماره موبایل</strong><small>استانداردسازی شماره‌ها</small></button>
-          <button className="shortcut slug" onClick={()=>setActivePanel("quick")}><b><FontAwesomeIcon icon={faArrowUpRight} /></b><strong>ساخت اسلاگ</strong><small>تبدیل متن به اسلاگ استاندارد</small></button>
+          <button className="shortcut dev" onClick={()=>setActivePanel("quick")}><b><FontAwesomeIcon icon={faCode} /></b><strong>ابزارهای توسعه</strong><small>ابزارهای مفید برنامه‌نویسان</small><span className="shortcut-arrow"><FontAwesomeIcon icon={faArrowLeft} /></span></button>
+          <button className="shortcut quality" onClick={()=>setActivePanel("review")}><b><FontAwesomeIcon icon={faCheck} /></b><strong>بازرس کیفیت متن</strong><small>بررسی و رفع خطاها</small><span className="shortcut-arrow"><FontAwesomeIcon icon={faArrowLeft} /></span></button>
+          <button className="shortcut analytics" onClick={()=>setActivePanel("stats")}><b><FontAwesomeIcon icon={faChartColumn} /></b><strong>تحلیل و آمار متن</strong><small>بررسی و نمایش آمار</small><span className="shortcut-arrow"><FontAwesomeIcon icon={faArrowLeft} /></span></button>
+          <button className="shortcut seo" onClick={()=>setActivePanel("content")}><b><FontAwesomeIcon icon={faMagnifyingGlass} /></b><strong>ابزارهای سئو</strong><small>بهینه‌سازی محتوای وب</small><span className="shortcut-arrow"><FontAwesomeIcon icon={faArrowLeft} /></span></button>
+          <button className="shortcut phone" onClick={()=>setActivePanel("content")}><b><FontAwesomeIcon icon={faPhone} /></b><strong>ابزار شماره موبایل</strong><small>استانداردسازی شماره‌ها</small><span className="shortcut-arrow"><FontAwesomeIcon icon={faArrowLeft} /></span></button>
+          <button className="shortcut slug" onClick={()=>setActivePanel("quick")}><b><FontAwesomeIcon icon={faArrowUpRight} /></b><strong>ساخت اسلاگ</strong><small>تبدیل متن به اسلاگ استاندارد</small><span className="shortcut-arrow"><FontAwesomeIcon icon={faArrowLeft} /></span></button>
         </div>
       </section>
 
