@@ -1,7 +1,7 @@
 {
   "name": "farsikit",
   "private": true,
-  "version": "0.5.3",
+  "version": "0.5.4",
   "description": "Open-source Persian text, content SEO, Iranian locale, and RTL developer toolkit.",
   "workspaces": [
     "packages/*",
