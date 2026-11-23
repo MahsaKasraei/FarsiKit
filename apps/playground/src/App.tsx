@@ -1,4 +1,7 @@
 import { useMemo, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHouse, faChevronDown, faCircleQuestion, faMoon, faArrowUpRightFromSquare, faBolt, faGear, faPenToSquare, faTrashCan, faFileLines, faCircleCheck, faCopy, faDownload, faCode, faCheck, faChartColumn, faMagnifyingGlass, faPhone, faArrowUpRight, faArrowRight, faSun } from "@fortawesome/free-solid-svg-icons";
+import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import {
   addZwnj,
   analyzePersianText,
@@ -62,33 +65,33 @@ export default function App() {
   return (
     <main className="page" dir="rtl">
       <header className="topbar">
-        <div className="top-actions"><span className="version"><i /> نسخه ۰.۴.۶</span><button className="round-action" aria-label="تغییر پوسته">☾</button><a className="github-link" href="https://github.com/MahsaKasraei/FarsiKit" target="_blank" rel="noreferrer" aria-label="گیت‌هاب">●</a></div>
-        <nav className="main-nav"><a href="#tools">ابزارها⌂</a><a href="#about">درباره ما⌄</a><a href="#help">راهنما ؟</a></nav>
+        <div className="top-actions"><span className="version"><i /> نسخه ۰.۴.۷</span><button className="round-action" aria-label="تغییر پوسته"><FontAwesomeIcon icon={faMoon} /></button><a className="github-link" href="https://github.com/MahsaKasraei/FarsiKit" target="_blank" rel="noreferrer" aria-label="گیت‌هاب"><FontAwesomeIcon icon={faGithub} /></a></div>
+        <nav className="main-nav"><a href="#tools"><FontAwesomeIcon icon={faHouse} /> ابزارها</a><a href="#about">درباره ما <FontAwesomeIcon icon={faChevronDown} /></a><a href="#help">راهنما <FontAwesomeIcon icon={faCircleQuestion} /></a></nav>
         <a className="brand" href="#" aria-label="FarsiKit home"><span>FarsiKit</span><span className="brand-mark">ف</span></a>
       </header>
 
       <section className="hero">
         <div className="hero-art"><img src="/farsikit-hero-hq.jpg" alt="لپ‌تاپ با حرف ف فارسی، گلدان و ابزارهای تایپوگرافی" /></div>
-        <div className="hero-copy"><div className="hero-brand">FarsiKit</div><h1>جعبه‌ابزار حرفه‌ای پردازش متن فارسی</h1><p>اصلاح متن، نیم‌فاصله، تبدیل اعداد، و ابزارهای کاربردی دیگر<br/>همه در یک محیط زیبا و قدرتمند!</p><div className="hero-actions"><a href="#workspace" className="primary-cta">شروع کنید ↗</a><a href="#tools" className="secondary-cta">مشاهده همه ابزارها ⠿</a></div></div>
+        <div className="hero-copy"><div className="hero-brand">FarsiKit</div><h1>جعبه‌ابزار حرفه‌ای پردازش متن فارسی</h1><p>اصلاح متن، نیم‌فاصله، تبدیل اعداد، و ابزارهای کاربردی دیگر<br/>همه در یک محیط زیبا و قدرتمند!</p><div className="hero-actions"><a href="#workspace" className="primary-cta">شروع کنید <FontAwesomeIcon icon={faArrowUpRightFromSquare} /></a><a href="#tools" className="secondary-cta">مشاهده همه ابزارها <FontAwesomeIcon icon={faArrowRight} /></a></div></div>
       </section>
 
       <section className="workspace" id="workspace">
         <aside className="quick-settings">
-          <h2>تنظیمات سریع <span>⚡</span></h2>
+          <h2>تنظیمات سریع <span><FontAwesomeIcon icon={faBolt} /></span></h2>
           <label><span>نیم‌فاصله</span><input type="checkbox" checked={useZwnj} onChange={e=>setUseZwnj(e.target.checked)} /></label>
           <label><span>اصلاح حروف عربی</span><input type="checkbox" checked={removeDiacritics} onChange={e=>setRemoveDiacritics(e.target.checked)} /></label>
           <label><span>تبدیل ارقام</span><input type="checkbox" checked={digits==="persian"} onChange={e=>setDigits(e.target.checked?"persian":"latin")} /></label>
           <label><span>حذف اعراب</span><input type="checkbox" checked={removeDiacritics} onChange={e=>setRemoveDiacritics(e.target.checked)} /></label>
           <label><span>اصلاح همزه</span><input type="checkbox" checked={fixEzafe} onChange={e=>setFixEzafe(e.target.checked)} /></label>
-          <button className="more-settings" onClick={()=>setActivePanel(activePanel==="quick"?null:"quick")}>تنظیمات بیشتر　⚙</button>
+          <button className="more-settings" onClick={()=>setActivePanel(activePanel==="quick"?null:"quick")}>تنظیمات بیشتر　<FontAwesomeIcon icon={faGear} /></button>
         </aside>
         <div className="editor-shell">
-          <div className="editor-toolbar"><h2>✎ ویرایشگر فارسی</h2><div><button className="subtle" onClick={()=>setInput("")}>♜ پاک کردن</button><button className="subtle" onClick={()=>copy(sample,"متن نمونه کپی شد")}>▢ نمونه متن</button></div></div>
+          <div className="editor-toolbar"><h2><FontAwesomeIcon icon={faPenToSquare} /> ویرایشگر فارسی</h2><div><button className="subtle" onClick={()=>setInput("")}><FontAwesomeIcon icon={faTrashCan} /> پاک کردن</button><button className="subtle" onClick={()=>copy(sample,"متن نمونه کپی شد")}><FontAwesomeIcon icon={faFileLines} /> نمونه متن</button></div></div>
           <div className="editor-panels">
             <div className="panel output-panel">
-              <div className="output-status">خروجی اصلاح‌شده　🟢</div>
+              <div className="output-status">خروجی اصلاح‌شده　<FontAwesomeIcon icon={faCircleCheck} /></div>
               <div className="output" dir="rtl">{normalized || <span className="placeholder">متن شما اینجا نمایش داده می‌شود</span>}</div>
-              <div className="panel-footer"><button className="copy" onClick={()=>copy(normalized,"خروجی کپی شد")}>کپی خروجی ▢</button><button className="download-output" onClick={()=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([normalized],{type:"text/plain;charset=utf-8"}));a.download="farsikit-output.txt";a.click();URL.revokeObjectURL(a.href)}}>دانلود ↓</button></div>
+              <div className="panel-footer"><button className="copy" onClick={()=>copy(normalized,"خروجی کپی شد")}><><FontAwesomeIcon icon={faCopy} /> کپی خروجی</></button><button className="download-output" onClick={()=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([normalized],{type:"text/plain;charset=utf-8"}));a.download="farsikit-output.txt";a.click();URL.revokeObjectURL(a.href)}}><><FontAwesomeIcon icon={faDownload} /> دانلود</></button></div>
             </div>
             <div className="panel input-panel">
               <textarea maxLength={5000} value={input} onChange={e=>setInput(e.target.value)} placeholder="اینجا متن فارسی خود را وارد کنید؛ مثلاً: این یک متن نمونه برای بررسی نیم‌فاصله و اصلاح حروف فارسی است..." />
@@ -99,14 +102,14 @@ export default function App() {
       </section>
 
       <section className="extras" id="tools">
-        <div className="extras-heading"><div><h2>ابزارهای تخصصی　▦</h2><p>ابزارهای کاربردی برای کاربران حرفه‌ای‌تر</p></div><button className="all-tools" onClick={()=>setActivePanel("quick")}>مشاهده همه ‹</button></div>
+        <div className="extras-heading"><div><h2>ابزارهای تخصصی</h2><p>ابزارهای کاربردی برای کاربران حرفه‌ای‌تر</p></div><button className="all-tools" onClick={()=>setActivePanel("quick")}>مشاهده همه <FontAwesomeIcon icon={faArrowLeft} /></button></div>
         <div className="tool-shortcuts">
-          <button className="shortcut dev" onClick={()=>setActivePanel("quick")}><b>&lt;/&gt;</b><strong>ابزارهای توسعه</strong><small>ابزارهای مفید برنامه‌نویسان</small></button>
-          <button className="shortcut quality" onClick={()=>setActivePanel("review")}><b>✓</b><strong>بازرس کیفیت متن</strong><small>بررسی و رفع خطاها</small></button>
-          <button className="shortcut analytics" onClick={()=>setActivePanel("stats")}><b>▥</b><strong>تحلیل و آمار متن</strong><small>بررسی و نمایش آمار</small></button>
-          <button className="shortcut seo" onClick={()=>setActivePanel("content")}><b>⌕</b><strong>ابزارهای سئو</strong><small>بهینه‌سازی محتوای وب</small></button>
-          <button className="shortcut phone" onClick={()=>setActivePanel("content")}><b>☎</b><strong>ابزار شماره موبایل</strong><small>استانداردسازی شماره‌ها</small></button>
-          <button className="shortcut slug" onClick={()=>setActivePanel("quick")}><b>↗</b><strong>ساخت اسلاگ</strong><small>تبدیل متن به اسلاگ استاندارد</small></button>
+          <button className="shortcut dev" onClick={()=>setActivePanel("quick")}><b><FontAwesomeIcon icon={faCode} /></b><strong>ابزارهای توسعه</strong><small>ابزارهای مفید برنامه‌نویسان</small></button>
+          <button className="shortcut quality" onClick={()=>setActivePanel("review")}><b><FontAwesomeIcon icon={faCheck} /></b><strong>بازرس کیفیت متن</strong><small>بررسی و رفع خطاها</small></button>
+          <button className="shortcut analytics" onClick={()=>setActivePanel("stats")}><b><FontAwesomeIcon icon={faChartColumn} /></b><strong>تحلیل و آمار متن</strong><small>بررسی و نمایش آمار</small></button>
+          <button className="shortcut seo" onClick={()=>setActivePanel("content")}><b><FontAwesomeIcon icon={faMagnifyingGlass} /></b><strong>ابزارهای سئو</strong><small>بهینه‌سازی محتوای وب</small></button>
+          <button className="shortcut phone" onClick={()=>setActivePanel("content")}><b><FontAwesomeIcon icon={faPhone} /></b><strong>ابزار شماره موبایل</strong><small>استانداردسازی شماره‌ها</small></button>
+          <button className="shortcut slug" onClick={()=>setActivePanel("quick")}><b><FontAwesomeIcon icon={faArrowUpRight} /></b><strong>ساخت اسلاگ</strong><small>تبدیل متن به اسلاگ استاندارد</small></button>
         </div>
       </section>
 
@@ -123,7 +126,7 @@ export default function App() {
               <span className={issue.severity === "warning" ? "issue-dot warning" : "issue-dot"} />
               <div><strong>{issue.message}</strong><span>تعداد موارد: {issue.count.toLocaleString("fa-IR")}</span></div>
             </div>
-          ))}</div> : <div className="clean-report">متن از نظر قواعدی که بررسی می‌کنیم، موردی برای گزارش ندارد. ✨</div>}
+          ))}</div> : <div className="clean-report">متن از نظر قواعدی که بررسی می‌کنیم، موردی برای گزارش ندارد. <FontAwesomeIcon icon={faCircleCheck} /></div>}
         </div>
       </section>
       )}
@@ -172,13 +175,13 @@ export default function App() {
               <strong className={phoneNormalized ? "detected" : "not-detected"}>{phoneNormalized ? (isValidIranianMobile(phone) ? "شماره معتبر است" : "فرمت پشتیبانی نمی‌شود") : "شماره قابل تشخیص نیست"}</strong>
               <span dir="ltr">{phoneNormalized || "—"}</span>
             </div>
-            <button className="tool-copy" onClick={() => copy(phoneNormalized, "شماره نرمال‌شده کپی شد")} disabled={!phoneNormalized}>کپی شماره استاندارد</button>
+            <button className="tool-copy" onClick={() => copy(phoneNormalized, "شماره نرمال‌شده کپی شد")} disabled={!phoneNormalized}><><FontAwesomeIcon icon={faCopy} /> کپی شماره استاندارد</></button>
           </div>
           <div className="tool-card">
             <div className="tool-top"><h3>آماده‌سازی توضیحات متا</h3><code>createMetaDescription</code></div>
             <p>پیشنهاد توضیحات متا با پاک‌سازی فاصله‌ها و محدودیت پیش‌فرض ۱۶۰ کاراکتر.</p>
             <div className="tool-value" dir="rtl">{metaDescription || <span className="placeholder">متن مقاله را وارد کن...</span>}</div>
-            <div className="mini-meta"><span>{[...metaDescription].length} / ۱۶۰ کاراکتر</span><button className="tool-copy" onClick={() => copy(metaDescription, "توضیحات متا کپی شد")} disabled={!metaDescription}>کپی متا</button></div>
+            <div className="mini-meta"><span>{[...metaDescription].length} / ۱۶۰ کاراکتر</span><button className="tool-copy" onClick={() => copy(metaDescription, "توضیحات متا کپی شد")} disabled={!metaDescription}><><FontAwesomeIcon icon={faCopy} /> کپی متا</></button></div>
           </div>
           <div className="tool-card">
             <div className="tool-top"><h3>زمان تقریبی مطالعه</h3><code>getReadingTime</code></div>
@@ -203,7 +206,7 @@ export default function App() {
 
       {copied && <div className="toast" role="status">{copied}</div>}
 
-      <footer id="about"><span>FarsiKit</span><span>رایگان برای همه متن‌باز با مجوز MIT　│　سریع و سبک ⚡</span></footer>
+      <footer id="about"><span>FarsiKit</span><span>رایگان برای همه متن‌باز با مجوز MIT　│　سریع و سبک <FontAwesomeIcon icon={faBolt} /></span></footer>
     </main>
   );
 }
@@ -215,7 +218,7 @@ function Tool({ title, code, description, value, onCopy }: {
     <div className="tool-top"><h3>{title}</h3><code>{code}</code></div>
     <p>{description}</p>
     <div className="tool-value" dir="rtl">{value || <span className="placeholder">—</span>}</div>
-    <button className="tool-copy" onClick={onCopy} disabled={!value}>کپی نتیجه</button>
+    <button className="tool-copy" onClick={onCopy} disabled={!value}><><FontAwesomeIcon icon={faCopy} /> کپی نتیجه</></button>
   </div>;
 }
 
