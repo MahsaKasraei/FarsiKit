@@ -211,7 +211,7 @@ footer{position:relative;overflow:hidden;display:flex;justify-content:center;gap
     max-width:none;
     min-height:0;
     object-fit:cover;
-    object-position:right center;
+    object-position:center center;
   }
   .hero-copy{
     grid-column:1;
