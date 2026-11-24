@@ -67,7 +67,7 @@ export default function App() {
   return (
     <main className="page" dir="rtl">
       <header className="topbar">
-        <div className="top-actions"><span className="version"><i /> نسخه ۰.۶.۸</span><button className="round-action" aria-label="تغییر پوسته"><FontAwesomeIcon icon={faMoon} /></button><a className="github-link" href="https://github.com/MahsaKasraei/FarsiKit" target="_blank" rel="noreferrer" aria-label="گیت‌هاب"><FontAwesomeIcon icon={faGithub} /></a></div>
+        <div className="top-actions"><span className="version"><i /> نسخه ۰.۶.۹</span><button className="round-action" aria-label="تغییر پوسته"><FontAwesomeIcon icon={faMoon} /></button><a className="github-link" href="https://github.com/MahsaKasraei/FarsiKit" target="_blank" rel="noreferrer" aria-label="گیت‌هاب"><FontAwesomeIcon icon={faGithub} /></a></div>
         <nav className="main-nav"><a href="#tools"><FontAwesomeIcon icon={faHouse} /> ابزارها</a><a href="#about">درباره ما <FontAwesomeIcon icon={faChevronDown} /></a><a href="#help">راهنما <FontAwesomeIcon icon={faCircleQuestion} /></a></nav>
         <a className="brand" href="#" aria-label="FarsiKit home"><span>FarsiKit</span><span className="brand-mark">ف</span></a>
       </header>
@@ -208,7 +208,23 @@ export default function App() {
 
       {copied && <div className="toast" role="status">{copied}</div>}
 
-      <footer id="about"><span>FarsiKit</span><span>رایگان برای همه متن‌باز با مجوز MIT　│　سریع و سبک <FontAwesomeIcon icon={faBolt} /></span></footer>
+      <section className="info-section help-section" id="help">
+        <div className="info-heading"><span className="info-icon"><FontAwesomeIcon icon={faCircleQuestion} /></span><div><h2>راهنمای استفاده از فارسی‌کیت</h2><p>برای شروع، متن را وارد کن و ابزارهای موردنیازت را فعال کن.</p></div></div>
+        <div className="help-grid">
+          <article className="info-card"><span className="help-number">۱</span><h3>متن را وارد کن</h3><p>متن فارسی یا ترکیبی خودت را در کادر ورودی بنویس یا با دکمهٔ «نمونه متن» یک متن آزمایشی قرار بده.</p></article>
+          <article className="info-card"><span className="help-number">۲</span><h3>تنظیمات را انتخاب کن</h3><p>از پنل تنظیمات سریع، اصلاح حروف عربی، نیم‌فاصله، تبدیل ارقام، حذف اعراب و اصلاح همزه را جداگانه روشن یا خاموش کن.</p></article>
+          <article className="info-card"><span className="help-number">۳</span><h3>خروجی را بردار</h3><p>نتیجه هم‌زمان در کادر خروجی نمایش داده می‌شود؛ می‌توانی آن را کپی کنی یا به‌صورت فایل متنی دانلود کنی.</p></article>
+        </div>
+        <div className="help-note"><strong>نکته:</strong> خاموش بودن «اصلاح حروف عربی» یعنی حروفی مثل «ي» و «ك» در متن دست‌نخورده می‌مانند. برای تبدیل آن‌ها به «ی» و «ک»، این گزینه را روشن کن.</div>
+        <div className="help-tools"><h3>ابزارهای بیشتر</h3><p>از بخش «ابزارهای تخصصی» می‌توانی بازرس کیفیت متن، آمار متن، ساخت اسلاگ، بررسی شماره موبایل و ابزارهای محتوایی را باز کنی. برای کار با این ابزارها ابتدا متن را در ویرایشگر وارد کن.</p><a href="#tools">رفتن به ابزارهای تخصصی <FontAwesomeIcon icon={faArrowLeft} /></a></div>
+      </section>
+
+      <section className="info-section about-section" id="about">
+        <div className="info-heading"><span className="info-icon"><span className="about-mark">ف</span></span><div><h2>دربارهٔ FarsiKit</h2><p>جعبه‌ابزار متن فارسی؛ ساده، سریع و در دسترس.</p></div></div>
+        <div className="about-copy"><p>FarsiKit مجموعه‌ای از ابزارهای کاربردی برای پاک‌سازی، یکدست‌سازی و بررسی متن فارسی است. هدف این پروژه این است که کارهای تکراری ویرایش متن، آماده‌سازی محتوا و پردازش نوشته‌های فارسی را در یک محیط ساده و رایگان انجام بدهی.</p><p>این پروژه متن‌باز و رایگان است و برای نویسندگان، تولیدکنندگان محتوا، ویراستاران و توسعه‌دهندگانی طراحی شده که با متن فارسی سروکار دارند.</p><a href="https://github.com/MahsaKasraei/FarsiKit" target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faGithub} /> مشاهدهٔ کد منبع در گیت‌هاب</a></div>
+      </section>
+
+      <footer><span>FarsiKit</span><span>رایگان برای همه متن‌باز با مجوز MIT　│　سریع و سبک <FontAwesomeIcon icon={faBolt} /></span></footer>
     </main>
   );
 }
