@@ -226,16 +226,16 @@ footer{position:relative;overflow:hidden;display:flex;justify-content:center;gap
 }
 
 
-/* One consistent full-bleed rule: center the banner by its own viewport width */
+/* Full-bleed hero: expand by the page's exact horizontal gutters */
 @media (min-width:1051px){
   .page > .hero{
     position:relative;
+    width:calc(100% + 68px);
+    max-width:none;
+    margin-left:-34px;
+    margin-right:-34px;
     left:auto;
     right:auto;
-    width:100vw;
-    max-width:none;
-    margin-left:calc(50% - 50vw);
-    margin-right:calc(50% - 50vw);
     transform:none;
     box-sizing:border-box;
   }
