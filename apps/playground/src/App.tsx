@@ -35,6 +35,7 @@ export default function App() {
     const value = normalizePersian(input, {
       convertDigits: digits,
       removeDiacritics,
+      normalizeArabicLetters: fixArabicLetters,
       normalizeEzafe: fixEzafe,
       normalizeWhitespace: true,
       fixPunctuation: true
@@ -66,7 +67,7 @@ export default function App() {
   return (
     <main className="page" dir="rtl">
       <header className="topbar">
-        <div className="top-actions"><span className="version"><i /> نسخه ۰.۶.۷</span><button className="round-action" aria-label="تغییر پوسته"><FontAwesomeIcon icon={faMoon} /></button><a className="github-link" href="https://github.com/MahsaKasraei/FarsiKit" target="_blank" rel="noreferrer" aria-label="گیت‌هاب"><FontAwesomeIcon icon={faGithub} /></a></div>
+        <div className="top-actions"><span className="version"><i /> نسخه ۰.۶.۸</span><button className="round-action" aria-label="تغییر پوسته"><FontAwesomeIcon icon={faMoon} /></button><a className="github-link" href="https://github.com/MahsaKasraei/FarsiKit" target="_blank" rel="noreferrer" aria-label="گیت‌هاب"><FontAwesomeIcon icon={faGithub} /></a></div>
         <nav className="main-nav"><a href="#tools"><FontAwesomeIcon icon={faHouse} /> ابزارها</a><a href="#about">درباره ما <FontAwesomeIcon icon={faChevronDown} /></a><a href="#help">راهنما <FontAwesomeIcon icon={faCircleQuestion} /></a></nav>
         <a className="brand" href="#" aria-label="FarsiKit home"><span>FarsiKit</span><span className="brand-mark">ف</span></a>
       </header>
