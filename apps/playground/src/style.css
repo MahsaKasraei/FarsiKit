@@ -247,3 +247,27 @@ footer{position:relative;overflow:hidden;display:flex;justify-content:center;gap
     align-items:stretch;
   }
 }
+
+
+/* 0.6.0: restore Persian reading order and true viewport-wide hero */
+@media (min-width:701px){
+  .editor-panels{direction:ltr;}
+  .editor-panels > .input-panel{grid-column:2;}
+  .editor-panels > .output-panel{grid-column:1;}
+}
+@media (max-width:700px){
+  .editor-panels > .input-panel,
+  .editor-panels > .output-panel{grid-column:auto;}
+}
+@media (min-width:1051px){
+  .page > .hero{
+    width:100vw;
+    max-width:none;
+    margin-left:calc((100% - 100vw)/2);
+    margin-right:calc((100% - 100vw)/2);
+    left:auto;
+    right:auto;
+    transform:none;
+    box-sizing:border-box;
+  }
+}
