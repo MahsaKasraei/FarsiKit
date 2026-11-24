@@ -65,7 +65,7 @@ export default function App() {
   return (
     <main className="page" dir="rtl">
       <header className="topbar">
-        <div className="top-actions"><span className="version"><i /> نسخه ۰.۵.۸</span><button className="round-action" aria-label="تغییر پوسته"><FontAwesomeIcon icon={faMoon} /></button><a className="github-link" href="https://github.com/MahsaKasraei/FarsiKit" target="_blank" rel="noreferrer" aria-label="گیت‌هاب"><FontAwesomeIcon icon={faGithub} /></a></div>
+        <div className="top-actions"><span className="version"><i /> نسخه ۰.۵.۹</span><button className="round-action" aria-label="تغییر پوسته"><FontAwesomeIcon icon={faMoon} /></button><a className="github-link" href="https://github.com/MahsaKasraei/FarsiKit" target="_blank" rel="noreferrer" aria-label="گیت‌هاب"><FontAwesomeIcon icon={faGithub} /></a></div>
         <nav className="main-nav"><a href="#tools"><FontAwesomeIcon icon={faHouse} /> ابزارها</a><a href="#about">درباره ما <FontAwesomeIcon icon={faChevronDown} /></a><a href="#help">راهنما <FontAwesomeIcon icon={faCircleQuestion} /></a></nav>
         <a className="brand" href="#" aria-label="FarsiKit home"><span>FarsiKit</span><span className="brand-mark">ف</span></a>
       </header>
@@ -88,14 +88,14 @@ export default function App() {
         <div className="editor-shell">
           <div className="editor-toolbar"><h2><FontAwesomeIcon icon={faPenToSquare} /> ویرایشگر فارسی</h2><div><button className="subtle" onClick={()=>setInput("")}><FontAwesomeIcon icon={faTrashCan} /> پاک کردن</button><button className="subtle" onClick={()=>{setInput(sample);setCopied("متن نمونه در ویرایشگر قرار گرفت")}}><FontAwesomeIcon icon={faFileLines} /> نمونه متن</button></div></div>
           <div className="editor-panels">
+            <div className="panel input-panel">
+              <textarea maxLength={5000} value={input} onChange={e=>setInput(e.target.value)} placeholder="اینجا متن فارسی خود را وارد کنید؛ مثلاً: این یک متن نمونه برای بررسی نیم‌فاصله و اصلاح حروف فارسی است..." />
+              <div className="panel-footer"><span>{input.length.toLocaleString("fa-IR")} کاراکتر</span></div>
+            </div>
             <div className="panel output-panel">
               <div className="output-status">خروجی اصلاح‌شده　<FontAwesomeIcon icon={faCircleCheck} /></div>
               <div className="output" dir="rtl">{normalized || <span className="placeholder">متن شما اینجا نمایش داده می‌شود</span>}</div>
               <div className="panel-footer"><button className="copy" onClick={()=>copy(normalized,"خروجی کپی شد")}><><FontAwesomeIcon icon={faCopy} /> کپی خروجی</></button><button className="download-output" onClick={()=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([normalized],{type:"text/plain;charset=utf-8"}));a.download="farsikit-output.txt";a.click();URL.revokeObjectURL(a.href)}}><><FontAwesomeIcon icon={faDownload} /> دانلود</></button></div>
-            </div>
-            <div className="panel input-panel">
-              <textarea maxLength={5000} value={input} onChange={e=>setInput(e.target.value)} placeholder="اینجا متن فارسی خود را وارد کنید؛ مثلاً: این یک متن نمونه برای بررسی نیم‌فاصله و اصلاح حروف فارسی است..." />
-              <div className="panel-footer"><span>{input.length.toLocaleString("fa-IR")} کاراکتر</span></div>
             </div>
           </div>
         </div>
