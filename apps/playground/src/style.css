@@ -249,25 +249,45 @@ footer{position:relative;overflow:hidden;display:flex;justify-content:center;gap
 }
 
 
-/* 0.6.0: restore Persian reading order and true viewport-wide hero */
+
+/* 0.6.1: keep the two editor panels on one row in Persian reading order */
 @media (min-width:701px){
-  .editor-panels{direction:ltr;}
-  .editor-panels > .input-panel{grid-column:2;}
-  .editor-panels > .output-panel{grid-column:1;}
+  .editor-panels{
+    display:flex !important;
+    flex-direction:row-reverse !important;
+    flex-wrap:nowrap !important;
+    align-items:stretch;
+    gap:8px;
+    direction:rtl !important;
+  }
+  .editor-panels > .input-panel,
+  .editor-panels > .output-panel{
+    display:flex;
+    flex:1 1 0 !important;
+    width:calc(50% - 4px) !important;
+    min-width:0 !important;
+    max-width:calc(50% - 4px) !important;
+    grid-column:auto !important;
+    grid-row:auto !important;
+  }
 }
 @media (max-width:700px){
+  .editor-panels{display:flex !important;flex-direction:column !important;}
   .editor-panels > .input-panel,
-  .editor-panels > .output-panel{grid-column:auto;}
+  .editor-panels > .output-panel{width:100% !important;max-width:100% !important;}
 }
+/* Full-bleed hero aligned to the viewport, independent of the page container */
 @media (min-width:1051px){
   .page > .hero{
-    width:100vw;
-    max-width:none;
-    margin-left:calc((100% - 100vw)/2);
-    margin-right:calc((100% - 100vw)/2);
-    left:auto;
-    right:auto;
-    transform:none;
+    width:100vw !important;
+    max-width:none !important;
+    margin-left:calc(50% - 50vw) !important;
+    margin-right:calc(50% - 50vw) !important;
+    padding-left:clamp(24px,3.5vw,55px);
+    padding-right:clamp(24px,3.5vw,55px);
     box-sizing:border-box;
+    left:auto !important;
+    right:auto !important;
+    transform:none !important;
   }
 }
