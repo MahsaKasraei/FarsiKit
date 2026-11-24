@@ -255,7 +255,7 @@ footer{position:relative;overflow:hidden;display:flex;justify-content:center;gap
 @media (min-width:701px){
   .editor-panels{
     display:flex !important;
-    flex-direction:row-reverse !important;
+    flex-direction:row !important;
     flex-wrap:nowrap !important;
     align-items:stretch;
     gap:8px;
