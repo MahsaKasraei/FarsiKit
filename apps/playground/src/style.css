@@ -353,3 +353,24 @@ footer{position:relative;overflow:hidden;display:flex;justify-content:center;gap
   font-weight:700;
 }
 .info-close:hover{background:#eaf3e9;color:#176348}
+
+
+/* 0.7.1 — keep About copy in one full-width, justified RTL text column */
+.about-section .about-copy{
+  display:block !important;
+  width:100% !important;
+  max-width:none !important;
+  columns:1 !important;
+  column-count:1 !important;
+  column-width:auto !important;
+  column-gap:0 !important;
+  direction:rtl;
+  text-align:justify !important;
+  text-justify:inter-word;
+}
+.about-section .about-copy p{
+  display:block;
+  width:100%;
+  max-width:none;
+  text-align:justify !important;
+}
