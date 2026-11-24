@@ -374,3 +374,30 @@ footer{position:relative;overflow:hidden;display:flex;justify-content:center;gap
   max-width:none;
   text-align:justify !important;
 }
+
+
+/* 0.7.2 — separate open/close controls on shortcut cards */
+.shortcut:after{
+  content:"➜";
+  left:auto;
+  right:13px;
+  color:#16804f;
+  border-color:#cfe7d7;
+  cursor:pointer;
+}
+.shortcut-arrow{
+  position:absolute;
+  left:13px;
+  bottom:13px;
+  width:29px;
+  height:29px;
+  display:grid;
+  place-items:center;
+  border:1px solid #f0d2d2;
+  border-radius:50%;
+  background:#fff;
+  color:#d34b4b;
+  cursor:pointer;
+  z-index:1;
+}
+.shortcut-arrow:hover{background:#fff1f1;border-color:#e7aaaa}
