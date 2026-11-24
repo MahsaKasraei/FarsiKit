@@ -24,6 +24,7 @@ const sample = "اين يك متن فارسی برای آزمايش حروف ع�
 export default function App() {
   const [input, setInput] = useState("");
   const [digits, setDigits] = useState<"persian" | "arabic" | "latin">("latin");
+  const [fixArabicLetters, setFixArabicLetters] = useState(false);
   const [removeDiacritics, setRemoveDiacritics] = useState(false);
   const [useZwnj, setUseZwnj] = useState(true);
   const [fixEzafe, setFixEzafe] = useState(false);
@@ -39,7 +40,7 @@ export default function App() {
       fixPunctuation: true
     });
     return useZwnj ? addZwnj(value) : value;
-  }, [input, digits, removeDiacritics, fixEzafe, useZwnj]);
+  }, [input, digits, removeDiacritics, fixArabicLetters, fixEzafe, useZwnj]);
 
   const slug = useMemo(() => slugifyPersian(input), [input]);
   const unicode = useMemo(() => normalizeUnicode(input), [input]);
@@ -79,7 +80,7 @@ export default function App() {
         <aside className="quick-settings">
           <h2>تنظیمات سریع <span><FontAwesomeIcon icon={faBolt} /></span></h2>
           <label><span>نیم‌فاصله</span><input type="checkbox" checked={useZwnj} onChange={e=>setUseZwnj(e.target.checked)} /></label>
-          <label><span>اصلاح حروف عربی</span><input type="checkbox" checked={removeDiacritics} onChange={e=>setRemoveDiacritics(e.target.checked)} /></label>
+          <label><span>اصلاح حروف عربی</span><input type="checkbox" checked={fixArabicLetters} onChange={e=>setFixArabicLetters(e.target.checked)} /></label>
           <label><span>تبدیل ارقام</span><input type="checkbox" checked={digits==="persian"} onChange={e=>setDigits(e.target.checked?"persian":"latin")} /></label>
           <label><span>حذف اعراب</span><input type="checkbox" checked={removeDiacritics} onChange={e=>setRemoveDiacritics(e.target.checked)} /></label>
           <label><span>اصلاح همزه</span><input type="checkbox" checked={fixEzafe} onChange={e=>setFixEzafe(e.target.checked)} /></label>
