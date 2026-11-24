@@ -401,3 +401,17 @@ footer{position:relative;overflow:hidden;display:flex;justify-content:center;gap
   z-index:1;
 }
 .shortcut-arrow:hover{background:#fff1f1;border-color:#e7aaaa}
+
+
+/* 0.7.3 — keep shortcut arrows low, clear of text, and point the green arrow right */
+.shortcut{padding-bottom:42px;}
+.shortcut:after{
+  content:"→";
+  bottom:5px;
+  right:13px;
+  left:auto;
+}
+.shortcut-arrow{
+  bottom:5px;
+  left:13px;
+}
