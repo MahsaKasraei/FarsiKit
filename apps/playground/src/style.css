@@ -220,6 +220,7 @@ footer{position:relative;overflow:hidden;display:flex;justify-content:center;gap
     position:relative;
     z-index:1;
     max-width:680px;
+    padding-right:clamp(28px,4vw,56px);
     direction:rtl;
     text-align:right;
   }
