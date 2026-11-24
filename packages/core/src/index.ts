@@ -6,6 +6,7 @@ export interface NormalizeOptions {
   fixPunctuation?: boolean;
   removeDiacritics?: boolean;
   normalizeEzafe?: boolean;
+  normalizeArabicLetters?: boolean;
 }
 
 const PERSIAN_DIGITS = "۰۱۲۳۴۵۶۷۸۹";
@@ -54,13 +55,15 @@ export function normalizePersian(
     normalizeWhitespace = true,
     fixPunctuation = true,
     removeDiacritics = false,
-    normalizeEzafe: fixEzafe = false
+    normalizeEzafe: fixEzafe = false,
+    normalizeArabicLetters = true
   } = options;
 
-  let result = normalizeUnicode(text)
-    .replace(/[يى]/g, "ی")
-    .replace(/ك/g, "ک")
-    .replace(/\u0640/g, "");
+  let result = normalizeUnicode(text);
+  if (normalizeArabicLetters) {
+    result = result.replace(/[يى]/g, "ی").replace(/ك/g, "ک");
+  }
+  result = result.replace(/\u0640/g, "");
 
   // Normalize ezafe before stripping combining marks: the hamza above heh
   // is meaningful here and must not be removed as a generic diacritic.
