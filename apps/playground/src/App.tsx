@@ -71,7 +71,7 @@ export default function App() {
   return (
     <main className="page" dir="rtl">
       <header className="topbar">
-        <div className="top-actions"><span className="version"><i /> نسخه ۰.۷.۲</span><button className="round-action" aria-label="تغییر پوسته"><FontAwesomeIcon icon={faMoon} /></button><a className="github-link" href="https://github.com/MahsaKasraei/FarsiKit" target="_blank" rel="noreferrer" aria-label="گیت‌هاب"><FontAwesomeIcon icon={faGithub} /></a></div>
+        <div className="top-actions"><span className="version"><i /> نسخه ۰.۷.۳</span><button className="round-action" aria-label="تغییر پوسته"><FontAwesomeIcon icon={faMoon} /></button><a className="github-link" href="https://github.com/MahsaKasraei/FarsiKit" target="_blank" rel="noreferrer" aria-label="گیت‌هاب"><FontAwesomeIcon icon={faGithub} /></a></div>
         <nav className="main-nav"><a href="#tools"><FontAwesomeIcon icon={faHouse} /> ابزارها</a><a href="#about" onClick={() => setActiveInfo("about")}>درباره ما <FontAwesomeIcon icon={faChevronDown} /></a><a href="#help" onClick={() => setActiveInfo("help")}>راهنما <FontAwesomeIcon icon={faCircleQuestion} /></a></nav>
         <a className="brand" href="#" aria-label="FarsiKit home"><span>FarsiKit</span><span className="brand-mark">ف</span></a>
       </header>
@@ -110,18 +110,18 @@ export default function App() {
       <section className="extras" id="tools">
         <div className="extras-heading"><div><h2>ابزارهای تخصصی</h2><p>ابزارهای کاربردی برای کاربران حرفه‌ای‌تر</p></div><button className="all-tools" onClick={()=>setActivePanel("quick")}>مشاهده همه <FontAwesomeIcon icon={faArrowLeft} /></button></div>
         <div className="tool-shortcuts">
-          <button className="shortcut dev" onClick={()=>setActivePanel("quick")}><b><FontAwesomeIcon icon={faCode} /></b><strong>ابزارهای توسعه</strong><small>ابزارهای مفید برنامه‌نویسان</small><span className="shortcut-arrow" role="button" tabIndex={0} aria-label="بستن بخش" title="بستن بخش" onClick={e=>{e.stopPropagation();setActivePanel(null);setActiveInfo(null)}} onKeyDown={e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();e.stopPropagation();setActivePanel(null)}}}><FontAwesomeIcon icon={faXmark} /></span></button>
-          <button className="shortcut quality" onClick={()=>setActivePanel("review")}><b><FontAwesomeIcon icon={faCheck} /></b><strong>بازرس کیفیت متن</strong><small>بررسی و رفع خطاها</small><span className="shortcut-arrow" role="button" tabIndex={0} aria-label="بستن بخش" title="بستن بخش" onClick={e=>{e.stopPropagation();setActivePanel(null)}} onKeyDown={e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();e.stopPropagation();setActivePanel(null)}}}><FontAwesomeIcon icon={faXmark} /></span></button>
-          <button className="shortcut analytics" onClick={()=>setActivePanel("stats")}><b><FontAwesomeIcon icon={faChartColumn} /></b><strong>تحلیل و آمار متن</strong><small>بررسی و نمایش آمار</small><span className="shortcut-arrow" role="button" tabIndex={0} aria-label="بستن بخش" title="بستن بخش" onClick={e=>{e.stopPropagation();setActivePanel(null)}} onKeyDown={e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();e.stopPropagation();setActivePanel(null)}}}><FontAwesomeIcon icon={faXmark} /></span></button>
-          <button className="shortcut seo" onClick={()=>setActivePanel("content")}><b><FontAwesomeIcon icon={faMagnifyingGlass} /></b><strong>ابزارهای سئو</strong><small>بهینه‌سازی محتوای وب</small><span className="shortcut-arrow" role="button" tabIndex={0} aria-label="بستن بخش" title="بستن بخش" onClick={e=>{e.stopPropagation();setActivePanel(null)}} onKeyDown={e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();e.stopPropagation();setActivePanel(null)}}}><FontAwesomeIcon icon={faXmark} /></span></button>
-          <button className="shortcut phone" onClick={()=>setActivePanel("content")}><b><FontAwesomeIcon icon={faPhone} /></b><strong>ابزار شماره موبایل</strong><small>استانداردسازی شماره‌ها</small><span className="shortcut-arrow" role="button" tabIndex={0} aria-label="بستن بخش" title="بستن بخش" onClick={e=>{e.stopPropagation();setActivePanel(null)}} onKeyDown={e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();e.stopPropagation();setActivePanel(null)}}}><FontAwesomeIcon icon={faXmark} /></span></button>
-          <button className="shortcut slug" onClick={()=>setActiveInfo("help")}><b><FontAwesomeIcon icon={faCircleQuestion} /></b><strong>راهنمای استفاده</strong><small>آشنایی با تنظیمات و ابزارها</small><span className="shortcut-arrow" role="button" tabIndex={0} aria-label="بستن بخش" title="بستن بخش" onClick={e=>{e.stopPropagation();setActivePanel(null)}} onKeyDown={e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();e.stopPropagation();setActivePanel(null)}}}><FontAwesomeIcon icon={faXmark} /></span></button>
+          <button className="shortcut dev" onClick={()=>setActivePanel("quick")}><b><FontAwesomeIcon icon={faCode} /></b><strong>ابزارهای توسعه</strong><small>ابزارهای مفید برنامه‌نویسان</small><span className="shortcut-arrow" role="button" tabIndex={0} aria-label="بستن بخش" title="بستن بخش" onClick={e=>{e.stopPropagation();setActivePanel(null);setActiveInfo(null)}} onKeyDown={e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();e.stopPropagation();setActivePanel(null)}}}><FontAwesomeIcon icon={faArrowLeft} /></span></button>
+          <button className="shortcut quality" onClick={()=>setActivePanel("review")}><b><FontAwesomeIcon icon={faCheck} /></b><strong>بازرس کیفیت متن</strong><small>بررسی و رفع خطاها</small><span className="shortcut-arrow" role="button" tabIndex={0} aria-label="بستن بخش" title="بستن بخش" onClick={e=>{e.stopPropagation();setActivePanel(null)}} onKeyDown={e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();e.stopPropagation();setActivePanel(null)}}}><FontAwesomeIcon icon={faArrowLeft} /></span></button>
+          <button className="shortcut analytics" onClick={()=>setActivePanel("stats")}><b><FontAwesomeIcon icon={faChartColumn} /></b><strong>تحلیل و آمار متن</strong><small>بررسی و نمایش آمار</small><span className="shortcut-arrow" role="button" tabIndex={0} aria-label="بستن بخش" title="بستن بخش" onClick={e=>{e.stopPropagation();setActivePanel(null)}} onKeyDown={e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();e.stopPropagation();setActivePanel(null)}}}><FontAwesomeIcon icon={faArrowLeft} /></span></button>
+          <button className="shortcut seo" onClick={()=>setActivePanel("content")}><b><FontAwesomeIcon icon={faMagnifyingGlass} /></b><strong>ابزارهای سئو</strong><small>بهینه‌سازی محتوای وب</small><span className="shortcut-arrow" role="button" tabIndex={0} aria-label="بستن بخش" title="بستن بخش" onClick={e=>{e.stopPropagation();setActivePanel(null)}} onKeyDown={e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();e.stopPropagation();setActivePanel(null)}}}><FontAwesomeIcon icon={faArrowLeft} /></span></button>
+          <button className="shortcut phone" onClick={()=>setActivePanel("content")}><b><FontAwesomeIcon icon={faPhone} /></b><strong>ابزار شماره موبایل</strong><small>استانداردسازی شماره‌ها</small><span className="shortcut-arrow" role="button" tabIndex={0} aria-label="بستن بخش" title="بستن بخش" onClick={e=>{e.stopPropagation();setActivePanel(null)}} onKeyDown={e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();e.stopPropagation();setActivePanel(null)}}}><FontAwesomeIcon icon={faArrowLeft} /></span></button>
+          <button className="shortcut slug" onClick={()=>setActiveInfo("help")}><b><FontAwesomeIcon icon={faCircleQuestion} /></b><strong>راهنمای استفاده</strong><small>آشنایی با تنظیمات و ابزارها</small><span className="shortcut-arrow" role="button" tabIndex={0} aria-label="بستن بخش" title="بستن بخش" onClick={e=>{e.stopPropagation();setActivePanel(null)}} onKeyDown={e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();e.stopPropagation();setActivePanel(null)}}}><FontAwesomeIcon icon={faArrowLeft} /></span></button>
         </div>
       </section>
 
       {activePanel === "review" && (
       <section className="inspector">
-        <div className="section-heading"><span className="step">۰۶</span><h2>بازرس کیفیت متن فارسی</h2></div>
+        <div className="section-heading"><h2>بازرس کیفیت متن فارسی</h2></div>
         <div className="inspector-card">
           <div className="inspector-summary">
             <div><strong>{issues.length.toLocaleString("fa-IR")}</strong><span>دستهٔ ایرادهای شناسایی‌شده</span></div>
@@ -139,7 +139,7 @@ export default function App() {
 
       {activePanel === "quick" && (
       <section className="tools-section">
-        <div className="section-heading"><span className="step">۰۳</span><h2>ابزارهای سریع متن</h2></div>
+        <div className="section-heading"><h2>ابزارهای سریع متن</h2></div>
         <div className="tool-grid">
           <Tool title="اسلاگ فارسی" code="slugifyPersian" description="ساخت آدرس خوانا برای URL؛ تبدیل ارقام به لاتین و حذف نشانه‌های اضافی." value={slug} onCopy={() => copy(slug, "اسلاگ کپی شد")} />
           <Tool title="حذف اعراب" code="stripArabicDiacritics" description="حذف حرکات و اعراب عربی بدون حذف حروف اصلی." value={withoutMarks} onCopy={() => copy(withoutMarks, "متن بدون اعراب کپی شد")} />
@@ -155,7 +155,7 @@ export default function App() {
 
       {activePanel === "stats" && (
       <section className="stats">
-        <div className="stats-title"><span className="step">۰۴</span><h2>آمار پیشرفته متن</h2></div>
+        <div className="stats-title"><h2>آمار پیشرفته متن</h2></div>
         <div className="stat-grid">
           <Stat label="تعداد واژه" value={stats.words} />
           <Stat label="تعداد کاراکتر" value={stats.characters} />
@@ -171,7 +171,7 @@ export default function App() {
 
       {activePanel === "content" && (
       <section className="pro-tools">
-        <div className="section-heading"><span className="step">۰۵</span><h2>ابزارهای محتوا، سئو و شماره موبایل</h2></div>
+        <div className="section-heading"><h2>ابزارهای محتوا، سئو و شماره موبایل</h2></div>
         <div className="pro-grid">
           <div className="tool-card">
             <div className="tool-top"><h3>تبدیل و اعتبارسنجی موبایل ایران</h3><code>Iranian phone</code></div>
@@ -215,9 +215,9 @@ export default function App() {
       {activeInfo === "help" && <section className="info-section help-section" id="help">
         <div className="info-heading"><span className="info-icon"><FontAwesomeIcon icon={faCircleQuestion} /></span><div><h2>راهنمای استفاده از فارسی‌کیت</h2><p>برای شروع، متن را وارد کن و ابزارهای موردنیازت را فعال کن.</p></div><button className="info-close" onClick={() => setActiveInfo(null)}>بستن</button></div>
         <div className="help-grid">
-          <article className="info-card"><span className="help-number">۱</span><h3>متن را وارد کن</h3><p>متن فارسی یا ترکیبی خودت را در کادر ورودی بنویس یا با دکمهٔ «نمونه متن» یک متن آزمایشی قرار بده.</p></article>
-          <article className="info-card"><span className="help-number">۲</span><h3>تنظیمات را انتخاب کن</h3><p>از پنل تنظیمات سریع، اصلاح حروف عربی، نیم‌فاصله، تبدیل ارقام، حذف اعراب و اصلاح همزه را جداگانه روشن یا خاموش کن.</p></article>
-          <article className="info-card"><span className="help-number">۳</span><h3>خروجی را بردار</h3><p>نتیجه هم‌زمان در کادر خروجی نمایش داده می‌شود؛ می‌توانی آن را کپی کنی یا به‌صورت فایل متنی دانلود کنی.</p></article>
+          <article className="info-card"><h3>متن را وارد کن</h3><p>متن فارسی یا ترکیبی خودت را در کادر ورودی بنویس یا با دکمهٔ «نمونه متن» یک متن آزمایشی قرار بده.</p></article>
+          <article className="info-card"><h3>تنظیمات را انتخاب کن</h3><p>از پنل تنظیمات سریع، اصلاح حروف عربی، نیم‌فاصله، تبدیل ارقام، حذف اعراب و اصلاح همزه را جداگانه روشن یا خاموش کن.</p></article>
+          <article className="info-card"><h3>خروجی را بردار</h3><p>نتیجه هم‌زمان در کادر خروجی نمایش داده می‌شود؛ می‌توانی آن را کپی کنی یا به‌صورت فایل متنی دانلود کنی.</p></article>
         </div>
         <div className="help-note"><strong>نکته:</strong> خاموش بودن «اصلاح حروف عربی» یعنی حروفی مثل «ي» و «ك» در متن دست‌نخورده می‌مانند. برای تبدیل آن‌ها به «ی» و «ک»، این گزینه را روشن کن.</div>
         <div className="help-tools"><h3>ابزارهای بیشتر</h3><p>از بخش «ابزارهای تخصصی» می‌توانی بازرس کیفیت متن، آمار متن، ساخت اسلاگ، بررسی شماره موبایل و ابزارهای محتوایی را باز کنی. برای کار با این ابزارها ابتدا متن را در ویرایشگر وارد کن.</p><a href="#tools">رفتن به ابزارهای تخصصی <FontAwesomeIcon icon={faArrowLeft} /></a></div>
