@@ -279,6 +279,11 @@ footer{position:relative;overflow:hidden;display:flex;justify-content:center;gap
 /* Full-bleed hero aligned to the viewport, independent of the page container */
 @media (min-width:1051px){
   .page > .hero{
+    padding:0 !important;
+  }
+}
+@media (min-width:1051px){
+  .page > .hero{
     width:100vw !important;
     max-width:none !important;
     margin-left:calc(50% - 50vw) !important;
