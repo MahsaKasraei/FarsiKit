@@ -295,3 +295,47 @@ footer{position:relative;overflow:hidden;display:flex;justify-content:center;gap
     transform:none !important;
   }
 }
+
+
+/* 0.6.9 — real destination sections for the header navigation */
+.info-section{
+  scroll-margin-top:24px;
+  margin:26px 0 0;
+  padding:26px;
+  border:1px solid #e2e8e1;
+  border-radius:22px;
+  background:#fff;
+  box-shadow:0 5px 24px #233a2c0b;
+}
+.info-heading{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+.info-heading h2{font-size:21px;margin:0 0 5px}
+.info-heading p{font-size:13px;color:#7b8580;margin:0}
+.info-icon{width:48px;height:48px;flex:0 0 48px;display:grid;place-items:center;border-radius:15px;background:#e8f3e9;color:#176348;font-size:21px}
+.about-mark{font-size:28px;font-weight:900}
+.help-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.info-card{position:relative;padding:20px 18px;border:1px solid #e7ece6;border-radius:16px;background:#fafcf9}
+.help-number{display:grid;place-items:center;width:30px;height:30px;border-radius:10px;background:#e5f1e5;color:#176348;font-weight:800;font-size:13px}
+.info-card h3,.help-tools h3{font-size:15px;margin:13px 0 7px;color:#26372e}
+.info-card p,.help-tools p,.about-copy p{font-size:13px;line-height:2;color:#68756c;margin:0}
+.help-note{margin-top:14px;padding:14px 16px;border-radius:13px;background:#f1f6ed;color:#435c49;font-size:13px;line-height:2}
+.help-tools{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:18px;padding-top:16px;border-top:1px solid #edf0eb}
+.help-tools h3{margin:0;white-space:nowrap}
+.help-tools p{flex:1;min-width:220px}
+.help-tools a,.about-copy a{display:inline-flex;align-items:center;gap:8px;color:#176348;font-size:13px;font-weight:700;text-decoration:none}
+.about-copy{max-width:900px}
+.about-copy p+p{margin-top:9px}
+.about-copy a{margin-top:15px;padding:10px 14px;border-radius:11px;background:#edf5ed}
+.info-section:target{scroll-margin-top:24px}
+@media(max-width:700px){
+  .info-section{padding:18px 14px;margin-top:18px;border-radius:17px}
+  .info-heading{gap:10px;margin-bottom:15px}
+  .info-heading h2{font-size:17px}
+  .info-heading p{font-size:11px}
+  .info-icon{width:40px;height:40px;flex-basis:40px}
+  .help-grid{grid-template-columns:1fr;gap:9px}
+  .info-card{padding:14px}
+  .info-card h3{margin:8px 0 4px}
+  .info-card p,.help-tools p,.about-copy p,.help-note{font-size:12px}
+  .help-tools{align-items:flex-start;gap:10px}
+  .help-tools h3{width:100%}
+}
