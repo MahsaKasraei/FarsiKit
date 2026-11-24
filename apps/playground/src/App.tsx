@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse, faChevronDown, faCircleQuestion, faMoon, faArrowUpRightFromSquare, faBolt, faGear, faPenToSquare, faTrashCan, faFileLines, faCircleCheck, faCopy, faDownload, faCode, faCheck, faChartColumn, faMagnifyingGlass, faPhone, faArrowRight, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
@@ -31,6 +31,10 @@ export default function App() {
   const [copied, setCopied] = useState("");
   const [phone, setPhone] = useState("۰۹۱۲ ۳۴۵ ۶۷۸۹");
   const [activePanel, setActivePanel] = useState<"review" | "quick" | "stats" | "content" | null>(null);
+  const [activeInfo, setActiveInfo] = useState<"help" | "about" | null>(null);
+  useEffect(() => {
+    if (activeInfo) document.getElementById(activeInfo)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [activeInfo]);
   const normalized = useMemo(() => {
     const value = normalizePersian(input, {
       convertDigits: digits,
@@ -67,8 +71,8 @@ export default function App() {
   return (
     <main className="page" dir="rtl">
       <header className="topbar">
-        <div className="top-actions"><span className="version"><i /> نسخه ۰.۶.۹</span><button className="round-action" aria-label="تغییر پوسته"><FontAwesomeIcon icon={faMoon} /></button><a className="github-link" href="https://github.com/MahsaKasraei/FarsiKit" target="_blank" rel="noreferrer" aria-label="گیت‌هاب"><FontAwesomeIcon icon={faGithub} /></a></div>
-        <nav className="main-nav"><a href="#tools"><FontAwesomeIcon icon={faHouse} /> ابزارها</a><a href="#about">درباره ما <FontAwesomeIcon icon={faChevronDown} /></a><a href="#help">راهنما <FontAwesomeIcon icon={faCircleQuestion} /></a></nav>
+        <div className="top-actions"><span className="version"><i /> نسخه ۰.۷.۰</span><button className="round-action" aria-label="تغییر پوسته"><FontAwesomeIcon icon={faMoon} /></button><a className="github-link" href="https://github.com/MahsaKasraei/FarsiKit" target="_blank" rel="noreferrer" aria-label="گیت‌هاب"><FontAwesomeIcon icon={faGithub} /></a></div>
+        <nav className="main-nav"><a href="#tools"><FontAwesomeIcon icon={faHouse} /> ابزارها</a><a href="#about" onClick={() => setActiveInfo("about")}>درباره ما <FontAwesomeIcon icon={faChevronDown} /></a><a href="#help" onClick={() => setActiveInfo("help")}>راهنما <FontAwesomeIcon icon={faCircleQuestion} /></a></nav>
         <a className="brand" href="#" aria-label="FarsiKit home"><span>FarsiKit</span><span className="brand-mark">ف</span></a>
       </header>
 
@@ -111,7 +115,7 @@ export default function App() {
           <button className="shortcut analytics" onClick={()=>setActivePanel("stats")}><b><FontAwesomeIcon icon={faChartColumn} /></b><strong>تحلیل و آمار متن</strong><small>بررسی و نمایش آمار</small><span className="shortcut-arrow"><FontAwesomeIcon icon={faArrowLeft} /></span></button>
           <button className="shortcut seo" onClick={()=>setActivePanel("content")}><b><FontAwesomeIcon icon={faMagnifyingGlass} /></b><strong>ابزارهای سئو</strong><small>بهینه‌سازی محتوای وب</small><span className="shortcut-arrow"><FontAwesomeIcon icon={faArrowLeft} /></span></button>
           <button className="shortcut phone" onClick={()=>setActivePanel("content")}><b><FontAwesomeIcon icon={faPhone} /></b><strong>ابزار شماره موبایل</strong><small>استانداردسازی شماره‌ها</small><span className="shortcut-arrow"><FontAwesomeIcon icon={faArrowLeft} /></span></button>
-          <button className="shortcut slug" onClick={()=>setActivePanel("quick")}><b><FontAwesomeIcon icon={faArrowUpRightFromSquare} /></b><strong>ساخت اسلاگ</strong><small>تبدیل متن به اسلاگ استاندارد</small><span className="shortcut-arrow"><FontAwesomeIcon icon={faArrowLeft} /></span></button>
+          <button className="shortcut slug" onClick={()=>setActiveInfo("help")}><b><FontAwesomeIcon icon={faCircleQuestion} /></b><strong>راهنمای استفاده</strong><small>آشنایی با تنظیمات و ابزارها</small><span className="shortcut-arrow"><FontAwesomeIcon icon={faArrowLeft} /></span></button>
         </div>
       </section>
 
@@ -208,8 +212,8 @@ export default function App() {
 
       {copied && <div className="toast" role="status">{copied}</div>}
 
-      <section className="info-section help-section" id="help">
-        <div className="info-heading"><span className="info-icon"><FontAwesomeIcon icon={faCircleQuestion} /></span><div><h2>راهنمای استفاده از فارسی‌کیت</h2><p>برای شروع، متن را وارد کن و ابزارهای موردنیازت را فعال کن.</p></div></div>
+      {activeInfo === "help" && <section className="info-section help-section" id="help">
+        <div className="info-heading"><span className="info-icon"><FontAwesomeIcon icon={faCircleQuestion} /></span><div><h2>راهنمای استفاده از فارسی‌کیت</h2><p>برای شروع، متن را وارد کن و ابزارهای موردنیازت را فعال کن.</p></div><button className="info-close" onClick={() => setActiveInfo(null)}>بستن</button></div>
         <div className="help-grid">
           <article className="info-card"><span className="help-number">۱</span><h3>متن را وارد کن</h3><p>متن فارسی یا ترکیبی خودت را در کادر ورودی بنویس یا با دکمهٔ «نمونه متن» یک متن آزمایشی قرار بده.</p></article>
           <article className="info-card"><span className="help-number">۲</span><h3>تنظیمات را انتخاب کن</h3><p>از پنل تنظیمات سریع، اصلاح حروف عربی، نیم‌فاصله، تبدیل ارقام، حذف اعراب و اصلاح همزه را جداگانه روشن یا خاموش کن.</p></article>
@@ -217,12 +221,12 @@ export default function App() {
         </div>
         <div className="help-note"><strong>نکته:</strong> خاموش بودن «اصلاح حروف عربی» یعنی حروفی مثل «ي» و «ك» در متن دست‌نخورده می‌مانند. برای تبدیل آن‌ها به «ی» و «ک»، این گزینه را روشن کن.</div>
         <div className="help-tools"><h3>ابزارهای بیشتر</h3><p>از بخش «ابزارهای تخصصی» می‌توانی بازرس کیفیت متن، آمار متن، ساخت اسلاگ، بررسی شماره موبایل و ابزارهای محتوایی را باز کنی. برای کار با این ابزارها ابتدا متن را در ویرایشگر وارد کن.</p><a href="#tools">رفتن به ابزارهای تخصصی <FontAwesomeIcon icon={faArrowLeft} /></a></div>
-      </section>
+      </section>}
 
-      <section className="info-section about-section" id="about">
-        <div className="info-heading"><span className="info-icon"><span className="about-mark">ف</span></span><div><h2>دربارهٔ FarsiKit</h2><p>جعبه‌ابزار متن فارسی؛ ساده، سریع و در دسترس.</p></div></div>
+      {activeInfo === "about" && <section className="info-section about-section" id="about">
+        <div className="info-heading"><span className="info-icon"><span className="about-mark">ف</span></span><div><h2>دربارهٔ FarsiKit</h2><p>جعبه‌ابزار متن فارسی؛ ساده، سریع و در دسترس.</p></div><button className="info-close" onClick={() => setActiveInfo(null)}>بستن</button></div>
         <div className="about-copy"><p>FarsiKit مجموعه‌ای از ابزارهای کاربردی برای پاک‌سازی، یکدست‌سازی و بررسی متن فارسی است. هدف این پروژه این است که کارهای تکراری ویرایش متن، آماده‌سازی محتوا و پردازش نوشته‌های فارسی را در یک محیط ساده و رایگان انجام بدهی.</p><p>این پروژه متن‌باز و رایگان است و برای نویسندگان، تولیدکنندگان محتوا، ویراستاران و توسعه‌دهندگانی طراحی شده که با متن فارسی سروکار دارند.</p><a href="https://github.com/MahsaKasraei/FarsiKit" target="_blank" rel="noreferrer"><FontAwesomeIcon icon={faGithub} /> مشاهدهٔ کد منبع در گیت‌هاب</a></div>
-      </section>
+      </section>}
 
       <footer><span>FarsiKit</span><span>رایگان برای همه متن‌باز با مجوز MIT　│　سریع و سبک <FontAwesomeIcon icon={faBolt} /></span></footer>
     </main>
