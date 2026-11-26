@@ -74,7 +74,7 @@ export default function App() {
   return (
     <main className={`page${theme === "dark" ? " dark-theme" : ""}`} dir="rtl">
       <header className="topbar">
-        <div className="top-actions"><span className="version"><i /> نسخه ۰.۷.۴</span><button className="round-action" type="button" aria-label={theme === "dark" ? "فعال‌کردن حالت روز" : "فعال‌کردن حالت شب"} aria-pressed={theme === "dark"} onClick={() => setTheme(current => current === "dark" ? "light" : "dark")}><FontAwesomeIcon icon={theme === "dark" ? faSun : faMoon} /></button><a className="github-link" href="https://github.com/MahsaKasraei/FarsiKit" target="_blank" rel="noreferrer" aria-label="گیت‌هاب"><FontAwesomeIcon icon={faGithub} /></a></div>
+        <div className="top-actions"><span className="version"><i /> نسخه ۰.۷.۵</span><button className="round-action" type="button" aria-label={theme === "dark" ? "فعال‌کردن حالت روز" : "فعال‌کردن حالت شب"} aria-pressed={theme === "dark"} onClick={() => setTheme(current => current === "dark" ? "light" : "dark")}><FontAwesomeIcon icon={theme === "dark" ? faSun : faMoon} /></button><a className="github-link" href="https://github.com/MahsaKasraei/FarsiKit" target="_blank" rel="noreferrer" aria-label="گیت‌هاب"><FontAwesomeIcon icon={faGithub} /></a></div>
         <nav className="main-nav"><a href="#tools"><FontAwesomeIcon icon={faHouse} /> ابزارها</a><a href="#about" onClick={() => setActiveInfo("about")}>درباره ما <FontAwesomeIcon icon={faChevronDown} /></a><a href="#help" onClick={() => setActiveInfo("help")}>راهنما <FontAwesomeIcon icon={faCircleQuestion} /></a></nav>
         <a className="brand" href="#" aria-label="FarsiKit home"><span>FarsiKit</span><span className="brand-mark">ف</span></a>
       </header>
@@ -87,6 +87,7 @@ export default function App() {
       <section className="workspace" id="workspace">
         <aside className="quick-settings">
           <h2>تنظیمات سریع <span><FontAwesomeIcon icon={faBolt} /></span></h2>
+          <button className="smart-persianize" type="button" onClick={() => { setUseZwnj(true); setFixArabicLetters(true); setDigits("persian"); setRemoveDiacritics(true); setFixEzafe(true); setCopied("همه اصلاحات فارسی فعال شدند"); }}><FontAwesomeIcon icon={faBolt} /> فارسی‌سازی هوشمند <span>فعال‌سازی همه اصلاحات</span></button>
           <label><span>نیم‌فاصله</span><input type="checkbox" checked={useZwnj} onChange={e=>setUseZwnj(e.target.checked)} /></label>
           <label><span>اصلاح حروف عربی</span><input type="checkbox" checked={fixArabicLetters} onChange={e=>setFixArabicLetters(e.target.checked)} /></label>
           <label><span>تبدیل ارقام</span><input type="checkbox" checked={digits==="persian"} onChange={e=>setDigits(e.target.checked?"persian":"latin")} /></label>
