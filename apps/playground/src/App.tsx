@@ -19,7 +19,7 @@ import {
   stripArabicDiacritics
 } from "@farsikit/core";
 
-const sample = "اين يك متن فارسي برای آزمايش حروف عربي است؛ علي در اين كتاب دربارهٔ زندگي، مسئوليت‌ های مهم و خانهٔ زيبايش می‌ نویسد. شماره 123 را هم ببينيد.";
+const sample = "اين يك متن فارسي برای آزمايش حروف عربي است؛ علي در اين كتاب دربارهٔ زندگي، مسئوليت‌ های مهم و خانهٔ زيبايش می نویسد. شماره 123 را هم ببينيد.";
 
 export default function App() {
   const [input, setInput] = useState("");
@@ -74,7 +74,7 @@ export default function App() {
   return (
     <main className={`page${theme === "dark" ? " dark-theme" : ""}`} dir="rtl">
       <header className="topbar">
-        <div className="top-actions"><span className="version"><i /> نسخه ۰.۷.۶</span><button className="round-action" type="button" aria-label={theme === "dark" ? "فعال‌کردن حالت روز" : "فعال‌کردن حالت شب"} aria-pressed={theme === "dark"} onClick={() => setTheme(current => current === "dark" ? "light" : "dark")}><FontAwesomeIcon icon={theme === "dark" ? faSun : faMoon} /></button><a className="github-link" href="https://github.com/MahsaKasraei/FarsiKit" target="_blank" rel="noreferrer" aria-label="گیت‌هاب"><FontAwesomeIcon icon={faGithub} /></a></div>
+        <div className="top-actions"><span className="version"><i /> نسخه ۰.۷.۷</span><button className="round-action" type="button" aria-label={theme === "dark" ? "فعال‌کردن حالت روز" : "فعال‌کردن حالت شب"} aria-pressed={theme === "dark"} onClick={() => setTheme(current => current === "dark" ? "light" : "dark")}><FontAwesomeIcon icon={theme === "dark" ? faSun : faMoon} /></button><a className="github-link" href="https://github.com/MahsaKasraei/FarsiKit" target="_blank" rel="noreferrer" aria-label="گیت‌هاب"><FontAwesomeIcon icon={faGithub} /></a></div>
         <nav className="main-nav"><a href="#tools"><FontAwesomeIcon icon={faHouse} /> ابزارها</a><a href="#about" onClick={() => setActiveInfo("about")}>درباره ما <FontAwesomeIcon icon={faChevronDown} /></a><a href="#help" onClick={() => setActiveInfo("help")}>راهنما <FontAwesomeIcon icon={faCircleQuestion} /></a></nav>
         <a className="brand" href="#" aria-label="FarsiKit home"><span>FarsiKit</span><span className="brand-mark">ف</span></a>
       </header>
