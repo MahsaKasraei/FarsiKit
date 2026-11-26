@@ -458,3 +458,43 @@ body:has(.page.dark-theme){background:#111a16}
 .dark-theme .detected{background:#294735;color:#b7e4c2}
 .dark-theme .not-detected{background:#493d27;color:#f0d99e}
 .dark-theme .toast{background:#285c48;color:#fff}
+
+
+/* 0.7.4 — compare input and normalized output in an overlay without changing editor layout */
+.compare-output{
+  border:1px solid #dce6dc;
+  background:#f7faf6;
+  color:#315e49;
+  border-radius:9px;
+  padding:8px 11px;
+  font-size:10px;
+}
+.compare-output:disabled{opacity:.4;cursor:not-allowed}
+.comparison-backdrop{
+  position:fixed;inset:0;z-index:20;
+  display:flex;align-items:center;justify-content:center;
+  padding:20px;background:#101a16a8;
+}
+.comparison-dialog{
+  width:min(920px,100%);max-height:min(82vh,760px);overflow:auto;
+  padding:22px;border:1px solid #e2e8e1;border-radius:18px;
+  background:#fff;color:#25342b;box-shadow:0 20px 70px #0003;
+}
+.comparison-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+.comparison-heading h2{margin:0;font-size:17px}
+.comparison-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.comparison-column{min-width:0;border:1px solid #e2e8e1;border-radius:12px;overflow:hidden}
+.comparison-column h3{margin:0;padding:11px 13px;background:#f1f6ef;font-size:12px}
+.comparison-column>div{padding:14px;min-height:140px;max-height:48vh;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px;line-height:2}
+.comparison-note{margin:14px 0 0;color:#78847b;font-size:11px;line-height:1.8}
+.dark-theme .compare-output{background:#263a2e;border-color:#405849;color:#dcebe0}
+.dark-theme .comparison-dialog{background:#1a2821;border-color:#34463b;color:#e5eee8}
+.dark-theme .comparison-column{border-color:#3a4c40}
+.dark-theme .comparison-column h3{background:#22332a;color:#e5eee8}
+.dark-theme .comparison-note{color:#a8b8ad}
+@media(max-width:650px){
+  .comparison-backdrop{padding:10px}
+  .comparison-dialog{padding:15px;max-height:88vh}
+  .comparison-grid{grid-template-columns:1fr}
+  .comparison-column>div{max-height:28vh;min-height:90px}
+}
