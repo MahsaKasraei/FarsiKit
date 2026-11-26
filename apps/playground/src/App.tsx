@@ -31,6 +31,7 @@ export default function App() {
   const [useZwnj, setUseZwnj] = useState(true);
   const [fixEzafe, setFixEzafe] = useState(false);
   const [copied, setCopied] = useState("");
+  const [showComparison, setShowComparison] = useState(false);
   const [phone, setPhone] = useState("۰۹۱۲ ۳۴۵ ۶۷۸۹");
   const [activePanel, setActivePanel] = useState<"review" | "quick" | "stats" | "content" | null>(null);
   const [activeInfo, setActiveInfo] = useState<"help" | "about" | null>(null);
@@ -73,7 +74,7 @@ export default function App() {
   return (
     <main className={`page${theme === "dark" ? " dark-theme" : ""}`} dir="rtl">
       <header className="topbar">
-        <div className="top-actions"><span className="version"><i /> نسخه ۰.۷.۳</span><button className="round-action" type="button" aria-label={theme === "dark" ? "فعال‌کردن حالت روز" : "فعال‌کردن حالت شب"} aria-pressed={theme === "dark"} onClick={() => setTheme(current => current === "dark" ? "light" : "dark")}><FontAwesomeIcon icon={theme === "dark" ? faSun : faMoon} /></button><a className="github-link" href="https://github.com/MahsaKasraei/FarsiKit" target="_blank" rel="noreferrer" aria-label="گیت‌هاب"><FontAwesomeIcon icon={faGithub} /></a></div>
+        <div className="top-actions"><span className="version"><i /> نسخه ۰.۷.۴</span><button className="round-action" type="button" aria-label={theme === "dark" ? "فعال‌کردن حالت روز" : "فعال‌کردن حالت شب"} aria-pressed={theme === "dark"} onClick={() => setTheme(current => current === "dark" ? "light" : "dark")}><FontAwesomeIcon icon={theme === "dark" ? faSun : faMoon} /></button><a className="github-link" href="https://github.com/MahsaKasraei/FarsiKit" target="_blank" rel="noreferrer" aria-label="گیت‌هاب"><FontAwesomeIcon icon={faGithub} /></a></div>
         <nav className="main-nav"><a href="#tools"><FontAwesomeIcon icon={faHouse} /> ابزارها</a><a href="#about" onClick={() => setActiveInfo("about")}>درباره ما <FontAwesomeIcon icon={faChevronDown} /></a><a href="#help" onClick={() => setActiveInfo("help")}>راهنما <FontAwesomeIcon icon={faCircleQuestion} /></a></nav>
         <a className="brand" href="#" aria-label="FarsiKit home"><span>FarsiKit</span><span className="brand-mark">ف</span></a>
       </header>
@@ -103,7 +104,7 @@ export default function App() {
             <div className="panel output-panel">
               <div className="output-status">خروجی اصلاح‌شده　<FontAwesomeIcon icon={faCircleCheck} /></div>
               <div className="output" dir="rtl">{normalized || <span className="placeholder">متن شما اینجا نمایش داده می‌شود</span>}</div>
-              <div className="panel-footer"><button className="copy" onClick={()=>copy(normalized,"خروجی کپی شد")}><><FontAwesomeIcon icon={faCopy} /> کپی خروجی</></button><button className="download-output" onClick={()=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([normalized],{type:"text/plain;charset=utf-8"}));a.download="farsikit-output.txt";a.click();URL.revokeObjectURL(a.href)}}><><FontAwesomeIcon icon={faDownload} /> دانلود</></button></div>
+              <div className="panel-footer"><button className="compare-output" onClick={()=>setShowComparison(true)} disabled={!input.trim()}>مقایسه متن</button><button className="copy" onClick={()=>copy(normalized,"خروجی کپی شد")}><><FontAwesomeIcon icon={faCopy} /> کپی خروجی</></button><button className="download-output" onClick={()=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([normalized],{type:"text/plain;charset=utf-8"}));a.download="farsikit-output.txt";a.click();URL.revokeObjectURL(a.href)}}><><FontAwesomeIcon icon={faDownload} /> دانلود</></button></div>
             </div>
           </div>
         </div>
@@ -212,6 +213,16 @@ export default function App() {
 
 
 
+      {showComparison && <div className="comparison-backdrop" role="presentation" onClick={() => setShowComparison(false)}>
+        <section className="comparison-dialog" role="dialog" aria-modal="true" aria-labelledby="comparison-title" onClick={e => e.stopPropagation()}>
+          <div className="comparison-heading"><h2 id="comparison-title">مقایسه متن ورودی و خروجی</h2><button className="info-close" onClick={() => setShowComparison(false)}>بستن</button></div>
+          <div className="comparison-grid">
+            <article className="comparison-column"><h3>متن اولیه</h3><div dir="auto">{input}</div></article>
+            <article className="comparison-column"><h3>متن اصلاح‌شده</h3><div dir="auto">{normalized}</div></article>
+          </div>
+          <p className="comparison-note">متن اولیه بدون تغییر باقی می‌ماند؛ فقط خروجی اصلاح‌شده را با آن مقایسه می‌کنی.</p>
+        </section>
+      </div>}
       {copied && <div className="toast" role="status">{copied}</div>}
 
       {activeInfo === "help" && <section className="info-section help-section" id="help">
