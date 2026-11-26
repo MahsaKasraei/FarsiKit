@@ -498,3 +498,19 @@ body:has(.page.dark-theme){background:#111a16}
   .comparison-grid{grid-template-columns:1fr}
   .comparison-column>div{max-height:28vh;min-height:90px}
 }
+
+
+/* 0.7.5 — one-click Persian normalization preset; isolated to quick settings */
+.smart-persianize{
+  width:100%;display:flex;flex-direction:column;align-items:flex-start;gap:4px;
+  margin:10px 0 12px;padding:11px 12px;border:1px solid #c9dfcf;border-radius:11px;
+  background:linear-gradient(135deg,#edf7ef,#f8fbf7);color:#285c3d;
+  font-family:inherit;font-size:12px;font-weight:700;text-align:right;cursor:pointer;
+  transition:background .18s ease,border-color .18s ease,transform .18s ease;
+}
+.smart-persianize>svg{margin-bottom:2px}
+.smart-persianize span{font-size:10px;font-weight:400;color:#66816d}
+.smart-persianize:hover{border-color:#83b995;background:#e5f3e8;transform:translateY(-1px)}
+.dark-theme .smart-persianize{background:linear-gradient(135deg,#263e30,#223329);border-color:#46644f;color:#c8efd1}
+.dark-theme .smart-persianize span{color:#a8c7ae}
+.dark-theme .smart-persianize:hover{background:#2b4936;border-color:#63876b}
