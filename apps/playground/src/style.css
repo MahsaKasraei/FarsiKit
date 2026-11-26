@@ -415,3 +415,46 @@ footer{position:relative;overflow:hidden;display:flex;justify-content:center;gap
   bottom:5px;
   left:13px;
 }
+
+
+/* Dark theme — styles only for the explicit theme toggle */
+body:has(.page.dark-theme){background:#111a16}
+.page.dark-theme{background:#111a16;color:#e5eee8;color-scheme:dark}
+.dark-theme .topbar .brand,.dark-theme .main-nav a{color:#e5eee8}
+.dark-theme .round-action,.dark-theme .github-link,.dark-theme .version{background:#1d2b24;border-color:#34463b;color:#e5eee8}
+.dark-theme .hero{background:#18251e}
+.dark-theme .hero:before{display:block;inset:0;width:auto;height:auto;left:0;bottom:0;border-radius:0;filter:none;background:#101a16a8;z-index:0}
+.dark-theme .hero-copy h1,.dark-theme .hero-copy p{color:#e5eee8}
+.dark-theme .secondary-cta{background:#22352b;border-color:#40584a;color:#e5eee8}
+.dark-theme .workspace .quick-settings,.dark-theme .editor-shell,
+.dark-theme .panel,.dark-theme .tool-card,.dark-theme .inspector-card,
+.dark-theme .stats,.dark-theme .info-section{background:#1a2821;border-color:#34463b;color:#e5eee8}
+.dark-theme .quick-settings label,.dark-theme h2,.dark-theme .editor-toolbar h2,
+.dark-theme .tool-top h3,.dark-theme .info-heading h2,.dark-theme .info-card h3{color:#e5eee8}
+.dark-theme .editor-panels .output-panel{background:#1d2d24}
+.dark-theme .output-status{background:#294b38;color:#e5eee8}
+.dark-theme .output,.dark-theme .input-panel textarea,.dark-theme .phone-input{color:#e5eee8}
+.dark-theme .input-panel textarea::placeholder{color:#899b8e}
+.dark-theme .subtle,.dark-theme .more-settings,.dark-theme .all-tools,
+.dark-theme .tool-copy,.dark-theme .info-close{background:#263a2e;border-color:#405849;color:#dcebe0}
+.dark-theme .shortcut{background:#202d35;border-color:#3b4b53;color:#e5eee8}
+.dark-theme .shortcut.quality{background:#1c342f}
+.dark-theme .shortcut.analytics{background:#203528}
+.dark-theme .shortcut.seo{background:#3a2d20}
+.dark-theme .shortcut.phone{background:#202f40}
+.dark-theme .shortcut.slug{background:#2b2740}
+.dark-theme .shortcut small,.dark-theme .extras-heading p,
+.dark-theme .tool-card p,.dark-theme .info-card p,
+.dark-theme .help-tools p,.dark-theme .about-copy p{color:#a8b8ad}
+.dark-theme .shortcut:after,.dark-theme .shortcut-arrow{background:#263a30;border-color:#496050}
+.dark-theme .tool-top code,.dark-theme .tool-value,.dark-theme .stat,
+.dark-theme .reading-metrics>div,.dark-theme .keyword-row,
+.dark-theme .issue-row,.dark-theme .info-card,.dark-theme .help-note{background:#22332a;border-color:#3a4c40;color:#dcebe0}
+.dark-theme .stat span,.dark-theme .inspector-summary p{color:#a8b8ad}
+.dark-theme .stat strong{color:#9bd2aa}
+.dark-theme .clean-report{background:#294735;color:#dcebe0}
+.dark-theme footer{background:linear-gradient(170deg,#1c3025,#243d2d);color:#dcebe0}
+.dark-theme footer:before{background:#294735}
+.dark-theme .detected{background:#294735;color:#b7e4c2}
+.dark-theme .not-detected{background:#493d27;color:#f0d99e}
+.dark-theme .toast{background:#285c48;color:#fff}
