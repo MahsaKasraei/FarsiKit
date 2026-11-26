@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHouse, faChevronDown, faCircleQuestion, faMoon, faArrowUpRightFromSquare, faBolt, faGear, faPenToSquare, faTrashCan, faFileLines, faCircleCheck, faCopy, faDownload, faCode, faCheck, faChartColumn, faMagnifyingGlass, faPhone, faArrowRight, faArrowLeft, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faHouse, faChevronDown, faCircleQuestion, faMoon, faArrowUpRightFromSquare, faBolt, faGear, faPenToSquare, faTrashCan, faFileLines, faCircleCheck, faCopy, faDownload, faCode, faCheck, faChartColumn, faMagnifyingGlass, faPhone, faArrowRight, faArrowLeft, faXmark, faSun } from "@fortawesome/free-solid-svg-icons";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import {
   addZwnj,
@@ -23,6 +23,8 @@ const sample = "اين يك متن فارسی برای آزمايش حروف ع�
 
 export default function App() {
   const [input, setInput] = useState("");
+  const [theme, setTheme] = useState<"light" | "dark">(() => localStorage.getItem("farsikit-theme") === "dark" ? "dark" : "light");
+  useEffect(() => { localStorage.setItem("farsikit-theme", theme); }, [theme]);
   const [digits, setDigits] = useState<"persian" | "arabic" | "latin">("latin");
   const [fixArabicLetters, setFixArabicLetters] = useState(false);
   const [removeDiacritics, setRemoveDiacritics] = useState(false);
@@ -69,9 +71,9 @@ export default function App() {
   };
 
   return (
-    <main className="page" dir="rtl">
+    <main className={`page${theme === "dark" ? " dark-theme" : ""}`} dir="rtl">
       <header className="topbar">
-        <div className="top-actions"><span className="version"><i /> نسخه ۰.۷.۳</span><button className="round-action" aria-label="تغییر پوسته"><FontAwesomeIcon icon={faMoon} /></button><a className="github-link" href="https://github.com/MahsaKasraei/FarsiKit" target="_blank" rel="noreferrer" aria-label="گیت‌هاب"><FontAwesomeIcon icon={faGithub} /></a></div>
+        <div className="top-actions"><span className="version"><i /> نسخه ۰.۷.۳</span><button className="round-action" type="button" aria-label={theme === "dark" ? "فعال‌کردن حالت روز" : "فعال‌کردن حالت شب"} aria-pressed={theme === "dark"} onClick={() => setTheme(current => current === "dark" ? "light" : "dark")}><FontAwesomeIcon icon={theme === "dark" ? faSun : faMoon} /></button><a className="github-link" href="https://github.com/MahsaKasraei/FarsiKit" target="_blank" rel="noreferrer" aria-label="گیت‌هاب"><FontAwesomeIcon icon={faGithub} /></a></div>
         <nav className="main-nav"><a href="#tools"><FontAwesomeIcon icon={faHouse} /> ابزارها</a><a href="#about" onClick={() => setActiveInfo("about")}>درباره ما <FontAwesomeIcon icon={faChevronDown} /></a><a href="#help" onClick={() => setActiveInfo("help")}>راهنما <FontAwesomeIcon icon={faCircleQuestion} /></a></nav>
         <a className="brand" href="#" aria-label="FarsiKit home"><span>FarsiKit</span><span className="brand-mark">ف</span></a>
       </header>
